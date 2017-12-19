@@ -94,5 +94,34 @@ Parse.Object.registerSubclass('Monster', Monster);
 
 #### 保存对象 {#保存对象}
 
+假设你想保存之前描述的对象`GameScore`到Parse服务器，这个接口和`BackBone.Model`类似，即`save`方法：
+
+```
+var GameScore = Parse.Object.extend("GameScore");
+var gameScore = new GameScore();
+
+gameScore.set("score", 1337);
+gameScore.set("playerName", "Sean Plott");
+gameScore.set("cheatMode", false);
+
+gameScore.save(null, {
+  success: function(gameScore) {
+    // 保存成功
+    alert('New object created with objectId: ' + gameScore.id);
+  },
+  error: function(gameScore, error) {
+    // 包含了错误码和错误信息
+    alert('Failed to create new object, with error code: ' + error.message);
+  }
+});
+```
+
+在上面代码运行后，你可能会想确认是否真的保存成功了，你可以在Parse的数据浏览器中查看，你将会看到类似下面的数据：
+
+```
+objectId: "xWMyZ4YEGZ", score: 1337, playerName: "Sean Plott", cheatMode: false,
+createdAt:"2011-06-10T18:33:42Z", updatedAt:"2011-06-10T18:33:42Z"
+```
+
 
 
