@@ -12,27 +12,27 @@ JavaScript的生态系统非常宽泛，它有着为数众多的框架和运行�
 
 在基于浏览器的应用中使用npm包，直接引入：
 
-```
+```js
 var Parse = require('parse');
 ```
 
 在后端应用或Node.js命令行工具中，引入`'parse/node'` ：
 
-```
+```js
 // node.js
 var Parse = require('parse/node');
 ```
 
 在React Native应用中，引入`'parse/react-native'` ：
 
-```
+```js
 // React Native
 var Parse = require('parse/react-native');
 ```
 
 接下来，用JavaScript初始化你的Parse-Sever，你应该用下面的代码替换你当前的初始化代码：
 
-```
+```js
 Parse.initialize("你的appId");
 Parse.serverURL = 'http://你的Parse-Server地址:1337/parse'
 ```

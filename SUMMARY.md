@@ -14,7 +14,3 @@
 * Promises
 * 位置\(GeoPint\)
 
-## Methods
-
-* [Defining Methods](methods.md)
-
