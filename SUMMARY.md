@@ -9,7 +9,7 @@
 * [LiveQueries](livequeries.md)
 * [用户\(Users\)](yong-623728-users.md)
 * 会话\(Sessions\)
-* 角色\(roles\)
+* 角色\(Roles\)
 * 文件\(Files\)
 * Promises
 * 位置\(GeoPint\)
