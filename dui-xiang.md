@@ -85,7 +85,7 @@ class Monster extends Parse.Object {
 }
 ```
 
-但是，当你使用extends时，SDK将不会自动识别你的子类。如果你想要请求返回的对象使用你的Parse.Object子类，你将需要注册这个子类，就像我们在其他平台做的一样：
+但是，当你使用extends时，SDK将不会自动识别你的子类。如果你想要查询返回的对象使用你的Parse.Object子类，你将需要注册这个子类，就像我们在其他平台做的一样：
 
 ```js
 // 指定Monster子类以后
