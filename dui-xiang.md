@@ -227,13 +227,119 @@ gameScore.save();
 
 举例说明，比如我们要添加一些元素到“skills”字段中，可以这样：
 
-```
+```js
 gameScore.addUnique("skills", "flying");
 gameScore.addUnique("skills", "kungfu");
 gameScore.save();
 ```
 
 注意，目前不支持在同一次`save`中，原子级`add`或`remove`数组字段中的元素，你必须在每次不同的数组操作后调用`save`。
+
+---
+
+#### 删除对象
+
+从云端删除一个对象：
+
+```js
+myObject.destroy({
+  success: function(myObject) {
+    // The object was deleted from the Parse Cloud.
+  },
+  error: function(myObject, error) {
+    // The delete failed.
+    // error is a Parse.Error with an error code and message.
+  }
+});
+```
+
+你可以用`unset`方法从对象中删除一个字段：
+
+```js
+// 删除playerName字段
+myObject.unset("playerName");
+
+// Saves the field deletion to the Parse Cloud.
+// If the object's field is an array, call save() after every unset() operation.
+myObject.save();
+```
+
+请注意，不推荐使用object.set\(null\)的方式从对象中删除字段，这可能会造成意外的问题。
+
+---
+
+#### 关系型数据
+
+一个对象可能和其他对象存在关联，比如，一个博客应用中，一篇文章\(Post\)的对象，可能关联着许多评论\(Comment\)对象。Parse支持所有的关系类型，包括一对一，一对多，多对多。
+
+###### 一对一和一对多
+
+一对一和一对多关系，是通过将`Parse.Object`的值设为其他对象来模型化的，比如，每个`Comment`对象，都对应了一个`Post`对象。
+
+要创建一篇新文章和一条评论，你可以这样写：
+
+```js
+// Declare the types.
+var Post = Parse.Object.extend("Post");
+var Comment = Parse.Object.extend("Comment");
+
+// 创建Post
+var myPost = new Post();
+myPost.set("title", "I'm Hungry");
+myPost.set("content", "Where should we go for lunch?");
+
+// 创建Comment
+var myComment = new Comment();
+myComment.set("content", "Let's do Sushirrito.");
+
+// 设置关系
+myComment.set("parent", myPost);
+
+// 保存
+myComment.save();
+```
+
+ 在内部，Parse框架只会把引用对象存储在一处，以保证一致性。你也可以通过objectId来指向关联对象：
+
+```js
+var post = new Post();
+post.id = "1zEcyElZ80";
+
+myComment.set("parent", post);
+```
+
+默认情况下，在拉取一个对象时，是不会将关联的对象一起拉取的，关联的对象需要再次拉取：
+
+```js
+var post = fetchedComment.get("parent");
+post.fetch({
+  success: function(post) {
+    var title = post.get("title");
+  }
+});
+```
+
+###### 多对多关系
+
+多对多关系是通过`Parse.Relation`模型化的。这和存储一个对象到数组字段中类似，不同之处在于，你不需要一次拉取这个关系中的所有对象。另外这允许你拓展多于数组字段的对象。
+
+假如，一个`User`可能有许多她喜欢的的`Posts`，那么你可以把`User`喜欢的`Posts`作为`relation`，要添加一篇`Post`到她喜欢的列表中，你可以这么做：
+
+```js
+var user = Parse.User.current();
+var relation = user.relation("likes");
+relation.add(post);
+user.save();
+```
+
+你可以这样从Parse.Relation中删除一篇文章：  
+
+
+
+
+
+
+
 
 
 
