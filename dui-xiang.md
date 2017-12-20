@@ -339,7 +339,7 @@ relation.remove(post);
 user.save();
 ```
 
-你可以多次使用`add`和`remove`再调用`save `：
+你可以多次使用`add`和`remove`再调用`save`：
 
 ```js
 relation.remove(post1);
@@ -347,9 +347,35 @@ relation.remove(post2);
 user.save();
 ```
 
+你也可以通过传入一个`Parse.Object`数组来`add`或者`remove`：
 
+```js
+relation.add([post1, post2, post3]);
+user.save();
+```
 
+默认情况下，关联的对象列表是没有拉取到本地，你可以使用query返回的Parse.Query得到用户喜欢的文字列表：
 
+```js
+relation.query().find({
+  success: function(list) {
+    // list contains the posts that the current user likes.
+  }
+});
+
+```
+
+如果你只想要`Posts`的部分子集，你可以添加额外的条件到`query`：
+
+```js
+var query = relation.query();
+query.equalTo("title", "I'm Hungry");
+query.find({
+  success:function(list) {
+    // list contains post liked by the current user which have the title "I'm Hungry".
+  }
+});
+```
 
 
 
