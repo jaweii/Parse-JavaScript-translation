@@ -41,3 +41,7 @@ Parse.serverURL = 'http://你的Parse-Server地址:1337/parse'
 
 我们的SDK支持Firefox 23+，Chrome 17+，Safari 5+和IE 10。 IE 9仅支持使用HTTPS托管的应用程序。
 
+
+
+
+
