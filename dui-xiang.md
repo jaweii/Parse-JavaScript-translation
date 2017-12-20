@@ -299,7 +299,7 @@ myComment.set("parent", myPost);
 myComment.save();
 ```
 
- 在内部，Parse框架只会把引用对象存储在一处，以保证一致性。你也可以通过objectId来指向关联对象：
+在内部，Parse框架只会把引用对象存储在一处，以保证一致性。你也可以通过objectId来指向关联对象：
 
 ```js
 var post = new Post();
@@ -332,10 +332,20 @@ relation.add(post);
 user.save();
 ```
 
-你可以这样从Parse.Relation中删除一篇文章：  
+你可以这样从Parse.Relation中删除一篇文章：
 
+```js
+relation.remove(post);
+user.save();
+```
 
+你可以多次使用`add`和`remove`再调用`save `：
 
+```js
+relation.remove(post1);
+relation.remove(post2);
+user.save();
+```
 
 
 
