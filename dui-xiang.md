@@ -378,3 +378,53 @@ query.find({
 
 更多关于`Parse.Query`的详情，请查看指南的查询\(Queries\)章节。`Parse.Relation`的查询和`Parse.Object`的查询类似，所以`Parse.Object`的任何查询，都可以用在`Parse.Relation`上。
 
+---
+
+#### 数据类型
+
+目前为止，我们使用的键值的类型有String、Number、和Parse.Object。Parse也支持Date和null。你还可以存储JSON Object 和JSON Array到你的Parse.Object。下面列出的，是对象的字段支持的所有类型：
+
+* String =&gt;`String`
+* Number =&gt;`Number`
+* Bool =&gt;`bool`
+* Array =&gt;`JSON Array`
+* Object =&gt;`JSON Object`
+* Date =&gt;`Date`
+* File =&gt;`Parse.File`
+* Pointer =&gt; other`Parse.Object`
+* Relation =&gt;`Parse.Relation`
+* Null =&gt;`null`
+
+一些例子：
+
+```js
+var number = 42;
+var bool = false;
+var string = "the number is " + number;
+var date = new Date();
+var array = [string, number];
+var object = { number: number, string: string };
+var pointer = MyClassName.createWithoutData(objectId);
+
+var BigObject = Parse.Object.extend("BigObject");
+var bigObject = new BigObject();
+bigObject.set("myNumber", number);
+bigObject.set("myBool", bool);
+bigObject.set("myString", string);
+bigObject.set("myDate", date);
+bigObject.set("myArray", array);
+bigObject.set("myObject", object);
+bigObject.set("anyKey", null); // this value can only be saved to an existing key
+bigObject.set("myPointerKey", pointer); // shows up as Pointer <MyClassName> in the Data Browser
+bigObject.save();
+
+```
+
+我们不推荐在对象中存储大件的二进制文件，比如图片和文档。对象应该在128字节以内。
+
+我们推荐你使用Parse.File来存储文件、图片，和其他文件 。你可以初始化一个Parse.File对象设置你的文件。具体可以看文件\(Files\)章节。
+
+关于Parse处理数据的更多信息，请查看文档的数据\(Data\)章节。
+
+
+
