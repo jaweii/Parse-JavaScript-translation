@@ -92,6 +92,8 @@ class Monster extends Parse.Object {
 Parse.Object.registerSubclass('Monster', Monster);
 ```
 
+---
+
 #### 保存对象 {#保存对象}
 
 假设你想保存之前描述的对象`GameScore`到Parse服务器，这个接口和`BackBone.Model`类似，即`save`方法：
@@ -122,6 +124,116 @@ gameScore.save(null, {
 objectId: "xWMyZ4YEGZ", score: 1337, playerName: "Sean Plott", cheatMode: false,
 createdAt:"2011-06-10T18:33:42Z", updatedAt:"2011-06-10T18:33:42Z"
 ```
+
+---
+
+#### 取得对象 {#取得对象}
+
+比保存数据到云端更有趣的是，从云端再次取回数据。如果你已经有了`objectId`，你可以通过`Parse.Query`来获得完整的`Parse.Object`。
+
+```js
+
+var GameScore = Parse.Object.extend("GameScore");
+var query = new Parse.Query(GameScore);
+query.get("xWMyZ4YEGZ", {
+  success: function(gameScore) {
+    // The object was retrieved successfully.
+  },
+  error: function(object, error) {
+    // The object was not retrieved successfully.
+    // error is a Parse.Error with an error code and message.
+  }
+});
+```
+
+通过`get`方法，即可从`Parse.Object`中获得值：
+
+```js
+var score = gameScore.get("score");
+var playerName = gameScore.get("playerName");
+var cheatMode = gameScore.get("cheatMode");
+```
+
+有三个值的键名是预留的属性，无法通过`get`方法获取，也不能通过`set`方法修改：
+
+```js
+var objectId = gameScore.id;
+var updatedAt = gameScore.updatedAt;
+var createdAt = gameScore.createdAt;
+```
+
+如果你需要更新一个已有的对象，你可以调用`fetch`方法，获取云端的最新数据：
+
+```js
+myObject.fetch({
+  success: function(myObject) {
+    // The object was refreshed successfully.
+  },
+  error: function(myObject, error) {
+    // The object was not refreshed successfully.
+    // error is a Parse.Error with an error code and message.
+  }
+});
+```
+
+---
+
+#### 更新对象
+
+更新对象非常简单，只需要设置一些新数据，然后调用`save`方法就可以了：
+
+```js
+// Create the object.
+var GameScore = Parse.Object.extend("GameScore");
+var gameScore = new GameScore();
+
+gameScore.set("score", 1337);
+gameScore.set("playerName", "Sean Plott");
+gameScore.set("cheatMode", false);
+gameScore.set("skills", ["pwnage", "flying"]);
+
+gameScore.save(null, {
+  success: function(gameScore) {
+    // Now let's update it with some new data. In this case, only cheatMode and score
+    // will get sent to the cloud. playerName hasn't changed.
+    gameScore.set("cheatMode", true);
+    gameScore.set("score", 1338);
+    gameScore.save();
+  }
+});
+```
+
+Parse会自动判断哪些数据是修改过的，所有只有”脏”字段会被发送到云端。
+
+##### 计数器
+
+上述的例子中包含了常用的使用情况，但score字段是一个计数器，我们需要不断的更新玩家最后的分数，上述的方法虽然也可用，但是过于麻烦，而且如果你有多个客户端同时更新，可能回导致一些问题。
+
+为了存储计数器类型的数据，Parse提供了原子级增减的方法，`increment`和`decrement` 。所以，计数器的更新我们可以这样写：
+
+```js
+gameScore.increment("score");
+gameScore.save();
+```
+
+ 你可以给`increment`和`decrement`传入第二个参数，作为要增减的数值，如果没有传入，默认是1。
+
+#####  数组
+
+为了存储数组型数据，我们提供了三个方法，可以原子级操作给定键值的数组：
+
+* add 增加一个值到对象的数组字段的尾部。
+* addUnique 如果指定数组字段中不包含这个值，才插入这个值到数组中。不保证插入的位置。
+
+
+
+
+
+
+
+
+
+
 
 
 
