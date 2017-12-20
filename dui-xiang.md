@@ -362,7 +362,6 @@ relation.query().find({
     // list contains the posts that the current user likes.
   }
 });
-
 ```
 
 如果你只想要`Posts`的部分子集，你可以添加额外的条件到`query`：
@@ -376,6 +375,8 @@ query.find({
   }
 });
 ```
+
+更多关于Parse.Query的详情，请查看指南的查询\(Quries\)章节。Parse.Relation的查询和Parse.Object的查询类似，所以Parse.Object的任何查询，都可以用在Parse.Relation上。
 
 
 
