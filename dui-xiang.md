@@ -132,7 +132,6 @@ createdAt:"2011-06-10T18:33:42Z", updatedAt:"2011-06-10T18:33:42Z"
 比保存数据到云端更有趣的是，从云端再次取回数据。如果你已经有了`objectId`，你可以通过`Parse.Query`来获得完整的`Parse.Object`。
 
 ```js
-
 var GameScore = Parse.Object.extend("GameScore");
 var query = new Parse.Query(GameScore);
 query.get("xWMyZ4YEGZ", {
@@ -216,18 +215,26 @@ gameScore.increment("score");
 gameScore.save();
 ```
 
- 你可以给`increment`和`decrement`传入第二个参数，作为要增减的数值，如果没有传入，默认是1。
+你可以给`increment`和`decrement`传入第二个参数，作为要增减的数值，如果没有传入，默认是1。
 
-#####  数组
+##### 数组
 
 为了存储数组型数据，我们提供了三个方法，可以原子级操作给定键值的数组：
 
-* add 增加一个值到对象的数组字段的尾部。
-* addUnique 如果指定数组字段中不包含这个值，才插入这个值到数组中。不保证插入的位置。
+* `add `增加一个元素到对象的数组字段的尾部。
+* `addUnique `如果指定数组字段中不包含这个元素，才插入这个元素到数组中。不保证插入的位置。
+* `remove `从给定对象的数组字段中移除所有元素。
 
+举例说明，比如我们要添加一些元素到“skills”字段中，可以这样：
 
+```
 
+gameScore.addUnique("skills", "flying");
+gameScore.addUnique("skills", "kungfu");
+gameScore.save();
+```
 
+注意，目前不支持在同一次`save`中，原子级`add`或`remove`数组字段中的元素，你必须在每次不同的数组操作后调用`save`。
 
 
 
