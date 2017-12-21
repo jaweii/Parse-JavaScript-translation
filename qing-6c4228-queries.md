@@ -1,4 +1,6 @@
-# 查询
+```
+查询
+```
 
 我们已经知道了`Parse.Query`是如何使用`get`从`Parse`查询一个对象的，下面还有许多其他方法，比如你可以一次查询多个对象，可以在一个查询上限制条件，等等。
 
@@ -151,7 +153,7 @@ losingUserQuery.find({
 });
 ```
 
-你可以使用select限定返回的字段。如果你想查询只包含了score和playerName字段的数据记录\(还有指定的内置字段objectId、createdAt和updatedAt\)：
+你可以使用`select`限定返回的字段。如果你想查询只包含了`score`和`playerName`字段的数据记录\(还有指定的内置字段objectId、createdAt和updatedAt\)：
 
 ```
 var GameScore = Parse.Object.extend("GameScore");
@@ -162,7 +164,7 @@ query.find().then(function(results) {
 });
 ```
 
-剩下的字段你可以使用fetch方法，在需要的时候拉取：
+剩下的字段你可以使用`fetch`方法，在需要的时候拉取：
 
 ```
 query.first().then(function(result) {
@@ -172,8 +174,6 @@ query.first().then(function(result) {
   // all fields of the object will now be available here.
 });
 ```
-
-
 
 
 
