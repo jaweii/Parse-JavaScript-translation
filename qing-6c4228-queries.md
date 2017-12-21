@@ -1,6 +1,4 @@
-```
-查询
-```
+# 查询
 
 我们已经知道了`Parse.Query`是如何使用`get`从`Parse`查询一个对象的，下面还有许多其他方法，比如你可以一次查询多个对象，可以在一个查询上限制条件，等等。
 
@@ -190,8 +188,6 @@ query.equalTo("arrayKey", 2);
 // Find objects where the array in arrayKey contains all of the elements 2, 3, and 4.
 query.containsAll("arrayKey", [2, 3, 4]);
 ```
-
-
 
 
 
