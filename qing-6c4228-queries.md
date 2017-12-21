@@ -199,7 +199,7 @@ query.containsAll("arrayKey", [2, 3, 4]);
 
 > 如果你想实现一个通用的搜索功能，我们推荐你看看这篇博文：[Implementing Scalable Search on a NoSQL Backend](http://blog.parse.com/learn/engineering/implementing-scalable-search-on-a-nosql-backend/)
 
-使用startWith可以限制特定开头的字符串值，类似与MySQL中的LIKE操作。这是索引果的，所以在大数据集中也有效：
+我们可以使用`startWith`限制特定开头的字符串值，类似与MySQL中的LIKE操作。这是索引果过的，所以在大数据集中也有效：
 
 ```js
 // Finds barbecue sauces that start with "Big Daddy's".
@@ -207,15 +207,7 @@ var query = new Parse.Query(BarbecueSauce);
 query.startsWith("name", "Big Daddy's");
 ```
 
-上面的例子将会查询到name以“Big Daddy's”开头的对象，"Big Daddy's" 和 "Big Daddy's BBQ"都会被匹配到，但是"big daddys's"或者"BBQ Sauce:Big Daddy's"不会。
+上面的例子将会查询到`name`以“Big Daddy's”开头的对象，"Big Daddy's" 和 "Big Daddy's BBQ"都会被匹配到，但是"big daddys's"或者"BBQ Sauce:Big Daddy's"不会。
 
 使用正则查询是非常耗费性能的，尤其是超过10万条数据时。Parse限制了给定时间里特定应用可以执行多少次这样的查询。
-
-
-
-
-
-
-
-
 
