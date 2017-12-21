@@ -175,5 +175,23 @@ query.first().then(function(result) {
 });
 ```
 
+#### 数组查询
+
+对于数组类型的键，你可以查询到`arrayKey`包含了2的对象：
+
+```js
+// Find objects where the array in arrayKey contains 2.
+query.equalTo("arrayKey", 2);
+```
+
+你也可以这样查询到键值包含了2、3、4的的对象：
+
+```
+// Find objects where the array in arrayKey contains all of the elements 2, 3, and 4.
+query.containsAll("arrayKey", [2, 3, 4]);
+```
+
+
+
 
 
