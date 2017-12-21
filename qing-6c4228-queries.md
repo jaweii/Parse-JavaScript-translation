@@ -302,6 +302,106 @@ query.include(["post.author"]);
 
 你可以多次调用`include`，发起一个包含了多个字段的请求，这个功能在`Parse.Query`的其他查询方法中也有效，比如`first`和`get`。
 
+---
+
+#### 统计查询
+
+如果你只是想知道有多少个匹配的对象，但不需要拿到对象的详细信息，你可以使用`count`方法替代`find`方法。比如，你想知道特定玩家玩了多少个游戏：
+
+```js
+var GameScore = Parse.Object.extend("GameScore");
+var query = new Parse.Query(GameScore);
+query.equalTo("playerName", "Sean Plott");
+query.count({
+  success: function(count) {
+    // The count request succeeded. Show the count
+    alert("Sean has played " + count + " games");
+  },
+  error: function(error) {
+    // The request failed
+  }
+});
+```
+
+---
+
+#### 组合查询
+
+更复杂的查询情况下，你可能需要用到组合查询。一个组合查询是多个子查询的组合\(如"and或"or"\)。
+
+需要注意的是，我们不支持在组合查询的子查询中使用GeoPint或者非过滤类型的约束条件。
+
+###### 或查询
+
+如果你想查询多个请求中符合其中一个即可的数据，你可以使用Parse.Query.or方法构建一个由传入的子查询组成的或查询。比如你想查询胜利次数在指定范围的玩家，你可以这样：
+
+```js
+var lotsOfWins = new Parse.Query("Player");
+lotsOfWins.greaterThan("wins", 150);
+
+var fewWins = new Parse.Query("Player");
+fewWins.lessThan("wins", 5);
+
+var mainQuery = Parse.Query.or(lotsOfWins, fewWins);
+mainQuery.find()
+  .then(function(results) {
+    // results contains a list of players that either have won a lot of games or won only a few games.
+  })
+  .catch(function(error) {
+    // There was an error.
+  });
+```
+
+###### 与查询
+
+如果你想查询和所有条件都符合的数据，通常只需要一次请求。你可以添加额外的条件，它实际上就是与查询：
+
+```js
+var query = new Parse.Query("User");
+query.greaterThan("age", 18);
+query.greaterThan("friends", 0);
+query.find()
+  .then(function(results) {
+    // results contains a list of users both older than 18 and having friends.
+  })
+  .catch(function(error) {
+    // There was an error.
+  });
+```
+
+但如果这个世界真的有这么简单那就好了。有时你可能需要用到组合查询，Parse.Query.and方法可以构建一个由传入的子程序组成的与查询。比如你想查询用户年龄为16或者18，并且ta的好友少于两人的用户,你可以这样：
+
+```js
+var age16Query = new Parse.Query("User");
+age16Query.equalTo("age", 16);
+
+var age18Query = new Parse.Query("User");
+age18Query.equalTo("age", 18);
+
+var friends0Query = new Parse.Query("User");
+friends0Query.equalTo("friends", 0);
+
+var friends2Query = new Parse.Query("User");
+friends2Query.greaterThan("friends", 2);
+
+var mainQuery = Parse.Query.and(
+  Parse.Query.or(age16Query, age18Query),
+  Parse.Query.or(friends0Query, friends2Query)
+);
+mainQuery.find()
+  .then(function(results) {
+    // results contains a list of users in the age of 16 or 18 who have either no friends or at least 2 friends
+    // results: (age 16 or 18) and (0 or >2 friends)
+  })
+  .catch(function(error) {
+    // There was an error.
+  });
+```
+
+
+
+
+
 
 
 
