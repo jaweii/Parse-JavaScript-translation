@@ -211,3 +211,110 @@ query.startsWith("name", "Big Daddy's");
 
 使用正则查询是非常耗费性能的，尤其是超过10万条数据时。Parse限制了给定时间里特定应用可以执行多少次这样的查询。
 
+---
+
+#### 关系查询
+
+有几种方法可以查询关系型的数据。如果你想查询某字段为某个对象的话，可以直接想查询其他类型一样使用`equalTo`。比如每个`Comment`都有一个`post`字段指向`Post`，你可以这样查询特定`Post`的评论：
+
+```js
+// Assume Parse.Object myPost was previously created.
+var query = new Parse.Query(Comment);
+query.equalTo("post", myPost);
+query.find({
+  success: function(comments) {
+    // comments now contains the comments for myPost
+  }
+});
+```
+
+如果你想查询某字段包含一个和另一个查询匹配的对象，你可以使用`matchesQuery`。为了查询\(包含图片的文章\)的评论，你可以这样：
+
+```js
+var Post = Parse.Object.extend("Post");
+var Comment = Parse.Object.extend("Comment");
+var innerQuery = new Parse.Query(Post);
+innerQuery.exists("image");
+var query = new Parse.Query(Comment);
+query.matchesQuery("post", innerQuery);
+query.find({
+  success: function(comments) {
+    // comments now contains the comments for posts with images.
+  }
+});
+```
+
+反之，你想查询某字段不包含和另一个查询匹配的对象，你可以使用doesNotMatchesQuery：
+
+```js
+var Post = Parse.Object.extend("Post");
+var Comment = Parse.Object.extend("Comment");
+var innerQuery = new Parse.Query(Post);
+innerQuery.exists("image");
+var query = new Parse.Query(Comment);
+query.doesNotMatchQuery("post", innerQuery);
+query.find({
+  success: function(comments) {
+    // comments now contains the comments for posts without images.
+  }
+});
+```
+
+你也可以通过`objectId`来查询关联对象：
+
+```js
+var post = new Post();
+post.id = "1zEcyElZ80";
+query.equalTo("post", post);
+```
+
+在某些情况下，你想要在一次查询中返回多个类型的关联对象，那么你可以使用`include`方法。比如说你想查询最新的10条评论，并同时查询到关联的文章：
+
+```js
+var query = new Parse.Query(Comment);
+
+// Retrieve the most recent ones
+query.descending("createdAt");
+
+// Only retrieve the last ten
+query.limit(10);
+
+// Include the post data with each comment
+query.include("post");
+
+query.find({
+  success: function(comments) {
+    // Comments now contains the last ten comments, and the "post" field
+    // has been populated. For example:
+    for (var i = 0; i < comments.length; i++) {
+      // This does not require a network access.
+      var post = comments[i].get("post");
+    }
+  }
+});
+```
+
+你也可以使用`post.author`的形式嵌套查询，如果你想查询包含了文章和文章作者的评论，你可以这样：
+
+```js
+query.include(["post.author"]);
+```
+
+你可以多次调用`include`，发起一个包含了多个字段的请求，这个功能在`Parse.Query`的其他查询方法中也有效，比如`first`和`get`。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
