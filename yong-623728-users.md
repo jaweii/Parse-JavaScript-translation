@@ -48,3 +48,13 @@ user.signUp(null, {
 
 需要注意的是，我们使用的是`signUp`方法，而不是`save`方法。新的`Parse.User`应该始终是通过`signUp`方法创建的，而后对用户的更新才可以`save`方法完成。
 
+
+
+
+
+
+
+
+
+
+
