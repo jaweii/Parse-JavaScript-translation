@@ -29,6 +29,8 @@ query.find({
 });
 ```
 
+---
+
 #### 查询条件
 
 下面有几个方法可以约束`Parse.Query`的查询结果，比如你可以用`notEqualTo`方法，传入键值对来筛选结果：
@@ -173,6 +175,8 @@ query.first().then(function(result) {
 });
 ```
 
+---
+
 #### 数组查询
 
 对于数组类型的键，你可以查询到`arrayKey`包含了2的对象：
@@ -188,6 +192,10 @@ query.equalTo("arrayKey", 2);
 // Find objects where the array in arrayKey contains all of the elements 2, 3, and 4.
 query.containsAll("arrayKey", [2, 3, 4]);
 ```
+
+---
+
+#### 字符串查询
 
 
 
