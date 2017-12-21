@@ -114,7 +114,15 @@ query.notContainedIn("playerName",
                      ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
 ```
 
+如果你想查询指定字段已被设置的对象，你可以使用exists；反之，如果想查询未被设置的对象，你可以使用doesNotExist：
 
+```js
+// Finds objects that have the score set
+query.exists("score");
+
+// Finds objects that don't have the score set
+query.doesNotExist("score");
+```
 
 
 
