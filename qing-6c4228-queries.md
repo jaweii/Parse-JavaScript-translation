@@ -66,7 +66,7 @@ query.first({
 });
 ```
 
-你可以通过设置skip来跳过x个查询结果，这在分页功能中很有
+你可以通过设置skip来跳过x个查询结果，这在分页功能中很有：
 
 ```js
 query.skip(10); // skip the first 10 results
@@ -114,7 +114,7 @@ query.notContainedIn("playerName",
                      ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
 ```
 
-如果你想查询指定字段已被设置的对象，你可以使用exists；反之，如果想查询未被设置的对象，你可以使用doesNotExist：
+如果你想查询指定字段已被设置的对象，你可以使用`exists`；反之，如果想查询未被设置的对象，你可以使用`doesNotExist`：
 
 ```js
 // Finds objects that have the score set
@@ -124,7 +124,54 @@ query.exists("score");
 query.doesNotExist("score");
 ```
 
+你可以使用`meachesKeyInQuery`方法查询对象，对象中的某个键值是和另一个请求返回的一组结果中的键值匹配的。比如，如果你有一个包含了运动队的类，并且你保存了用户的老家信息在user类中，你现在用查询获胜队伍的成员家乡信息，你可以这样请求：
 
+```js
+var Team = Parse.Object.extend("Team");
+var teamQuery = new Parse.Query(Team);
+teamQuery.greaterThan("winPct", 0.5);
+var userQuery = new Parse.Query(Parse.User);
+userQuery.matchesKeyInQuery("hometown", "city", teamQuery);
+userQuery.find({
+  success: function(results) {
+    // results has the list of users with a hometown team with a winning record
+  }
+});
+```
+
+反之，如果你要查询，对象中的某个键值是和另一个请求返回的一组结果中的键值是不匹配的，用`doesNotMatchKeyInQuery`。比如，查询战败队成员的家乡信息：
+
+```js
+var losingUserQuery = new Parse.Query(Parse.User);
+losingUserQuery.doesNotMatchKeyInQuery("hometown", "city", teamQuery);
+losingUserQuery.find({
+  success: function(results) {
+    // results has the list of users with a hometown team with a losing record
+  }
+});
+```
+
+你可以使用select限定返回的字段。如果你想查询只包含了score和playerName字段的数据记录\(还有指定的内置字段objectId、createdAt和updatedAt\)：
+
+```
+var GameScore = Parse.Object.extend("GameScore");
+var query = new Parse.Query(GameScore);
+query.select("score", "playerName");
+query.find().then(function(results) {
+  // each of results will only have the selected fields available.
+});
+```
+
+剩下的字段你可以使用fetch方法，在需要的时候拉取：
+
+```
+query.first().then(function(result) {
+  // only the selected fields of the object will now be available here.
+  return result.fetch();
+}).then(function(result) {
+  // all fields of the object will now be available here.
+});
+```
 
 
 
