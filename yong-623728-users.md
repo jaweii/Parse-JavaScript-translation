@@ -73,13 +73,13 @@ Parse.User.logIn("myname", "mypass", {
 
 #### 邮箱验证
 
-启用应用设置中的邮箱验证，可以让应用为已验证用户保留部分体验。邮箱验证提那家了一个`emailVerified`字段在`Parse.User`对象上，当`Parse.User`的`email`被设置或修改了，`emailVerified`就会被设置成`false`，Parse会发送一封链接邮件给用户，验证通过后`emailVerified`就会被设置为`true`。
+启用应用设置中的邮箱验证，可以让应用为已验证用户保留部分体验。邮箱验证添加一个`emailVerified`字段在`Parse.User`对象上，当`Parse.User`的`email`被设置或修改了，`emailVerified`就会被设置成`false`，Parse会发送一封链接邮件给用户，验证通过后`emailVerified`就会被设置为`true`。
 
 有三种`emailVerified`状态需要考虑：
 
 1. `true` - 用户通过Parse发送的验证邮件验证成功。用户账号首次创建的时候，值永远不会为`true`。
-2. `false `- 用户还没有验证ta的邮箱。
-3. `missing `- 当邮箱验证未启用，或者`Parse.User`没有`email`值。
+2. `false`- 用户还没有验证ta的邮箱。
+3. `missing`- 当邮箱验证未启用，或者`Parse.User`没有`email`值。
 
 
 
