@@ -20,7 +20,7 @@ Parse.User具备的一些属性将它和`Parse.Object`区分开来：
 
 ---
 
-#### 登录
+#### 注册
 
 你的应用可能首先要做的就是要求用户中注册，下面的代码是典型的注册示例：
 
@@ -52,9 +52,34 @@ user.signUp(null, {
 
 你也可以决定使用邮箱地址作为用户名，只需要要求用户输入他们的邮箱，不过邮箱是保存在`username`属性上，`Parse.User`会正常工作。我们将会在密码重置章节回顾这是如何处理的。
 
+---
+
 #### 登录
 
+当然，在我们允许用户注册以后，你将来还需要他们登录，以访问他们的账户。为了实现此功能，你可以使用用户类的`logIn`方法：
 
+```js
+Parse.User.logIn("myname", "mypass", {
+  success: function(user) {
+    // Do stuff after successful login.
+  },
+  error: function(user, error) {
+    // The login failed. Check error to see why.
+  }
+});
+```
+
+---
+
+#### 邮箱验证
+
+启用应用设置中的邮箱验证，可以让应用为已验证用户保留部分体验。邮箱验证提那家了一个`emailVerified`字段在`Parse.User`对象上，当`Parse.User`的`email`被设置或修改了，`emailVerified`就会被设置成`false`，Parse会发送一封链接邮件给用户，验证通过后`emailVerified`就会被设置为`true`。
+
+有三种`emailVerified`状态需要考虑：
+
+1. `true` - 用户通过Parse发送的验证邮件验证成功。用户账号首次创建的时候，值永远不会为`true`。
+2. `false `- 用户还没有验证ta的邮箱。
+3. `missing `- 当邮箱验证未启用，或者`Parse.User`没有`email`值。
 
 
 
