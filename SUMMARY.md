@@ -11,6 +11,6 @@
 * 会话\(Sessions\)
 * 角色\(Roles\)
 * 文件\(Files\)
-* Promises
-* 位置\(GeoPint\)
+* [Promises](promises.md)
+* [位置\(GeoPint\)](wei-7f6e28-geopint.md)
 
