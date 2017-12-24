@@ -81,5 +81,40 @@ Parse.User.logIn("myname", "mypass", {
 2. `false`- 用户还没有验证ta的邮箱。
 3. `missing`- 当邮箱验证未启用，或者`Parse.User`没有`email`值。
 
+---
+
+#### 当前用户
+
+如果用户每次打开你的应用都要登录，那是很麻烦的 。你可以通过使用缓存的当前`Parse.User`对象，避免这个麻烦。
+
+无论何时，当你使用`signup`或`login`方法后，用户登录信息都被缓存到了`localStorage`中，你可以把它当做用户会话使用，以此判断用户是否登录。
+
+```js
+var currentUser = Parse.User.current();
+if (currentUser) {
+    // do stuff with the user
+} else {
+    // show the signup or login page
+}
+```
+
+你可以通过注销用户来清除当前用户：
+
+```js
+Parse.User.logOut().then(() => {
+  var currentUser = Parse.User.current();  // this will now be null
+});
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
