@@ -166,7 +166,17 @@ var user = Parse.User.logIn("my_username", "my_password", {
 
 #### 对象安全
 
+有些应用在`Parse.User`上的安全策略也可以应用在其他对象上，对于任意一个对象，你可以指定哪个用户可以读取和修改。为了支持这种安全类型，每一个对象都有一个`access control list`，通过`Parse.ACL`类实现。
 
+要指定一个对象只有某个用户可以读写，最简单的方法始使用Parse.ACL。这是通过为Parse.User初始化一个Parse.ACL完成的：new Parse.ACL\(user\)生成一个Parse.ACL，它限制了user的访问。当一个对象被保存后，它的ACL也会被更新，就像其他的属性一样。那么，要创建一个只有当前用户可以访问的私人笔记，可以这样：
+
+```
+var Note = Parse.Object.extend("Note");
+var privateNote = new Note();
+privateNote.set("content", "This note is private!");
+privateNote.setACL(new Parse.ACL(Parse.User.current()));
+privateNote.save();
+```
 
 
 
