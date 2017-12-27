@@ -207,5 +207,5 @@ publicPost.setACL(postACL);
 publicPost.save();
 ```
 
-禁止的操作，比如删除一个对象，但是你没有修改的权限，会导致一个`Parse.Error.OBJECT_NOT_FOUND`错误码。于安全的目的，这样的有区分的阻止可以确认哪些对象是受保护的，哪些对象是完全不存在的。
+禁止的操作，比如删除一个对象，但是你没有修改的权限，会导致一个`Parse.Error.OBJECT_NOT_FOUND`错误码。出于安全的目的，这样的有区分的阻止可以确认哪些对象是受保护的，哪些对象是完全不存在的。
 
