@@ -180,7 +180,7 @@ privateNote.setACL(new Parse.ACL(Parse.User.current()));
 privateNote.save();
 ```
 
-这个note将只有当前用户可以访问，并且，当前用户登录的任何设备都可以访问。这个功能在你想启用跨设备访问用户数据时非常有用，权限也可以给予每个用户的基础上授权，你可以使用setReadAccess和setWriteAccess为Parse.ACL添加独有的权限。比如，你有一条消息要发送给几个用户，他们中的每一个用户都有权限读取和修改：
+这个note将只有当前用户可以访问，并且，当前用户登录的任何设备都可以访问。这个功能在你想启用跨设备访问用户数据时非常有用，权限也可以给予每个用户的基础上授权，你可以使用`setReadAccess`和`setWriteAccess`为`Parse.ACL`添加独有的权限。比如，你有一条消息要发送给几个用户，他们中的每一个用户都有权限读取和修改：
 
 ```js
 var Message = Parse.Object.extend("Message");
@@ -197,7 +197,7 @@ groupMessage.setACL(groupACL);
 groupMessage.save();
 ```
 
-你也可以使用setPublicReadAccess和setPublicWriteAccess一次授权所有用户，这在留言板中发布评论这种模式中很有用。要创建一篇文章只有它的作者可以编辑，但是所有人可以访问，可以这样：
+你也可以使用`setPublicReadAccess`和`setPublicWriteAccess`一次授权所有用户，这在留言板中发布评论这种模式中很有用。要创建一篇文章只有它的作者可以编辑，但是所有人可以访问，可以这样：
 
 ```js
 var publicPost = new Post();
@@ -207,5 +207,5 @@ publicPost.setACL(postACL);
 publicPost.save();
 ```
 
-禁止的操作，比如删除一个对象，但是你没有修改的权限，会导致一个Parse.Error.OBJECT\_NOT\_FOUND错误码。于安全的目的，这样的有区分的阻止可以确认哪些对象是受保护的，哪些对象是完全不存在的。
+禁止的操作，比如删除一个对象，但是你没有修改的权限，会导致一个`Parse.Error.OBJECT_NOT_FOUND`错误码。于安全的目的，这样的有区分的阻止可以确认哪些对象是受保护的，哪些对象是完全不存在的。
 
