@@ -87,6 +87,8 @@ Parse.User.logIn("myname", "mypass", {
 
 如果用户每次打开你的应用都要登录，那是很麻烦的 。你可以通过使用缓存的当前`Parse.User`对象，避免这个麻烦。
 
+请注意，这个功能在Node.js环境中，默认是禁止的，以阻止在服务端配置上有状态的用法。
+
 无论何时，当你使用`signup`或`login`方法后，用户登录信息都被缓存到了`localStorage`中，你可以把它当做用户会话使用，以此判断用户是否登录。
 
 ```js
@@ -106,9 +108,63 @@ Parse.User.logOut().then(() => {
 });
 ```
 
+---
 
+#### 设置当前用户
 
+如果你已经创建了自己的身份验证程序，或者用户通过其他方式登录到了服务端，你可以传入session token到`become`方法，这个方法会在设置当前用户前确认session token可用。
 
+```js
+Parse.User.become("session-token-here").then(function (user) {
+  // The current user is now set to user.
+}, function (error) {
+  // The token could not be validated.
+});
+```
+
+---
+
+#### 用户安全
+
+`Parse.User`类默认情况下是安全的，它的数据默认只有用户自己可以修改，其他用户只有读的权限，除非`Parse.User`经过权限验证可以被修改，否则只读。
+
+特别是，除非你通过了`logIn`或者`signUp`的验证，否则你无法使用`save`或者`delete`方法。这确保了只有用户自己可以修改自己的数据。
+
+下面的代码说明了此安全策略：
+
+```js
+var user = Parse.User.logIn("my_username", "my_password", {
+  success: function(user) {
+    user.set("username", "my_new_username");  // attempt to change username
+    user.save(null, {
+      success: function(user) {
+        // This succeeds, since the user was authenticated on the device
+
+        // Get the user from a non-authenticated method
+        var query = new Parse.Query(Parse.User);
+        query.get(user.objectId, {
+          success: function(userAgain) {
+            userAgain.set("username", "another_username");
+            userAgain.save(null, {
+              error: function(userAgain, error) {
+                // This will error, since the Parse.User is not authenticated
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+});
+```
+
+从`Parse.User.current()`获取的`Parse.User`永远是通过了验证的。
+
+如果你想检查一个`Parse.User`是否通过验证，你可以使用`authenticated`方法。你不需要去检查那些通过`authenticated`方法获取的`Parse.User`的`authenticated`。
+
+---
+
+#### 对象安全
 
 
 
