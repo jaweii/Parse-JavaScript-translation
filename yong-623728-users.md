@@ -256,6 +256,51 @@ query.find({
 });
 ```
 
+---
+
+#### 联合查询
+
+假如你在开发一个博客应用，想要提交一篇新博文，以及查询作者的所有文章，你可以这样：
+
+```js
+var user = Parse.User.current();
+
+// Make a new post
+var Post = Parse.Object.extend("Post");
+var post = new Post();
+post.set("title", "My New Post");
+post.set("body", "This is some great content.");
+post.set("user", user);
+post.save(null, {
+  success: function(post) {
+    // Find all posts by the current user
+    var query = new Parse.Query(Post);
+    query.equalTo("user", user);
+    query.find({
+      success: function(usersPosts) {
+        // userPosts contains all of the posts by the current user.
+      }
+    });
+  }
+});
+```
+
+---
+
+#### 脸书用户
+
+
+
+
+
+---
+
+#### 领英用户
+
+
+
+
+
 
 
 

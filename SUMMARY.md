@@ -8,7 +8,7 @@
 * [查询\(Queries\)](qing-6c4228-queries.md)
 * [实时请求\(LiveQueries\)](livequeries.md)
 * [用户\(Users\)](yong-623728-users.md)
-* 会话\(Sessions\)
+* [会话\(Sessions\)](hui-8bdd28-sessions.md)
 * 角色\(Roles\)
 * 文件\(Files\)
 * [Promises](promises.md)
