@@ -28,5 +28,9 @@
 
 * `installationId`（只能设置一次）：表示会话从哪里登录。对于Parse SDK，这个字段会在用户注册或登录时自动设置。除了`installationId`，所有的字段只能由Parse云端自动设置。但请记住，所有已登录设备都可以读取相同用户的其他session，除非你禁用类级权限。
 
+---
+
+#### 处理无效的session token
+
 
 
