@@ -15,14 +15,18 @@
 * `sessionToken`（只读）：用于验证Parse API请求的字符串标识，在请求的相应结果中，只有当前`Session`对象包含`sessionToken`。
 * `user`（只读）：指向所属的用户对象
 * `createdWith`（只读）：关于session是如何创建的信息（e.g `{ "action": "login", "authProvider": "password"}`）。
+
   * `action`可能的值有：`login`，`signup`，`create`，`upgrade`。当保存的`Session`对象是开发者手动创建的，值就会是`create`；当用户从旧的`sessionToken`更新到新的`sessionToken`，值就会是`upgrade`。
   * `authProvider` 可能的值有，`password`，`anonymous`，`facebook`，`twitter`。
 
-* restricted（只读）：表示session是否受限制。
+* `restricted`（只读）：表示session是否受限制。
+
   * 受限制session对Parse上的`User`、`Session`、`Role`没有写权限，受限制的会话也不能读取未受限制的会话。
   * 通过用户注册或登录，由Parse云端自动创建的session，全都是未受限制的；由开发者通过客户端手段创建保存的new `Session`对象，都是受限制的。
 
-* expiresAt（只读）：
+* `expiresAt`（只读）：`Session`对象将被自动删除的日期（UTC），你可以在你应用的Parse面板设置页面进行设置（一年不活动过期或永不过期）。
+
+* `installationId`（只能设置一次）：表示会话从哪里登录。对于Parse SDK，这个字段会在用户注册或登录时自动设置。除了`installationId`，所有的字段只能由Parse云端自动设置。但请记住，所有已登录设备都可以读取相同用户的其他session，除非你禁用类级权限。
 
 
 
