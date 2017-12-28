@@ -209,3 +209,44 @@ publicPost.save();
 
 禁止的操作，比如删除一个对象，但是你没有修改的权限，会导致一个`Parse.Error.OBJECT_NOT_FOUND`错误码。出于安全的目的，这样的有区分的阻止可以确认哪些对象是受保护的，哪些对象是完全不存在的。
 
+---
+
+#### 重置密码
+
+现实中，只要你已将用户密码传入系统，用户就会忘记密码。鉴于这种情况，我们的库提供了一种方法让他们重设密码。
+
+要触发重置密码的流程，先询问用户的邮箱地址，然后调用：
+
+```js
+Parse.User.requestPasswordReset("email@example.com", {
+  success: function() {
+  // Password reset request was sent successfully
+  },
+  error: function(error) {
+    // Show the error message somewhere
+    alert("Error: " + error.code + " " + error.message);
+  }
+});
+```
+
+这将会尝试用给定的邮箱和用户的`email`或`username`字段进行匹配，并且会发送一封密码重置的邮件。你可以选择让用户用邮箱作为他们的用户名，也可以把邮箱单独的存在`email`字段。
+
+密码重置流程如下：
+
+1. 用户通过输入他们的邮箱来请求重置密码
+2. Parse发送一封 邮件到他们的邮箱，其中包含一个密码重置的链接
+3. 用户点击链接，将被引导到指定的Parse页面，在这个页面上重置密码
+4. 用户输入新的密码后，他们的密码就被重置为新密码
+
+注意在此流程中的消息传递所引用的应用名，是你创建Parse应用时的app名。
+
+
+
+
+
+
+
+
+
+
+
