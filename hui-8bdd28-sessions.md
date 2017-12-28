@@ -18,7 +18,11 @@
   * `action`可能的值有：`login`，`signup`，`create`，`upgrade`。当保存的`Session`对象是开发者手动创建的，值就会是`create`；当用户从旧的`sessionToken`更新到新的`sessionToken`，值就会是`upgrade`。
   * `authProvider` 可能的值有，`password`，`anonymous`，`facebook`，`twitter`。
 
+* restricted（只读）：表示session是否受限制。
+  * 受限制session对Parse上的`User`、`Session`、`Role`没有写权限，受限制的会话也不能读取未受限制的会话。
+  * 通过用户注册或登录，由Parse云端自动创建的session，全都是未受限制的；由开发者通过客户端手段创建保存的new `Session`对象，都是受限制的。
 
+* expiresAt（只读）：
 
 
 
