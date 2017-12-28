@@ -240,7 +240,21 @@ Parse.User.requestPasswordReset("email@example.com", {
 
 注意在此流程中的消息传递所引用的应用名，是你创建Parse应用时的app名。
 
+---
 
+#### 查询
+
+要查询用户，你可以简单的为用户创建一个新的Parse.Query：
+
+```js
+var query = new Parse.Query(Parse.User);
+query.equalTo("gender", "female");  // find all the women
+query.find({
+  success: function(women) {
+    // Do stuff
+  }
+});
+```
 
 
 
