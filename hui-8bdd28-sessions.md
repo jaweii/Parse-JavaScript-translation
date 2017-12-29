@@ -32,5 +32,101 @@
 
 #### 处理无效的session token
 
+使用可撤回session，如果你的`Session`对象被Parse云端删除了，那么你对应的当前用户session也会失效，这在某些情况下可能会用上，比如你从用户`Session`管理界面上，将用户强制注销，或者你手动的从云端删除了session。session还可以通过设置自动过期来自动删除。 如果一个设备上的session token无法和Parse云端匹配上，那么所有来自此设备的请求都将返回错误信息：“Error 209: invalid session token”。
+
+要处理这个错误，我们推荐写一个全局的功能函数，并在你的Parse请求发生错误时调用，然后你就可以在全局函数中处理无效“invalid session token”。同时你应该提示用户重新登录，这样用户就能获得新的session token。像这样：
+
+```js
+function handleParseError(err) {
+  switch (err.code) {
+    case Parse.Error.INVALID_SESSION_TOKEN:
+      Parse.User.logOut();
+      ... // If web browser, render a log in screen
+      ... // If Express.js, redirect the user to the log in route
+      break;
+
+    ... // Other Parse API errors that you want to explicitly handle
+  }
+}
+
+// For each API request, call the global error handler
+query.find().then(function() {
+  ...
+}, function(err) {
+  handleParseError(err);
+});
+```
+
+---
+
+#### 会话安全
+
+`Session`对象只有user字段指定的用户可以访问，所有的`Session`对象都有一个ACL，只允许指定用户读写，你不能修改这个ACL。这意味着会话的查询只会返回与当前登录用户相匹配的会话。
+
+当你使用login方法登录时，Parse云端将会自动创建一个未受限制的`Session`对象，使用signup、脸书、推特登录也是一样。
+
+通过客户端SDK手动创建的`Session`对象始终是受限制的，你不能使用api手动的创建一个未受限制的会话。
+
+受限制的会话禁止创建、修改、更新`User`、`Session`、`Role`中的任何数据，受限制的会话也不能读取未受限制的会话。受限制的会话在“Parse for IoT”设备（例如 Arduino、Embedded C）中很有用，这在不可信的物理环境用的也比手机应用环境用的多。无论如何，记住受限制的会话仍然可以读取`User`、`Session`、`Role`类中的数据，并且可以像正常session一样读写其他class中的任何数据。这对IoT设备的安全和加密存储仍然非常重要。
+
+如果你想阻止受限制会话修改`User`、`Session`、`Role`以外的class，你可以为在云代码中为其class写一个`beforeSave`处理器：
+
+```js
+Parse.Cloud.beforeSave("MyClass", function(request, response) {
+  Parse.Session.current().then(function(session) {
+    if (session.get('restricted')) {
+      response.error('write operation not allowed');
+    }
+    response.success();
+  });
+});
+```
+
+ 如果你想在Parse上为`Session`类设置类级权限（CLP），CLP通过Session API 限制session的读写，但是不要在用户注册、登录、注销时，限制Parse云自动增删session。我们推荐你禁用所有不需要的CLP。下面有一些Session CLP的用例：
+
+* **查找，删除** - 用以构建一个供用户查看其他登录的在线设备，并且注销其他设备的用户.的功能。如果你不需要个功能，你应该禁用这个权限。
+* **创建** - 用于“Parse for IoT”应用，为来自手机应用的其他设备 受限制的会话，你应该检查你的哪个IoT设备确实需要访问用户专有数据，如果你的IoT设备不需要用户会话，你应该禁用这个权限。
+* **拉取、更新、增加字段** - 除非你需要这些操作，否则你应该禁用这些权限。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
