@@ -86,7 +86,7 @@ Parse.Cloud.beforeSave("MyClass", function(request, response) {
 
 * **Find、Delete** - 用以构建一个供用户查看其他登录的在线设备，并且注销其他设备的用户.的功能。如果你不需要个功能，你应该禁用这个权限。
 * **Create **- 用于“Parse for IoT”应用，为来自手机应用的其他设备 受限制的会话，你应该检查你的哪个IoT设备确实需要访问用户专有数据，如果你的IoT设备不需要用户会话，你应该禁用这个权限。
-* **Get、Update、App Field** - 除非你需要这些操作，否则你应该禁用这些权限。
+* **Get、Update、Add Field** - 除非你需要这些操作，否则你应该禁用这些权限。
 
 
 
