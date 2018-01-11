@@ -24,7 +24,7 @@
 
 要创建一个新的`Parse.Role`，你要这样写：
 
-```
+```js
 // By specifying no write privileges for the ACL, we can ensure the role cannot be altered.
 var roleACL = new Parse.ACL();
 roleACL.setPublicReadAccess(true);
@@ -34,7 +34,7 @@ role.save();
 
 你可以通过`Parse.Role`上的users和roles关联对象，添加用户和角色继承你的新角色权限：
 
-```
+```js
 var role = new Parse.Role(roleName, roleACL);
 role.getUsers().add(usersToAddToRole);
 role.getRoles().add(rolesToAddToRole);
@@ -44,6 +44,48 @@ role.save();
 当你指派ACL到你的角色时应尤其小心，确保只有有权修改的用户可以修改数据。
 
 ---
+
+#### 基于角色的对象安全
+
+现在你为你的应用创建了一组角色，你可以在ACL中使用他们定义对象权限。每一个Parse.Object可以指定一个Parse.ACL，它提供了访问控制列表，可以标示哪些用户和角色可以读写对象。
+
+给予一个对象某角色的读写权限非常简单：
+
+```js
+var moderators = /* 查询到的 Parse.Role */;
+var wallPost = new Parse.Object("WallPost");
+var postACL = new Parse.ACL();
+postACL.setRoleWriteAccess(moderators, true);
+wallPost.setACL(postACL);
+wallPost.save();
+```
+
+你也可以不使用查询获取角色，直接给ACL指定角色名：
+
+```js
+var wallPost = new Parse.Object("WallPost");
+var postACL = new Parse.ACL();
+postACL.setRoleWriteAccess("Moderators", true);
+wallPost.setACL(postACL);
+wallPost.save();
+```
+
+---
+
+#### 角色等级
+
+如上所述，一个角色可以包含另一个角色，两个角色间建立了父子关系，这种关系的结果就是，当父对象的权限被承认后，所有的子对象也会被承认。
+
+这些类型的关系通常在具有用户管理的应用中存在，比如论坛。用户的小部分子集是管理员，具备最高级别的权限，可以创建新板块，设置全局消息等。还有部分用户是版主，他们负责确保用户创建的内容是合适的。任何具备管理员权限的用户也会具备版主的权限。要完成这样的关系，你要使你的管理员角色成为版主角色的子角色：
+
+```js
+var administrators = /* Your "Administrators" role */;
+var moderators = /* Your "Moderators" role */;
+moderators.getRoles().add(administrators);
+moderators.save();
+```
+
+
 
 
 
