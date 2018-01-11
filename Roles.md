@@ -79,25 +79,11 @@ wallPost.save();
 这些类型的关系通常在具有用户管理的应用中存在，比如论坛。用户的小部分子集是管理员，具备最高级别的权限，可以创建新板块，设置全局消息等。还有部分用户是版主，他们负责确保用户创建的内容是合适的。任何具备管理员权限的用户也会具备版主的权限。要完成这样的关系，你要使你的管理员角色成为版主角色的子角色：
 
 ```js
-var administrators = /* Your "Administrators" role */;
-var moderators = /* Your "Moderators" role */;
+var administrators = /* 你的管理员角色 */;
+var moderators = /* 你的版主角色 */;
 moderators.getRoles().add(administrators);
 moderators.save();
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
