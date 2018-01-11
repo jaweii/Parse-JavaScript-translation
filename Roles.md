@@ -4,5 +4,58 @@
 
 比如，在具有内容策划的应用中，可能有一些用户是经过考虑后被赋予“主持人”角色，并且主持人可以可以修改和删除内容；可能还有一些用户被设置为管理员，有着和主持人一样的权限，并且可以修改应用的全局设置。这样通过角色，就不必手动的为每个用户授予访问每个资源的权限。
 
-我们提供了一个专门的类Parse.Role，它在你的客户端代码证表示角色对象，Parse.Role是Parse.Object的子类，并且具有Parse.Object的所有功能，比如灵活的模型、自动持久化、键值接口。Parse.Object的所有方法，Parse.Role都具备。不同的是，Parse.Role有角色管理功能。
+我们提供了一个专门的类`Parse.Role`，它在你的客户端代码证表示角色对象，`Parse.Role`是`Parse.Object`的子类，并且具有`Parse.Object`的所有功能，比如灵活的模型、自动持久化、键值接口。`Parse.Object`的所有方法，`Parse.Role`都具备。不同的是，`Parse.Role`有角色管理功能。
+
+---
+
+#### Parse.Role属性
+
+`Parse.Role`的这些属性将它和`Parse.Object`区分开来：
+
+* name：角色名，必需，并且只能在创建的时候设置。这个值是由字母、数字、空格或下划线组成，name将被用来识别角色，而不需要objectId。
+* users：继承此角色被授予权限的用户。
+* roles：继承此角色被授予权限的角色。
+
+---
+
+#### 角色安全
+
+`Parse.Role`使用的是和Parse上其他对象一样的安全模型（ACL），不同的是它需要被显示的设置。通常，只有权限足够大的用户，比如管理员，才可以创建和修改角色，所以你应该定义合理的ACL。记住，如果你授予一个用户对角色的写权限，那么这个用户可以添加其他用户到这个角色中，甚至删除所有角色。
+
+要创建一个新的`Parse.Role`，你要这样写：
+
+```
+// By specifying no write privileges for the ACL, we can ensure the role cannot be altered.
+var roleACL = new Parse.ACL();
+roleACL.setPublicReadAccess(true);
+var role = new Parse.Role("Administrator", roleACL);
+role.save();
+```
+
+你可以通过`Parse.Role`上的users和roles关联对象，添加用户和角色继承你的新角色权限：
+
+```
+var role = new Parse.Role(roleName, roleACL);
+role.getUsers().add(usersToAddToRole);
+role.getRoles().add(rolesToAddToRole);
+role.save();
+```
+
+当你指派ACL到你的角色时应尤其小心，确保只有有权修改的用户可以修改数据。
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
