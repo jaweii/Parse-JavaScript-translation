@@ -12,5 +12,5 @@
 * [角色\(Roles\)](Roles.md)
 * [文件\(Files\)](Files.md)
 * [链式写法\(Promises\)](Promise.md)
-* [位置\(GeoPint\)](Geo Point.md)
+* [坐标\(GeoPint\)](Geo Point.md)
 
