@@ -27,7 +27,7 @@ object.save({ key: value }).then(function(obj){
 })
 
 
-//补充两个写法
+//译者补充两个写法
 object.set('key',value)
 object.save().then(obj=>{/* ... */}).catch(function(err){/*...*/})
 
