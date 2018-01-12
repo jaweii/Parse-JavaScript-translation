@@ -17,7 +17,7 @@ object.save({ key: value }, {
 });
 ```
 
-而在Promise的写法中，是这样的：
+而在Promise的链式写法中，是这样的：
 
 ```
 object.save({ key: value }).then(function(obj){
