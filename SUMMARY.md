@@ -11,6 +11,6 @@
 * [会话\(Sessions\)](Session.md)
 * [角色\(Roles\)](Roles.md)
 * [文件\(Files\)](Files.md)
-* [Promises](Promise.md)
+* [Promise](Promise.md)
 * [位置\(GeoPint\)](Geo Point.md)
 
