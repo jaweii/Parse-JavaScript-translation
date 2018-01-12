@@ -6,7 +6,7 @@
 
 假设我们想保存一个Parse.Object，这是一个异步的操作，回调式的写法是这样的：
 
-```
+```js
 object.save({ key: value }, {
   success: function(object) {
     // the object was saved.
@@ -19,12 +19,20 @@ object.save({ key: value }, {
 
 而在Promise的链式写法中，是这样的：
 
-```
+```js
 object.save({ key: value }).then(function(obj){
     //保存成功
 }).catch(err=>{
     //保存失败
 })
+
+
+//补充两个写法
+object.set('key',value)
+object.save().then(obj=>{/* ... */}).catch(function(err){/*...*/})
+
+//或
+object.set('key',value).save(obj=>{/*...*/},err=>{/*...*/})
 ```
 
 ---
