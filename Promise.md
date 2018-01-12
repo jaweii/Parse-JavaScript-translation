@@ -29,5 +29,5 @@ object.save({ key: value }).then(function(obj){
 
 ---
 
-如果你尚不了解Promise用法，可以参考此教程[Promise对象-阮一峰](http://es6.ruanyifeng.com/#docs/promise) 。
+如果你尚不了解Promise用法，可以参考此教程[Promise对象 - 阮一峰](http://es6.ruanyifeng.com/#docs/promise) 。
 
