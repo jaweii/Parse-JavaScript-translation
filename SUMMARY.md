@@ -13,4 +13,5 @@
 * [文件\(Files\)](Files.md)
 * [链式写法\(Promises\)](Promise.md)
 * [坐标\(GeoPint\)](Geo Point.md)
+* [配置\(Config\)](config.md)
 
