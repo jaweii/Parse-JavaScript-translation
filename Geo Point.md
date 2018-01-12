@@ -8,13 +8,13 @@ Parse允许你在对象中关联真实世界的经纬坐标，使用`Parse.GeoPo
 
 要关联一个坐标到对象，你首先需要创建一个`Parse.GeoPoint`。假设你要创建一个纬度40.00、经度-30.00的坐标：
 
-```
+```js
 var point = new Parse.GeoPoint({latitude: 40.0, longitude: -30.0});
 ```
 
 这个位置将会作为一个普通的字段存储在对象中。
 
-```
+```js
 placeObject.set("location", point);
 ```
 
@@ -24,7 +24,7 @@ placeObject.set("location", point);
 
 现在假设，你有一大堆具有位置坐标的对象，要找出最靠近某个点的对象，可以通过给`Parse.Query`增加一个`near`条件，就能得到结果：
 
-```
+```js
 // 用户位置
 var userGeoPoint = userObject.get("location");
 // 创建一个位置查询
@@ -44,7 +44,7 @@ query.find({
 
 如果要根据距离过滤查询结果，可以使用`withinMiles`（英米内），`withinKilometers`（千米内）和`withinReadians`（弧度内）。
 
-你可以查询特定区域内的对象。要查询举行范围内的对象，给`Parse.Query`增加`withinGeoBox`条件即可：
+你可以查询特定区域内的对象。要查询距离范围内的对象，给`Parse.Query`增加`withinGeoBox`条件即可：
 
 ```js
 var southwestOfSF = new Parse.GeoPoint(37.708813, -122.526398);
@@ -65,21 +65,9 @@ query.find({
 
 有几个需要注意的地方：
 
-1. 每一个Parse.Object类应当只有一个字段是Parse.GeoPoint对象；
-2. near条件限制，同时也会限制搜索结果在100英里内；
+1. 每一个`Parse.Object`类应当只有一个字段是`Parse.GeoPoint`对象；
+2. `near`条件限制同时也会限制搜索结果在100英里内；
 3. 坐标不能大于或等于最终范围，纬度应该在-90.00到90.00间，经度应在-180.00到180.00间。超过将造成error。
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
