@@ -42,7 +42,7 @@ Parse.Config.get().then(function(config) {
 
 #### 当前配置
 
-每一个`Parse.Config`实例都是不可改变的，当你从云端获取到一个新的`Parse.Config`实例，这并不会修改已经存在的任何Parse.Config，但是会通过`Parse.Config.current()`新创建一个替换掉之前的，因此，你可以安全地传递任何`current()`对象，并且认定它不会自动改变。
+每一个`Parse.Config`实例都是不可改变的，当你从云端获取到一个新的`Parse.Config`实例，这并不会修改已经存在的任何`Parse.Config`，但是会通过`Parse.Config.current()`新创建一个替换掉之前的，因此，你可以安全地传递任何`current()`对象，并且认定它不会自动改变。
 
 如果每次要使用配置的时候都拉取一次，这可能过于麻烦，你可以通过`current()`的缓存来避免此麻烦，然后隔一段时间拉取一次就可以了。
 
@@ -78,18 +78,4 @@ string
 * JS Object
 
 目前配置支持最多100个参数，并且支持的所有参数总大小为128Kb。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
