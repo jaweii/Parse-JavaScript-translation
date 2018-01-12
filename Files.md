@@ -66,18 +66,18 @@ jobApplication.set("applicantResumeFile", parseFile);
 jobApplication.save();
 ```
 
-#### 获得文件 
+#### 获得文件
 
 获得文件的最佳实践还要视你的应用而定。因为有跨域请求，所以最好先确保跨域能正常工作。典型的应用场景就是在页面上显示上传的图片，下面我们用jQuery在页面上显示上传的图片文件：
 
-```
+```js
 var profilePhoto = profile.get("photoFile");
 $("profileImg")[0].src = profilePhoto.url();
 ```
 
 如果你想在云代码中处理文件数据，你可以用我们的http请求库来获取文件：
 
-```
+```js
 Parse.Cloud.httpRequest({ url: profilePhoto.url() }).then(function(response) {
   // 文件数据在 response.buffer 中。
 });
@@ -86,18 +86,4 @@ Parse.Cloud.httpRequest({ url: profilePhoto.url() }).then(function(response) {
 你可以使用[REST API](http://docs.parseplatform.org/rest/guide/#deleting-files)删除对象引用的文件，但是你需要提供master key才有权限删除文件。
 
 如果你的文件没有被任何对象引用，那么不能通过REST API删除文件，你应该到应用设置页面清理未使用的文件。注意，删除后就不能再被访问到了。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
