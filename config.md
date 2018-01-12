@@ -66,7 +66,7 @@ var refreshConfig = function() {
 
 #### 参数
 
-ParseConfig支持Parse.Object支持的绝大多数数据类型：
+`ParseConfig`支持`Parse.Object`支持的绝大多数数据类型：
 
 string
 
