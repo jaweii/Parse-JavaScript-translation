@@ -28,14 +28,20 @@ var Parse = require('parse/node');
 var Parse = require('parse/react-native');
 ```
 
-接下来，用JavaScript初始化你的Parse-Sever，你应该用下面的代码替换你当前的初始化代码：
+接下来，用JavaScript初始化你的Parse-Sever，记得替换为你的应用信息：
 
 ```js
 Parse.initialize("你的appId");
 Parse.serverURL = 'http://你的Parse-Server地址:1337/parse'
 ```
 
-我们的JavaScript SDK 最初是基于广受欢迎的Backbone.js框架，它提供了灵活的API，允许你配置你喜欢的JS库。我们的目标是最小化配置，以便你快速开始构建你的JavaScript和HTML5应用。
+这个JavaScript SDK 最初是基于广受欢迎的Backbone.js框架，它提供了灵活的API，允许你配置你喜欢的JS库。
 
-我们的SDK支持Firefox 23+，Chrome 17+，Safari 5+和IE 10。 IE 9仅支持使用HTTPS托管的应用程序。
+我们的目标是最小化配置，以便你快速开始构建你的JavaScript和HTML5应用。
+
+目前SDK支持Firefox 23+，Chrome 17+，Safari 5+和IE 10。 IE 9仅支持使用HTTPS托管的应用程序。  
+
+  
+
+  
 
