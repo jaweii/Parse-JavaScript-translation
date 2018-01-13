@@ -10,11 +10,11 @@ Parse提供了一些钩子来帮助你分析你应用的一些数据。你知道
 
 #### 常用分析
 
-Parse.Analytics允许你跟踪自定义事件，只需要使用一些string类型的键值即可。这些额外的指标可以在你应用的仪表盘上看到。
+`Parse.Analytics`允许你跟踪自定义事件，只需要使用一些string类型的键值即可。这些额外的指标可以在你应用的仪表盘上看到。
 
 假设你的应用提供了公寓列表搜索的功能，并且你想跟踪这个功能的使用情况，下面我们来跟踪三个维度的搜索数据：
 
-```
+```js
 var dimensions = {
   // 定义价格范围
   priceRange: '1000-1500',
@@ -27,7 +27,7 @@ var dimensions = {
 Parse.Analytics.track('search', dimensions);
 ```
 
-Parse.Analytics甚至可以用于异常跟踪，只需要使用下面的代码，就可以为你的应用记录错误频率、错误信息。
+`Parse.Analytics`甚至可以用于异常跟踪，只需要使用下面的代码，就可以为你的应用记录错误频率、错误信息。
 
 ```
 var codeString = '' + error.code;
