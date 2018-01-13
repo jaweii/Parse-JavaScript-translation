@@ -13,5 +13,6 @@
 * [文件\(Files\)](Files.md)
 * [链式写法\(Promises\)](Promise.md)
 * [坐标\(GeoPint\)](Geo Point.md)
+* [推送通知\(PushNotification\)](tui-song-tong-77e528-pushnotification.md)
 * [配置\(Config\)](config.md)
 
