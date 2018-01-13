@@ -12,7 +12,7 @@ keyword: parse中文文档
 
 如果你喜欢没事鼓捣鼓捣业余项目。
 
-Parse后端服务框架，Facebook的开源项目。
+Parse后端服务框架，Facebook开源项目。
 
 值得拥有。
 
