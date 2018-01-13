@@ -179,7 +179,7 @@ myObject.fetch({
 
 #### 更新对象
 
-更新对象非常简单，只需要设置一些新数据，然后调用`save`方法就可以了：
+更新对象超级简单，只需要设置一些新数据，然后调用`save`方法就可以了：
 
 ```js
 // Create the object.
@@ -417,7 +417,6 @@ bigObject.set("myObject", object);
 bigObject.set("anyKey", null); // this value can only be saved to an existing key
 bigObject.set("myPointerKey", pointer); // shows up as Pointer <MyClassName> in the Data Browser
 bigObject.save();
-
 ```
 
 我们不推荐在对象中存储大件的二进制文件，比如图片和文档。对象应该在128字节以内。
@@ -425,6 +424,4 @@ bigObject.save();
 我们推荐你使用Parse.File来存储文件、图片，和其他文件 。你可以初始化一个Parse.File对象设置你的文件。具体可以看文件\(Files\)章节。
 
 关于Parse处理数据的更多信息，请查看文档的数据\(Data\)章节。
-
-
 

@@ -244,7 +244,7 @@ Parse.User.requestPasswordReset("email@example.com", {
 
 #### 查询
 
-要查询用户，你可以简单的为用户创建一个新的Parse.Query：
+要查询用户，你可以为用户创建一个新Parse.Query：
 
 ```js
 var query = new Parse.Query(Parse.User);
