@@ -1,7 +1,3 @@
----
-keyword: parse中文文档
----
-
 # Parse JavaScript SDK 中文指南
 
 如果你是前端开发者。
