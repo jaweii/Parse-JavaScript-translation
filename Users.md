@@ -1,16 +1,14 @@
 # 用户
 
-在许多应用的核心功能中，都有用户账户的概念，它让用户以一种安全的方式访问自己的信息。我们提供了专门的用户类，通过调用`Parse.User`可以自动处理大量用户管理的功能。
-
-通过这个类，你将可以在你的应用中使用用户管理功能。
+在许多应用的核心功能中，都有用户账户的概念，它让用户以一种安全的方式访问自己的信息。我们提供了专门的用户类，通过调用`Parse.User`可以实现很多用户管理的功能。
 
 `Parse.User`是`Parse.Object`的子类，它们具有一样的特征，比如灵活的模式，自动持久化，和键值接口。`Parse.Object`上的所有方法，`Parse.User`也有，不同的是，`Parse.User`还具备一些额外的用户操作方法。
 
 ---
 
-#### 用户属性
+#### 用户属性 {#用户属性}
 
-Parse.User具备的一些属性将它和`Parse.Object`区分开来：
+Parse.User具备一些`Parse.Object`没有的属性：
 
 * username:用户名，必须
 * password:密码，必须
@@ -20,9 +18,9 @@ Parse.User具备的一些属性将它和`Parse.Object`区分开来：
 
 ---
 
-#### 注册
+#### 注册 {#注册}
 
-你的应用可能首先要做的就是要求用户中注册，下面的代码是典型的注册示例：
+你的应用可能首先要做的就是要求用户注册，下面的代码是典型的注册示例：
 
 ```js
 var user = new Parse.User();
@@ -30,12 +28,12 @@ user.set("username", "my name");
 user.set("password", "my pass");
 user.set("email", "email@example.com");
 
-// other fields can be set just like with Parse.Object
+// 还可以设置电话号码
 user.set("phone", "415-392-0202");
 
 user.signUp(null, {
   success: function(user) {
-    // Hooray! Let them use the app now.
+    // 注册成功.
   },
   error: function(user, error) {
     // Show the error message somewhere and let the user try again.
@@ -44,9 +42,9 @@ user.signUp(null, {
 });
 ```
 
-此调用是异步在你的Parse应用上创建一个新用户。在此之前，它会检查你的账号和邮箱是否未被使用。另外，在云端密码也用bcrypt进行了加密，我们不会将密码明文存储，也不会将密码明文传输给客户端。
+此调用是异步在你的Parse应用上创建一个新用户。在此之前，它会检查你的账号和邮箱是否被使用。另外，在云端密码也用bcrypt进行了加密，我们不会将密码明文存储，也不会将密码明文传输给客户端。
 
-需要注意的是，我们使用的是`signUp`方法，而不是`save`方法。新的`Parse.User`应该始终是通过`signUp`方法创建的，而后对用户的更新才可以用`save`方法完成。
+需要注意的是，我们使用的是`signUp`方法，而不是`save`方法。新的`Parse.User`应该始终是通过`signUp`方法创建的，而后对用户信息的更新才可以用`save`方法完成。
 
 如果注册失败，你应该查看返回的错误对象，最有可能的情况是用户名或邮箱已经被别的用户使用，你应该告知用户，要求用户使用不同的用户名或邮箱。
 
@@ -54,7 +52,7 @@ user.signUp(null, {
 
 ---
 
-#### 登录
+#### 登录 {#登录}
 
 当然，在我们允许用户注册以后，你将来还需要他们登录，以访问他们的账户。为了实现此功能，你可以使用用户类的`logIn`方法：
 
@@ -71,11 +69,11 @@ Parse.User.logIn("myname", "mypass", {
 
 ---
 
-#### 邮箱验证
+#### 邮箱验证 {#邮箱验证}
 
 启用应用设置中的邮箱验证，可以让应用为已验证用户保留部分体验。邮箱验证添加一个`emailVerified`字段在`Parse.User`对象上，当`Parse.User`的`email`被设置或修改了，`emailVerified`就会被设置成`false`，Parse会发送一封链接邮件给用户，验证通过后`emailVerified`就会被设置为`true`。
 
-有三种`emailVerified`状态需要考虑：
+`emailVerified`有三种状态：
 
 1. `true` - 用户通过Parse发送的验证邮件验证成功。用户账号首次创建的时候，值永远不会为`true`。
 2. `false`- 用户还没有验证ta的邮箱。
@@ -83,11 +81,11 @@ Parse.User.logIn("myname", "mypass", {
 
 ---
 
-#### 当前用户
+#### 当前用户 {#当前用户}
 
 如果用户每次打开你的应用都要登录，那是很麻烦的 。你可以通过使用缓存的当前`Parse.User`对象，避免这个麻烦。
 
-请注意，这个功能在Node.js环境中，默认是禁止的，以阻止在服务端配置上有状态的用法。
+请注意，这个功能在Node.js环境中，默认是禁止的，这是为了阻止在服务端配置上有状态的用法。
 
 无论何时，当你使用`signup`或`login`方法后，用户登录信息都被缓存到了`localStorage`中，你可以把它当做用户会话使用，以此判断用户是否登录。
 
@@ -110,9 +108,9 @@ Parse.User.logOut().then(() => {
 
 ---
 
-#### 设置当前用户
+#### 设置当前用户 {#设置当前用户}
 
-如果你已经创建了自己的身份验证程序，或者用户通过其他方式登录到了服务端，你可以传入session token到`become`方法，这个方法会在设置当前用户前确认session token可用。
+如果你已经创建了自己的身份验证程序，或者用户通过其他方式登录到了服务端，你可以传入session token到`become`方法，这个方法会在设置当前用户前确认session token是否可用。
 
 ```js
 Parse.User.become("session-token-here").then(function (user) {
@@ -124,21 +122,21 @@ Parse.User.become("session-token-here").then(function (user) {
 
 ---
 
-#### 用户安全
+#### 用户安全 {#用户安全}
 
-`Parse.User`类默认情况下是安全的，它的数据默认只有用户自己可以修改，其他用户只有读的权限，除非`Parse.User`经过权限验证可以被修改，否则只读。
+`Parse.User`类默认情况下是安全的，它的数据默认只有用户自己可以修改，其他用户只有读的权限，除非`Parse.User`权限设置了允许其他用户修改。
 
-特别是，除非你通过了`logIn`或者`signUp`的验证，否则你无法使用`save`或者`delete`方法。这确保了只有用户自己可以修改自己的数据。
+特别注意，除非你通过了`logIn`或者`signUp`的验证，否则你无法使用`save`或者`delete`方法。这确保了只有用户自己可以修改自己的数据。
 
 下面的代码说明了此安全策略：
 
 ```js
 var user = Parse.User.logIn("my_username", "my_password", {
   success: function(user) {
-    user.set("username", "my_new_username");  // attempt to change username
+    user.set("username", "my_new_username");  //修改用户名
     user.save(null, {
       success: function(user) {
-        // This succeeds, since the user was authenticated on the device
+        // 修改成功
 
         // Get the user from a non-authenticated method
         var query = new Parse.Query(Parse.User);
@@ -160,15 +158,15 @@ var user = Parse.User.logIn("my_username", "my_password", {
 
 从`Parse.User.current()`获取的`Parse.User`永远是通过了验证的。
 
-如果你想检查一个`Parse.User`是否通过验证，你可以使用`authenticated`方法。你不需要去检查那些通过`authenticated`方法获取的`Parse.User`的`authenticated`。
+如果你想检查一个`Parse.User`是否通过登录验证，你可以使用`authenticated`方法。你不需要去检查那些通过`authenticated`方法获取的`Parse.User`。
 
 ---
 
-#### 对象安全
+#### 对象安全 {#对象安全}
 
 有些应用在`Parse.User`上的安全策略也可以应用在其他对象上，对于任意一个对象，你可以指定哪个用户可以读取和修改。为了支持这种安全类型，每一个对象都有一个`access control list`，通过`Parse.ACL`类实现。
 
-要指定一个对象只有某个用户可以读写，最简单的方法始使用`Parse.ACL`。这是通过为`Parse.User`初始化一个`Parse.ACL`完成的：`new Parse.ACL(user)`生成一个`Parse.ACL`，它限制了`user`的访问。当一个对象被保存后，它的ACL也会被更新，就像其他的属性一样。
+要指定一个对象只有某个用户可以读写，最简单的方法始使用`Parse.ACL`。这是通过为`Parse.User`初始化一个`Parse.ACL`完成的：`new Parse.ACL(user)`生成一个`Parse.ACL`，它限制了`user`的访问。当对象被保存后，它的ACL会被更新，就像其他的属性一样。
 
 那么，要创建一个只有当前用户可以访问的私人笔记，可以这样：
 
@@ -180,14 +178,14 @@ privateNote.setACL(new Parse.ACL(Parse.User.current()));
 privateNote.save();
 ```
 
-这个note将只有当前用户可以访问，并且，当前用户登录的任何设备都可以访问。这个功能在你想启用跨设备访问用户数据时非常有用，权限也可以给予每个用户的基础上授权，你可以使用`setReadAccess`和`setWriteAccess`为`Parse.ACL`添加独有的权限。比如，你有一条消息要发送给几个用户，他们中的每一个用户都有权限读取和修改：
+这个note将只有当前用户可以访问，并且，当前用户登录的任何设备都可以访问。这个功能在你想启用跨设备访问用户数据时非常有用，权限也可以给多个用户授权，你可以使用`setReadAccess`和`setWriteAccess`为`Parse.ACL`添加独有的权限。比如，你有一条消息要发送给几个用户，他们中的每一个用户都有权限读取和修改：
 
 ```js
 var Message = Parse.Object.extend("Message");
 var groupMessage = new Message();
 var groupACL = new Parse.ACL();
 
-// userList is an array with the users we are sending this message to.
+// 用户数组
 for (var i = 0; i < userList.length; i++) {
   groupACL.setReadAccess(userList[i], true);
   groupACL.setWriteAccess(userList[i], true);
@@ -207,11 +205,11 @@ publicPost.setACL(postACL);
 publicPost.save();
 ```
 
-禁止的操作，比如删除一个对象，但是你没有修改的权限，会导致一个`Parse.Error.OBJECT_NOT_FOUND`错误码。出于安全的目的，这样的有区分的阻止可以确认哪些对象是受保护的，哪些对象是完全不存在的。
+禁止的操作，比如删除一个对象，但是你没有修改的权限，会导致一个`Parse.Error.OBJECT_NOT_FOUND`错误码。出于安全的目的，这样可以阻止客户端判断哪些对象是受保护的，哪些对象是完全不存在的。
 
 ---
 
-#### 重置密码
+#### 重置密码 {#重置密码}
 
 现实中，只要你已将用户密码传入系统，用户就会忘记密码。鉴于这种情况，我们的库提供了一种方法让他们重设密码。
 
@@ -220,7 +218,7 @@ publicPost.save();
 ```js
 Parse.User.requestPasswordReset("email@example.com", {
   success: function() {
-  // Password reset request was sent successfully
+  // 重置密码请求已发出
   },
   error: function(error) {
     // Show the error message somewhere
@@ -229,7 +227,7 @@ Parse.User.requestPasswordReset("email@example.com", {
 });
 ```
 
-这将会尝试用给定的邮箱和用户的`email`或`username`字段进行匹配，并且会发送一封密码重置的邮件。你可以选择让用户用邮箱作为他们的用户名，也可以把邮箱单独的存在`email`字段。
+这会尝试用给定的邮箱和用户的`email`或`username`字段进行匹配，并且会发送一封密码重置的邮件。你可以选择让用户用邮箱作为他们的用户名，也可以把邮箱单独的存在`email`字段。
 
 密码重置流程如下：
 
@@ -242,7 +240,7 @@ Parse.User.requestPasswordReset("email@example.com", {
 
 ---
 
-#### 查询
+#### 查询 {#查询}
 
 要查询用户，你可以为用户创建一个新Parse.Query：
 
@@ -258,14 +256,14 @@ query.find({
 
 ---
 
-#### 联合查询
+#### 联合查询 {#联合查询}
 
 假如你在开发一个博客应用，想要提交一篇新博文，以及查询作者的所有文章，你可以这样：
 
 ```js
 var user = Parse.User.current();
 
-// Make a new post
+// 提交一篇新博文
 var Post = Parse.Object.extend("Post");
 var post = new Post();
 post.set("title", "My New Post");
@@ -273,7 +271,7 @@ post.set("body", "This is some great content.");
 post.set("user", user);
 post.save(null, {
   success: function(post) {
-    // Find all posts by the current user
+    // 查询作者的所有文章
     var query = new Parse.Query(Post);
     query.equalTo("user", user);
     query.find({

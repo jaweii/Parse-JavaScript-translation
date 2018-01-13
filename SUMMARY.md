@@ -16,5 +16,5 @@
 * [推送通知\(PushNotification\)](tui-song-tong-77e528-pushnotification.md)
 * [配置\(Config\)](config.md)
 * [分析\(Analytics\)](analytics.md)
-* Data
+* [数据\(Data\)](data.md)
 
