@@ -16,7 +16,7 @@ Parse后端服务框架，Facebook的开源项目。
 
 值得拥有。
 
-
+------------------------------------------------------------------------------------
 
 原始文档地址：[http://docs.parseplatform.org/js/guide](http://docs.parseplatform.org/js/guide)
 
