@@ -101,19 +101,19 @@ userQuery.containedIn("weaponsList", arrayOfWeapons);
 
 #### 多对多关系
 
-现在我们来处理多对多关系。假设我们有一个阅读应用，我们需要构建Book对象和Author对象，一个作者可以写多本书，并且一本书可以有多个作者，这就是一个多对多关系的场景，你必须从数组、对象关系、指针三个方案中做出选择。
+现在我们来处理多对多关系。假设我们有一个阅读应用，我们需要构建`Book`对象和`Author`对象，一个作者可以写多本书，并且一本书可以有多个作者，这就是一个多对多关系的场景，你必须从数组、对象关系、指针三个方案中做出选择。
 
 决策的关键点在于你是否有父子对象以外的信息要保存。
 
 如果没有，使用关系对象或者使用数组是最简单的方案。通常，使用数组会产生更高的并发和较少的请求。
 
-如果需要，那么使用指针指向关联对象更合适。
+如果有，那么使用指针指向关联对象更合适。
 
 _使用Parse.Realtion_
 
-使用Parse.Relation，我们可以在Book对象和一些Author对象中建立关联。你可以在数据浏览器中，在Book对象上创建一个relation类型的authors字段。然后，我们可以为Book对象关联一些author：
+使用Parse.Relation，我们可以在`Book`对象和一些`Author`对象中建立关联。你可以在数据浏览器中，在`Book`对象上创建一个relation类型的`authors`字段。然后，我们可以为Book对象关联一些author：
 
-```
+```js
 // 假设有这么几个author对象
 var authorOne = ...
 var authorTwo = ...
@@ -134,7 +134,7 @@ book.save();
 
 要获取一本书的作者列表，可以创建一个查询：
 
-```
+```js
 // 假设有一个book对象
 var book = ...
 
@@ -147,9 +147,9 @@ var query = relation.query();
 // 执行查询即可
 ```
 
-假如你想获取一个作者参与过的书籍列表， 只需要为查询对象增加条件即可：
+假如你想获取一个作者参与编辑过的书籍列表， 只需要为查询对象增加条件即可：
 
-```
+```js
 // 假设有一个作者对象
 var author = ...
 
@@ -162,11 +162,11 @@ query.equalTo("authors", author);
 
 _使用指针_
 
-假设我们要在用户间构建一个following\(我关注的\)/follower\(关注我的\)关系，一个用户可以关注多个用户，就像社交平台一样。在我们的应用中，我们不只需要知道谁关注了谁，还需要知道是什么时候关注的。要有序的记录这些数据，你必须创建一个独立的class表，这个表我们将命名为Follow，它有form字段和to字段，都是指向一个用户的指针。除了这些，你还可以添加一个Date类型的字段date用来记录时间。
+假设我们要在用户间构建一个following\(我关注的\)/follower\(关注我的\)关系，一个用户可以关注多个用户，就像社交平台一样。在我们的应用中，我们不只需要知道谁关注了谁，还需要知道是什么时候关注的。要有序的记录这些数据，你必须创建一个独立的class表，这个表我们将命名为`Follow`，它有`form`字段和`to`字段，都是指向一个用户的指针。除了这些，你还可以添加一个`Date`类型的字段`date`用来记录时间。
 
-现在，如果你想保存两个用户的关注信息，只需要在Follow表中设置from、to和date的值即可：
+现在，如果你想保存两个用户的关注信息，只需要在`Follow`表中设置`from`、`to`和`date`的值即可：
 
-```
+```js
 var otherUser = ...
 
 // 构建Follow对象
@@ -177,9 +177,9 @@ follow.set("date", Date());
 follow.save();
 ```
 
-如果你想查找你关注的所有用户，可以创建一个Follow的查询对象：
+如果你想查找你关注的所有用户，可以创建一个`Follow`的查询对象：
 
-```
+```js
 var query = new Parse.Query("Follow");
 query.equalTo("from", Parse.User.current());
 query.find({
@@ -189,9 +189,9 @@ query.find({
 });
 ```
 
-要查找关注我的所有用户也同样简单，通过to字段查找即可：
+要查找关注我的所有用户也同样简单，通过`to`字段查找即可：
 
-```
+```js
 // 构建查询对象
 var query = new Parse.Query("Follow");
 query.equalTo("to", Parse.User.current());
@@ -206,11 +206,11 @@ _使用数组_
 
 在多对多关系中使用数组和在一对多关系中使用数组很像，关系一方的对象用一个数组字段包含另一方的一些对象。
 
-还是假设我们有一个阅读应有，有Book和Author两个对象，Book对象有一个authors数组字段包含了Book的所有Author，数组在这里就非常合适，因为一本书的作者不会超过100个人。不过一个作者可能会写100本以上的书。
+还是假设我们有一个阅读应有，有`Book`和`Author`两个对象，`Book`对象有一个authors数组字段包含了`Book`的所有`Author`，数组在这里就非常合适，因为一本书的作者不会超过100个人。不过一个作者可能会写100本以上的书。
 
-下面是我们保存Book和Author关系的示例：
+下面是我们保存`Book`和`Author`关系的示例：
 
-```
+```js
 // 假设有一个作者对象
 var author = ...
 
@@ -221,9 +221,9 @@ var book = ...
 book.add("authors", author);
 ```
 
-因为authors是一个数组，你应该在查询Book的实收使用includeKey参数把author包含进来，以便服务器返回Book对象时同时包含作者：
+因为`authors`是一个数组，你应该在查询`Book`的时使用`includeKey`参数把`author`包含进来，以便服务器返回`Book`对象时同时包含作者：
 
-```
+```js
 // 构建Book查询对象
 var bookQuery = new Parse.Query("Book");
 
@@ -238,25 +238,25 @@ bookQuery.find({
 });
 ```
 
-同时，要根据拿到的Book对象获取authors数组可以直接使用get方法：
+要根据拿到的`Book`对象获取`authors`数组可以直接使用`get`方法：
 
-```
+```js
 var authorList = book.get("authors")
 ```
 
-最后，如果你想根据一个用户对象，查询用户所有参与编辑过的书，直接使用include方法即可：
+最后，如果你想根据一个用户对象，查询用户所有参与编辑过的书，直接使用`include`方法即可：
 
-```
-// set up our query for the Book object
+```js
+// 构建查询对象
 var bookQuery = new Parse.Query("Book");
 
-// configure any constraints on your query...
+// 增加约束条件
 bookQuery.equalTo("authors", author);
 
-// tell the query to fetch all of the Author objects along with the Book
+// 告诉查询对象要包含作者
 bookQuery.include("authors");
 
-// execute the query
+// 执行查询
 bookQuery.find({
   success: function(books){
     ...
@@ -264,15 +264,20 @@ bookQuery.find({
 });
 ```
 
-#### 一对一关系
+---
 
-在某些情况下，要将一个对象分成两个对象，一对一关系就很合适。这种例子可能很少，但是有如果两个例子：
+#### 一对一关系 {#一对一}
 
-* duix 限制某些用户数据的可见。在这个场景中，你要把对象一分为二，其中 
+在某些情况下，要将一个对象分成两个对象，一对一关系就很合适。这种例子可能很少，但是也有如下两个例子：
+
+* **限制某些用户数据的可见**。在这个场景中，你要把对象一分为二，其中一部分数据对其他用户可见，关联的另一部分数据对其他用户不可见，并且被ACL保护。
+* **分割对象大小**。在这个场景中，你的原始对象大小超过了允许的128K，所以你决定创建第二个对象存储额外的数据。设计好你的数据模型很重要，以避免对象过大要分割对象。如果你无法避免这样做，你可以考虑将大文件存储到Parse.File中。
 
 
 
+感谢你阅读了这么多，我们为这复杂程度向你致歉。虽然对象关系是比较难的部分，但是也有好的一面：
 
+它可比人际关系简单多了。
 
 
 
