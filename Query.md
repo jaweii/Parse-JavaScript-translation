@@ -52,7 +52,7 @@ query.greaterThan("playerAge", 18);
 query.limit(10); // limit to at most 10 results
 ```
 
-如果你想精确的查询一个结果，你可以用更方便的`first`方法替代`find`方法：
+如果你只想查询一个结果，你可以用更方便的`first`方法替代`find`方法：
 
 ```js
 var GameScore = Parse.Object.extend("GameScore");
@@ -87,20 +87,20 @@ query.descending("score");
 对于可排序类型，你还可以在查询中使用比较：
 
 ```js
-// Restricts to wins < 50
+//wins < 50
 query.lessThan("wins", 50);
 
-// Restricts to wins <= 50
+//  wins <= 50
 query.lessThanOrEqualTo("wins", 50);
 
-// Restricts to wins > 50
+// wins > 50
 query.greaterThan("wins", 50);
 
-// Restricts to wins >= 50
+// wins >= 50
 query.greaterThanOrEqualTo("wins", 50);
 ```
 
-如果你想查询与数组中任意值匹配的对象，你可以使用`containedIn`方法，并提供一个可接受值的数组。这样可以一个请求完成多个请求的功能。比如，你想查询由数组中任意玩家组成的分数结果：
+如果你想查询与数组中任意值匹配的对象，你可以使用`containedIn`方法，并提供一个可接受值的数组。这样可以一个请求完成多个请求的功能。比如，你想查询数组中玩家的分数结果：
 
 ```js
 // Finds scores from any of Jonathan, Dario, or Shawn
@@ -199,7 +199,7 @@ query.containsAll("arrayKey", [2, 3, 4]);
 
 > 如果你想实现一个通用的搜索功能，我们推荐你看看这篇博文：[Implementing Scalable Search on a NoSQL Backend](http://blog.parse.com/learn/engineering/implementing-scalable-search-on-a-nosql-backend/)
 
-我们可以使用`startWith`限制特定开头的字符串值，类似与MySQL中的LIKE操作。这是索引果过的，所以在大数据集中也有效：
+我们可以使用`startWith`限制特定开头的字符串值，类似与MySQL中的LIKE操作。这是索引过的，所以在大数据集中也有效：
 
 ```js
 // Finds barbecue sauces that start with "Big Daddy's".
@@ -244,7 +244,7 @@ query.find({
 });
 ```
 
-反之，你想查询某字段不包含和另一个查询匹配的对象，你可以使用doesNotMatchesQuery：
+反之，你想查询某字段不包含和另一个查询匹配的对象，你可以使用`doesNotMatchesQuery`：
 
 ```js
 var Post = Parse.Object.extend("Post");
@@ -279,7 +279,7 @@ query.descending("createdAt");
 // Only retrieve the last ten
 query.limit(10);
 
-// Include the post data with each comment
+// 评论对象同时包含文章对象
 query.include("post");
 
 query.find({
