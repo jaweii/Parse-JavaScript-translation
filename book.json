@@ -1,5 +1,5 @@
 {
-    "plugins": [ "theme-api","atoc","donate" ],
+    "plugins": [ "theme-api","atoc","donate","edit-link" ],
     "pluginsConfig": {
         "theme-api": {
             "languages": [
@@ -25,6 +25,10 @@
           "button": "打赏",
           "alipayText": "支付宝打赏",
           "wechatText": "微信打赏"
-        }
+        },
+        "edit-link": {
+                "base": "https://github.com/jaweii/Parse-JavaScript-translation",
+                "label": "编辑此页"
+            }
     }
 }
