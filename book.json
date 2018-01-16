@@ -23,6 +23,14 @@
             "markdown": false,
             "update_label": "<i>updated</i>",
             "update_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "disqus": {
+            "shortName": "XXXXXXX"
+        }
+    },
+    "links" : {
+        "sidebar" : {
+            "New Issue" : "https://github.com/jaweii/Parse-JavaScript-translation/issues/new"
         }
     }
 }
