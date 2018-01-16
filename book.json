@@ -23,7 +23,7 @@
           "wechatText": "微信打赏"
         },
         "edit-link": {
-                "base": "https://github.com/jaweii/Parse-JavaScript-translation",
+                "base": "https://github.com/jaweii/Parse-JavaScript-translation/blob/master",
                 "label": "编辑此页"
             }
     }
