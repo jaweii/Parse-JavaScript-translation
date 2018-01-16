@@ -10,7 +10,7 @@
 
 这就是为什么Parse有很多安全功能来帮助你保护数据安全。client key在应用发布后就给了用户，所以任何可以用客户端密钥完成的事情都可以由公众，甚至是恶意的黑客来完成。
 
-另一方面，master key定义了一种安全的机制。使用master key可以忽略应用的所有安全机制，比如类级别权限、ACL。master key就像服务器的root权限，所以你应该保管好你的master key，就像保管你的root密码一样。
+另一方面，master key定义了一种安全的机制。使用master key可以忽略应用的所有安全机制，比如表级别权限、ACL。master key就像服务器的root权限，所以你应该保管好你的master key，就像保管你的root密码一样。
 
 你应该限制客户端的权限，把敏感的操作在云代码中用master key完成。你将在[Implementing Business Logic in Cloud Code](http://docs.parseplatform.org/js/guide/#implementing-business-logic-in-cloud-code)这一节学会使用云代码。
 
@@ -27,18 +27,4 @@
 你可以配置这些权限，应用到你应用的每个用户，或者指定的用户/角色。角色是指包含其他用户或其他角色的组，你可以将角色指派给一个对象来限制对象的使用。授权给角色的任何权限，也会同样的授权给角色的子角色和子用户，这使你可以为你的应用创建权限级别。
 
 当你自信有了正确的class表
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
