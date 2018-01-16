@@ -1,5 +1,5 @@
 {
-    "plugins": [ "theme-api","atoc","donate","edit-link" ],
+    "plugins": [ "theme-api","neo-navigator","donate","edit-link" ],
     "pluginsConfig": {
         "theme-api": {
             "languages": [
@@ -13,10 +13,6 @@
                     "name": "Go"
                 }
             ]
-        },
-        "atoc": {
-            "addClass": true,
-            "className": "atoc"
         },
         "donate": {
           "wechat": "例：/images/qr.png",
