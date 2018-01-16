@@ -1,5 +1,5 @@
 {
-    "plugins": [ "theme-api","neo-navigator","donate","edit-link" ],
+    "plugins": [ "theme-api","neo-navigator","edit-link","page-footer-ex" ],
     "pluginsConfig": {
         "theme-api": {
             "languages": [
@@ -14,17 +14,15 @@
                 }
             ]
         },
-        "donate": {
-          "wechat": "例：/images/qr.png",
-          "alipay": "http://blog.willin.wang/static/images/qr.png",
-          "title": "",
-          "button": "打赏",
-          "alipayText": "支付宝打赏",
-          "wechatText": "微信打赏"
-        },
         "edit-link": {
                 "base": "https://github.com/jaweii/Parse-JavaScript-translation/blob/master",
                 "label": "编辑此页"
-            }
+        },
+        "page-footer-ex": {
+            "copyright": "",
+            "markdown": false,
+            "update_label": "<i>updated</i>",
+            "update_format": "YYYY-MM-DD HH:mm:ss"
+        }
     }
 }
