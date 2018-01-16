@@ -2,7 +2,7 @@
 
 除了回调，Parse JavaScript SDK的所有异步方法，都返回一个Promise。通过promise，你的代码会比在回调中嵌套代码清晰很多。
 
-#### 举例
+## 举例
 
 假设我们想保存一个Parse.Object，这是一个异步的操作，回调式的写法是这样的：
 

@@ -16,7 +16,7 @@ Parse.Config.get().then(function(config) {
 
 ---
 
-#### 获取配置
+## 获取配置
 
 `ParseConfig`即便在糟糕的网络下，也会尽可能的保持可用，默认配置会被缓存，以确保最后一次成功拉取的配置始终可用。在下面的例子中，我们从服务器拉取配置的最新版本，如果`get`失败，我们通过`current`回退到最近一次成功拉取的配置：
 
@@ -40,7 +40,7 @@ Parse.Config.get().then(function(config) {
 
 ---
 
-#### 当前配置 {#当前配置}
+## 当前配置
 
 每一个`Parse.Config`实例都是不可改变的，当你从云端获取到一个新的`Parse.Config`实例，这并不会修改已经存在的任何`Parse.Config`，但是会通过`Parse.Config.current()`新创建一个替换掉之前的，因此，你可以安全地传递任何`current()`对象，并且认定它不会自动改变。
 
@@ -64,7 +64,7 @@ var refreshConfig = function() {
 
 ---
 
-#### 参数 {#参数}
+## 参数
 
 `ParseConfig`支持`Parse.Object`支持的绝大多数数据类型：
 

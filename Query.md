@@ -2,7 +2,7 @@
 
 我们已经知道了`Parse.Query`是如何使用`get`从Parse云端查询一个对象的，下面还有许多其他方法，比如你可以一次查询多个对象，可以在一个查询上限制条件等。
 
-#### 基本查询 {#基本查询}
+## 基本查询
 
 很多时候，`get`可能满足不了你的欲望。
 
@@ -31,7 +31,7 @@ query.find({
 
 ---
 
-#### 查询条件 {#查询条件}
+## 查询条件
 
 下面有几个方法可以约束`Parse.Query`的查询结果，比如你可以用`notEqualTo`方法，传入键值对来筛选结果：
 
@@ -177,7 +177,7 @@ query.first().then(function(result) {
 
 ---
 
-#### 数组查询 {#数组查询}
+## 数组查询
 
 对于数组类型的键，你可以查询到`arrayKey`包含了2的对象：
 
@@ -195,7 +195,7 @@ query.containsAll("arrayKey", [2, 3, 4]);
 
 ---
 
-#### 字符串查询 {#字符串查询}
+## 字符串查询
 
 > 如果你想实现一个通用的搜索功能，我们推荐你看看这篇博文：[Implementing Scalable Search on a NoSQL Backend](http://blog.parse.com/learn/engineering/implementing-scalable-search-on-a-nosql-backend/)
 
@@ -213,7 +213,7 @@ query.startsWith("name", "Big Daddy's");
 
 ---
 
-#### 关系查询 {#关系查询}
+## 关系查询
 
 有几种方法可以查询关系型的数据。如果你想查询某字段为某个对象的话，可以直接想查询其他类型一样使用`equalTo`。比如每个`Comment`都有一个`post`字段指向`Post`，你可以这样查询特定`Post`的评论：
 
@@ -304,7 +304,7 @@ query.include(["post.author"]);
 
 ---
 
-#### 统计查询 {#统计查询}
+## 统计查询
 
 如果你只是想知道有多少个匹配的对象，但不需要拿到对象的详细信息，你可以使用`count`方法替代`find`方法。比如，你想知道特定玩家玩了多少个游戏：
 
@@ -325,7 +325,7 @@ query.count({
 
 ---
 
-#### 组合查询 {#组合查询}
+## 组合查询
 
 更复杂的查询情况下，你可能需要用到组合查询。一个组合查询是多个子查询的组合\(如"and或"or"\)。
 
