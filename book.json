@@ -13,6 +13,10 @@
                     "name": "Go"
                 }
             ]
+        },
+        "simple-page-toc": {
+            "maxDepth": 3,
+            "skipFirstH1": true
         }
     }
 }
