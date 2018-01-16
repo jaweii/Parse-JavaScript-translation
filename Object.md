@@ -1,6 +1,6 @@
 # 对象
 
-#### Parse.Object {#parseobject}
+## Parse.Object
 
 Parse的对象存储是建立在`Parse.Object`上，每一个`Parse.Object`包含了JSON格式的键值对。它的数据是无模式的，这意味着你无需提前为每一个`Parse.Object` 指定存在的键。你只需要设置任何你想要的键值对就行了，我们的后端都会存储它。
 
@@ -94,7 +94,7 @@ Parse.Object.registerSubclass('Monster', Monster);
 
 ---
 
-#### 保存对象 {#保存对象}
+## 保存对象
 
 假设你想保存之前描述的对象`GameScore`到Parse服务器，这个接口和`BackBone.Model`类似，即`save`方法：
 
@@ -127,7 +127,7 @@ createdAt:"2011-06-10T18:33:42Z", updatedAt:"2011-06-10T18:33:42Z"
 
 ---
 
-#### 取得对象 {#取得对象}
+## 取得对象
 
 比保存数据到云端更有趣的是，从云端再次取回数据。如果你已经有了`objectId`，你可以通过`Parse.Query`来获得完整的`Parse.Object`。
 
@@ -177,7 +177,7 @@ myObject.fetch({
 
 ---
 
-#### 更新对象 {#更-新对象}
+## 更新对象
 
 更新对象超级简单，只需要设置一些新数据，然后调用`save`方法就可以了：
 
@@ -237,7 +237,7 @@ gameScore.save();
 
 ---
 
-#### 删除对象 {#删除对象}
+## 删除对象
 
 从云端删除一个对象：
 
@@ -268,7 +268,7 @@ myObject.save();
 
 ---
 
-#### 关系型数据 {#关系型数据}
+## 关系型数据
 
 一个对象可能和其他对象存在关联，比如，一个博客应用中，一篇文章\(Post\)的对象，可能关联着许多评论\(Comment\)对象。Parse支持所有的关系类型，包括一对一，一对多，多对多。
 
@@ -380,7 +380,7 @@ query.find({
 
 ---
 
-#### 数据类型 {#数据类型}
+## 数据类型
 
 目前为止，我们使用的键值的类型有String、Number、和Parse.Object。Parse也支持Date和null。你还可以存储JSON Object 和JSON Array到你的Parse.Object。下面列出的，是对象的字段支持的所有类型：
 
