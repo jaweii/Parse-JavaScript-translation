@@ -1,5 +1,5 @@
 {
-    "plugins": [ "theme-api","atoc" ],
+    "plugins": [ "theme-api","atoc","donate" ],
     "pluginsConfig": {
         "theme-api": {
             "languages": [
@@ -17,6 +17,14 @@
         "atoc": {
             "addClass": true,
             "className": "atoc"
+        },
+        "donate": {
+          "wechat": "例：/images/qr.png",
+          "alipay": "http://blog.willin.wang/static/images/qr.png",
+          "title": "",
+          "button": "打赏",
+          "alipayText": "支付宝打赏",
+          "wechatText": "微信打赏"
         }
     }
 }
