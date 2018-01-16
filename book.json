@@ -1,5 +1,5 @@
 {
-    "plugins": [ "theme-api","simple-page-toc"  ],
+    "plugins": [ "theme-api","atoc" ],
     "pluginsConfig": {
         "theme-api": {
             "languages": [
@@ -14,9 +14,9 @@
                 }
             ]
         },
-        "simple-page-toc": {
-            "maxDepth": 3,
-            "skipFirstH1": true
+        "atoc": {
+            "addClass": true,
+            "className": "atoc"
         }
     }
 }
