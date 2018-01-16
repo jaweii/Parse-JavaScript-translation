@@ -2,7 +2,7 @@
 
 Parse的大多数JavaScript函数会在回调中返回一个成功或失败的对象，类似于Backbone中的"options"对象。
 
-`success`和`error`这两个主要的回调中，每当操作完成且没有错误，就会调用`seccess`，通常在`save`或`get`中，`success`会是一个Parse.Object，在`find`中，会是一个Parse.Object数组。当与云端交互结束后出现了任何错误，就会调用`error`，`error`可能是连接云端的问题，也可能是执行请求操作的问题。
+`success`和`error`这两个回调中，每当操作完成且没有错误，就会调用`seccess`在`save`或`get`中，`success`通常会是一个Parse.Object；在`find`中，会是一个Parse.Object数组。当与云端交互结束后出现了任何错误，就会调用`error`，`error`可能是连接云端的问题，也可能是执行请求操作的问题。
 
 我们来看一个例子，在下面代码中，我们尝试去拉取一个云端不存在的对象，云端将会返回一个`error`，我们要根据`error`信息做相应的处理：
 
@@ -45,6 +45,4 @@ query.get("thisObjectIdDoesntExist", {
 对于像`save`和`signUp`这样会影响特定Parse.Object的方法，`error`方法的第一个参数将会是Parse.Object本身，第二个参数将会是Parse.Error对象。这是为了和类Backbone框架兼容。
 
 要查看Parse.Eroor错误码列表，请查看错误码章节。
-
-
 
