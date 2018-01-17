@@ -144,7 +144,7 @@ _查询权限验证\(需要parse-server &gt;= 2.3.0\)_
 
 比如，你想允许经过验证的用户从你的云端find和get `Announcement`，你需要设置此CLP：
 
-```
+```js
 // POST http://my-parse-server.com/schemas/Announcement
 // Set the X-Parse-Application-Id and X-Parse-Master-Key header
 // body:
