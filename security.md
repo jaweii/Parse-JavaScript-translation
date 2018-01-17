@@ -69,6 +69,44 @@ _访问控制列表_
 
 当你有了用户以后，你就可以开始使用ACL了。你要记住，用户可以通过传统用户名/密码方式注册，也可以使用Fackbook或twitter等第三方平台登录，甚至使用Parse的匿名用户功能。要为当前用户设置ACL，使其对公众不可读，你可以这样做：
 
+```
+var user = Parse.User.current();
+user.setACL(new Parse.ACL(user));
+```
+
+很多应用都会这样，如果你保存敏感的用户信息，比如邮箱地址和电话号码，你需要为用户设置一个ACL，以便保护用户的私人数据不会被其他人拿到，如果一个对象没有ACL，那么所有人都可以读写这个对象的数据，用户对象除外。我们用户不会允许用户修改其他用户的数据，但是默认用户可以读取其他用户的数据。如果开发者有更新其他用户对象的需求，可以使用master key完成。
+
+如果你想让用户的部分数据公开，另一部分数据不公开，最好的办法就是分割成两个对象，在公开的对象上增加一个指向私密对象的指针字段。
+
+```
+var privateData = Parse.Object.extend("PrivateUserData");
+privateData.setACL(new Parse.ACL(Parse.User.current()));
+privateData.set("phoneNumber", "555-5309");
+
+Parse.User.current().set("privateData", privateData);
+```
+
+当然，你也可以为对象设置不同的读写权限。比如，创建一个作者可写，公众可读的ACL：
+
+```
+var acl = new Parse.ACL();
+acl.setPublicReadAccess(true);
+acl.setWriteAccess(Parse.User.current().id, true);
+```
+
+有时基于每个用户的权限管理是不方便的，并且你想按特定权限给用户分组，就行设置管理员，使用角色功能就可以完成。角色是一种特殊的对象类型，它可以让你创建一个角色，通过ACL给角色指派权限。角色最方便的就是你无需为每个受角色约束的对象做修改，就可以为对象的用户权限做增删操作。要创建一个只有管理员可写的对象可以这样做：
+
+```
+var acl = new Parse.ACL();
+acl.setPublicReadAccess(true);
+acl.setRoleWriteAccess("admins", true);
+```
+
+当然，上门的代码时假设你已经创建了一个名为"admins"的角色。角色还可以自由的创建和修改，比如这个场景，在两个用户建立连接后，为"friendOf\_\_"增加一个新的朋友。当你在开发应用时，你要创建一组特殊的角色，这将会很有用。
+
+这些仅仅是开始。应用可以通过ACL和表级权限执行所有种类复杂的权限控制。比如：
+
+* 
 
 
 
