@@ -52,7 +52,7 @@ query.greaterThan("playerAge", 18);
 query.limit(10); // limit to at most 10 results
 ```
 
-如果你只想查询一个结果，你可以用更方便的`first`方法替代`find`方法：
+如果你只想查询一个结果，可以用更方便的`first`方法替代`find`方法：
 
 ```js
 var GameScore = Parse.Object.extend("GameScore");
@@ -100,7 +100,7 @@ query.greaterThan("wins", 50);
 query.greaterThanOrEqualTo("wins", 50);
 ```
 
-如果你想查询与数组中任意值匹配的对象，你可以使用`containedIn`方法，并提供一个可接受值的数组。这样可以一个请求完成多个请求的功能。比如，你想查询数组中玩家的分数结果：
+如果你想查询与数组中任意值匹配的对象，可以使用`containedIn`方法，并提供一个可接受值的数组。这样可以一个请求完成多个请求的功能。比如，你想查询数组中玩家的分数结果：
 
 ```js
 // Finds scores from any of Jonathan, Dario, or Shawn
@@ -126,7 +126,7 @@ query.exists("score");
 query.doesNotExist("score");
 ```
 
-你可以使用`meachesKeyInQuery`方法查询对象，对象中的某个键值是和另一个请求返回的一组结果中的键值匹配的。比如，如果你有一个包含了运动队的类，并且你保存了用户的老家信息在user类中，你现在用查询获胜队伍的成员家乡信息，你可以这样请求：
+你可以使用`meachesKeyInQuery`方法查询对象，对象中的某个键值是和另一个请求返回的一组结果中的键值匹配的。比如，如果你有一个包含了运动队的类，并且你保存了用户的老家信息在user类中，你现在要查询获胜队伍的成员家乡信息，你可以这样请求：
 
 ```js
 var Team = Parse.Object.extend("Team");
@@ -179,7 +179,7 @@ query.first().then(function(result) {
 
 ## 数组查询
 
-对于数组类型的键，你可以查询到`arrayKey`包含了2的对象：
+对于数组类型的字段，你可以查询到`arrayKey`包含了2的对象：
 
 ```js
 // Find objects where the array in arrayKey contains 2.
@@ -188,7 +188,7 @@ query.equalTo("arrayKey", 2);
 
 你也可以这样查询到键值包含了2、3、4的的对象：
 
-```
+```js
 // Find objects where the array in arrayKey contains all of the elements 2, 3, and 4.
 query.containsAll("arrayKey", [2, 3, 4]);
 ```
@@ -215,7 +215,7 @@ query.startsWith("name", "Big Daddy's");
 
 ## 关系查询
 
-有几种方法可以查询关系型的数据。如果你想查询某字段为某个对象的话，可以直接想查询其他类型一样使用`equalTo`。比如每个`Comment`都有一个`post`字段指向`Post`，你可以这样查询特定`Post`的评论：
+有几种方法可以查询关系型的数据。如果你想查询某字段为某个对象的话，可以直接像查询其他类型一样使用`equalTo`。比如每个`Comment`都有一个`post`字段指向`Post`，你可以这样查询特定`Post`的评论：
 
 ```js
 // Assume Parse.Object myPost was previously created.
@@ -228,7 +228,7 @@ query.find({
 });
 ```
 
-如果你想查询某字段包含一个和另一个查询匹配的对象，你可以使用`matchesQuery`。为了查询\(包含图片的文章\)的评论，你可以这样：
+如果你想查询某字段包含一个和另一个查询匹配的对象，你可以使用`matchesQuery`。为了查询包含图片的文章的评论，你可以这样：
 
 ```js
 var Post = Parse.Object.extend("Post");
@@ -369,7 +369,7 @@ query.find()
   });
 ```
 
-但如果这个世界真的有这么简单那就好了。有时你可能需要用到组合查询，Parse.Query.and方法可以构建一个由传入的子程序组成的与查询。比如你想查询用户年龄为16或者18，并且ta的好友少于两人的用户,你可以这样：
+但如果这个世界真的有这么简单那就好了。有时你可能需要用到与组合查询，Parse.Query.and方法可以构建一个由传入的子程序组成的与查询。比如你想查询用户年龄为16或者18，并且ta的好友少于两人的用户,你可以这样：
 
 ```js
 var age16Query = new Parse.Query("User");
