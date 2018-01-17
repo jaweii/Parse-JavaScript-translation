@@ -201,6 +201,15 @@ Parse中有一些特殊的class表，他们不像其他class表一样完全遵�
 
 1. 登录或使用REST API /parse/login 行为在用户表上不遵循GET CLP，只有基于用户名/密码的登录正常工作，并且不能使用CLP禁用。
 2. 拉取当前用户，或成为基于session token的用户，这两个都在REST API /parse/users/me 中，不遵循用户表的Get CLP 。
-3. 
+3. ACL 只读无法应用在已登录用不上，举例，如果所有用户都被ACL设置为禁止读操作，那么执行查询请求仍然会返回当前用户。总之，如果Find CLP被禁止，那么尝试在用户表执行find请求会返回错误。
+
+4. Create CLP也会应用到用户注册上，所以禁止用户表上的Create CLP也会禁止用户注册，除非使用master key。 
+
+5. 用户数据的更新和删除只能由用户子集完成，公众的Delete/Update CLP仍然可用。比如说，如果你禁止用户表的公众修改权限，那么用户自己也不能编辑。不过用户对象的ACL写权限正常工作，用户仍然可以更新户删除自己的数据，并且用户不能更新或删除其他用户的数据。
+
+6. installations表上的Get权限遵循ACL，Find权限在没有使用master key的情况下不被允许，除非你应用了installtionId作为约束条件。
+
+7. installations表上的Update请求遵循ACL，但是Delete请求需要master key才可以。更多关于installtions工作的信息，请查看[http://docs.parseplatform.org/rest/guide/\#installations](http://docs.parseplatform.org/rest/guide/#installations)
+
 
 
