@@ -199,5 +199,8 @@ Parse中有一些特殊的class表，他们不像其他class表一样完全遵�
 | Delete | 正常 \[5\] | 仅master key有效 \[7\] |
 | Add Field | 正常 | 正常 |
 
+1. 登录或使用REST API /parse/login 行为在用户表上不遵循GET CLP，只有基于用户名/密码的登录正常工作，并且不能使用CLP禁用。
+2. 拉取当前用户，或成为基于session token的用户，这两个都在REST API /parse/users/me 中，不遵循用户表的Get CLP 。
+3. 
 
 
