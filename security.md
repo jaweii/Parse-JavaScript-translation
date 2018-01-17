@@ -180,6 +180,12 @@ _CLP和ACL_
 
 你可能期望这会使user1和user2都能Get PhotoObject，但是因为CLP层和ACL层同时生效，所以user1和user2将都不能请求成功。user1的Get请求会通过CLP层，但是无法通过ACL层，同样的，user2可以通过ACL层，但是不能通过CLP层。
 
+现在我们在来看一个指针权限的例子。假设我们有一个Post表，里面有一个myPost对象，在我们的应用中有两个用户，poster和viewer，现在我们要增加一个指针权限使Creator字段中的任何人都可以读写这个对象，并且对于myPost对象，poster是这个字段中的用户，我们还在这个对象上增加了ACL，使view具备只读权限。你可能期望这会允许poster可以读取和修改myPost，但是viewer将会被指针权限拒绝，poster将会被ACL拒绝，所以，两个用户都无法访问这个对象。
+
+介于CLP、ACL和指针权限间的复杂影响，建议你同时使用时要小心对待。
+
+
+
 
 
 
