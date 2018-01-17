@@ -140,7 +140,7 @@ _指针类型权限_
 
 _查询权限验证\(需要parse-server &gt;= 2.3.0\)_
 
-从2.3.0版本开始，parse-server引进了心的表级权限\(CLP\)requiresAuthentication，CLP会阻止任何未经验证的用户执行CLP保护的操作。
+从2.3.0版本开始，parse-server引进新的表级权限\(CLP\)requiresAuthentication，CLP会阻止任何未经验证的用户执行CLP保护的操作。
 
 比如，你想允许经过验证的用户从你的云端find和get Announcement，你需要设置此CLP：
 
