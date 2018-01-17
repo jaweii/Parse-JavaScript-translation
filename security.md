@@ -69,7 +69,7 @@ _访问控制列表_
 
 当你有了用户以后，你就可以开始使用ACL了。你要记住，用户可以通过传统用户名/密码方式注册，也可以使用Fackbook或twitter等第三方平台登录，甚至使用Parse的匿名用户功能。要为当前用户设置ACL，使其对公众不可读，你可以这样做：
 
-```
+```js
 var user = Parse.User.current();
 user.setACL(new Parse.ACL(user));
 ```
@@ -78,7 +78,7 @@ user.setACL(new Parse.ACL(user));
 
 如果你想让用户的部分数据公开，另一部分数据不公开，最好的办法就是分割成两个对象，在公开的对象上增加一个指向私密对象的指针字段。
 
-```
+```js
 var privateData = Parse.Object.extend("PrivateUserData");
 privateData.setACL(new Parse.ACL(Parse.User.current()));
 privateData.set("phoneNumber", "555-5309");
@@ -88,7 +88,7 @@ Parse.User.current().set("privateData", privateData);
 
 当然，你也可以为对象设置不同的读写权限。比如，创建一个作者可写，公众可读的ACL：
 
-```
+```js
 var acl = new Parse.ACL();
 acl.setPublicReadAccess(true);
 acl.setWriteAccess(Parse.User.current().id, true);
@@ -96,7 +96,7 @@ acl.setWriteAccess(Parse.User.current().id, true);
 
 有时基于每个用户的权限管理是不方便的，并且你想按特定权限给用户分组，就像设置管理员，使用角色功能就可以完成。角色是一种特殊的对象类型，它可以让你创建一个角色，通过ACL给角色指派权限。角色最方便的就是你无需为每个受角色约束的对象做修改，就可以为对象的用户权限做增删操作。要创建一个只有管理员可写的对象可以这样做：
 
-```
+```js
 var acl = new Parse.ACL();
 acl.setPublicReadAccess(true);
 acl.setRoleWriteAccess("admins", true);
@@ -114,7 +114,7 @@ acl.setRoleWriteAccess("admins", true);
 
 下面是一个公众可读，自己可写的ACL格式：
 
-```
+```js
 {
     "*": { "read":true },
     "UserObjectId": { "read" :true, "write": true }
@@ -123,7 +123,7 @@ acl.setRoleWriteAccess("admins", true);
 
 下面是一个使用了角色的ACL格式：
 
-```
+```js
 {
     "role:RoleName": { "read": true },
     "UserObjectId": { "read": true, "write": true }
@@ -132,7 +132,7 @@ acl.setRoleWriteAccess("admins", true);
 
 _指针类型权限_
 
-指针类型是一种特殊的表级权限，它基于这些对象上的指针字段指向的用户，在class表中的每个对象上创建了一个虚拟ACL。比如，一个使用了owner字段的class表中，owner上设置了一个只读权限，class表中的每个对象将会对owner指向的用户只读。假设有一个有sender\(发送方\)和receiver\(接收方\)字段的class表，receiver字段上使用了只读权限，sender字段上使用了读写权限，那么receiver指向的用户对于这个表中所有的对象只读，sender指向的用户对于这个表中所有的用户可以读写。
+指针类型是一种特殊的表级权限，它基于这些对象上的指针字段指向的用户，在class表中的每个对象上创建了一个虚拟ACL。比如，一个使用了`owner`字段的class表中，`owner`上设置了一个只读权限，class表中的每个对象将会对`owner`指向的用户只读。假设有一个有`sender`\(发送方\)和`receiver`\(接收方\)字段的class表，`receiver`字段上使用了只读权限，`sender`字段上使用了读写权限，那么`receiver`指向的用户对于这个表中所有的对象只读，`sender`指向的用户对于这个表中所有的用户可以读写。
 
 需要注意的是这个ACL并没有真的在每个对象上创建，任何已经存在的ACL并不会因为你增删了指针类型权限而有任何修改，并且任何尝试和一个对象进行交互的用户都只能和这个对象进行交互，对象已经存在的ACL也会允许其操作。
 
@@ -142,7 +142,7 @@ _查询权限验证\(需要parse-server &gt;= 2.3.0\)_
 
 从2.3.0版本开始，parse-server引进新的表级权限\(CLP\)requiresAuthentication，CLP会阻止任何未经验证的用户执行CLP保护的操作。
 
-比如，你想允许经过验证的用户从你的云端find和get Announcement，你需要设置此CLP：
+比如，你想允许经过验证的用户从你的云端find和get `Announcement`，你需要设置此CLP：
 
 ```
 // POST http://my-parse-server.com/schemas/Announcement
@@ -176,11 +176,11 @@ _查询权限验证\(需要parse-server &gt;= 2.3.0\)_
 
 _CLP和ACL的相互影响_
 
-表级权限\(CLP，Class Level Permmissions\)和访问控制列表\(ACL，Access Control List\)都是安全防护的好工具，但它们并不总是如你期望的那样交互。它们实际上代表两种不同安全层，每个请求必须通过每一层后才能返回正确的信息或做预期的修改。下图展示了这些层，一个在lass表层，一个在对象层，请求必须经过这两层验证。请注意，尽管指针权限和ACL很相似，但是指针权限是表级权限的一种，所以请求为了经过CLP验证必须先经过指针权限验证。![](/assets/clp_vs_acl_diagram.png)就像你看到的，当你同时使用了CLP和ACL，判断是否授权用户发出的请求就会变得复杂。让我们通过一个例子来更好的理解CLP和ACL可以如何交互。假设我们有一个Photo表，并且有一个photoObject对象，我们的应用中有两个用户，user1和user2，现在我们在Photo表上设置Get CLP，禁止公众Get的请求，允许user1的Get请求，然后再在photoObject上设置ACL，只允许user2的Get请求。
+表级权限\(CLP，Class Level Permmissions\)和访问控制列表\(ACL，Access Control List\)都是安全防护的好工具，但它们并不总是如你期望的那样交互。它们实际上代表两种不同安全层，每个请求必须通过每一层后才能返回正确的信息或做预期的修改。下图展示了这些层，一个在lass表层，一个在对象层，请求必须经过这两层验证。请注意，尽管指针权限和ACL很相似，但是指针权限是表级权限的一种，所以请求为了经过CLP验证必须先经过指针权限验证。![](/assets/clp_vs_acl_diagram.png)就像你看到的，当你同时使用了CLP和ACL，判断是否授权用户发出的请求就会变得复杂。让我们通过一个例子来更好的理解CLP和ACL可以如何交互。假设我们有一个`Photo`表，并且有一个`photoObject`对象，我们的应用中有两个用户，`user1`和`user2`，现在我们在`Photo`表上设置Get CLP，禁止公众Get的请求，允许`user1`的Get请求，然后再在`photoObject`上设置ACL，只允许`user2`的Get请求。
 
-你可能期望这会使user1和user2都能Get PhotoObject，但是因为CLP层和ACL层同时生效，所以user1和user2将都不能请求成功。user1的Get请求会通过CLP层，但是无法通过ACL层，同样的，user2可以通过ACL层，但是不能通过CLP层。
+你可能期望这会使`user1`和`user2`都能Get `PhotoObject`，但是因为CLP层和ACL层同时生效，所以`user1`和`user2`将都不能请求成功。`user1`的Get请求会通过CLP层，但是无法通过ACL层，同样的，`user2`可以通过ACL层，但是不能通过CLP层。
 
-现在我们在来看一个指针权限的例子。假设我们有一个Post表，里面有一个myPost对象，在我们的应用中有两个用户，poster和viewer，现在我们要增加一个指针权限使Creator字段中的任何人都可以读写这个对象，并且对于myPost对象，poster是这个字段中的用户，我们还在这个对象上增加了ACL，使view具备只读权限。你可能期望这会允许poster可以读取和修改myPost，但是viewer将会被指针权限拒绝，poster将会被ACL拒绝，所以，两个用户都无法访问这个对象。
+现在我们在来看一个指针权限的例子。假设我们有一个`Post`表，里面有一个`myPost`对象，在我们的应用中有两个用户，`poster`和`viewer`，现在我们要增加一个指针权限使`Creator`字段中的任何人都可以读写这个对象，并且对于`myPost`对象，`poster`是这个字段中的用户，我们还在这个对象上增加了ACL，使`viewer`具备只读权限。你可能期望这会允许`poster`可以读取和修改`myPost`，但是`viewer`将会被指针权限拒绝，`poster`将会被ACL拒绝，所以，两个用户都无法访问这个对象。
 
 介于CLP、ACL和指针权限间的复杂影响，我们建议你同时使用时要小心对待。
 
@@ -199,15 +199,15 @@ Parse中有一些特殊的class表，他们不像其他class表一样完全遵�
 | Delete | 正常 \[5\] | 仅master key有效 \[7\] |
 | Add Field | 正常 | 正常 |
 
-1. 登录或使用REST API /parse/login 行为在用户表上不遵循GET CLP，只有基于用户名/密码的登录正常工作，并且不能使用CLP禁用。
-2. 拉取当前用户，或成为基于session token的用户，这两个都在REST API /parse/users/me 中，不遵循用户表的Get CLP 。
-3. ACL 只读无法应用在已登录用不上，举例，如果所有用户都被ACL设置为禁止读操作，那么执行查询请求仍然会返回当前用户。总之，如果Find CLP被禁止，那么尝试在用户表执行find请求会返回错误。
+1. 登录或使用REST API `/parse/login` 行为在用户表上不遵循GET CLP，只有基于用户名/密码的登录正常工作，并且不能使用CLP禁用。
+2. 拉取当前用户，或成为基于session token的用户，这两个都在REST API `/parse/users/me` 中，不遵循用户表的Get CLP 。
+3. ACL 只读无法应用在已登录用户上，举例，如果所有用户都被ACL设置为禁止读操作，那么执行查询请求仍然会返回当前用户。不过，如果Find CLP被禁止，那么尝试在用户表执行find请求会返回错误。
 
-4. Create CLP也会应用到用户注册上，所以禁止用户表上的Create CLP也会禁止用户注册，除非使用master key。 
+4. Create CLP也会应用到用户注册上，所以禁止用户表上的Create CLP也会禁止用户注册，除非使用master key。
 
-5. 用户数据的更新和删除只能由用户子集完成，公众的Delete/Update CLP仍然可用。比如说，如果你禁止用户表的公众修改权限，那么用户自己也不能编辑。不过用户对象的ACL写权限正常工作，用户仍然可以更新户删除自己的数据，并且用户不能更新或删除其他用户的数据。
+5. 用户数据的更新和删除只能由用户自己完成，公众的Delete/Update CLP仍然可用。比如说，如果你禁止用户表的公众修改权限，那么用户自己也不能编辑。不过用户对象的ACL写权限正常工作，用户仍然可以更新户删除自己的数据，并且用户不能更新或删除其他用户的数据。
 
-6. installations表上的Get权限遵循ACL，Find权限在没有使用master key的情况下不被允许，除非你应用了installtionId作为约束条件。
+6. installations表上的Get权限遵循ACL，Find权限在没有使用master key的情况下不被允许，除非你应用了`installtionId`作为约束条件。
 
 7. installations表上的Update请求遵循ACL，但是Delete请求需要master key才可以。更多关于installtions工作的信息，请查看[http://docs.parseplatform.org/rest/guide/\#installations](http://docs.parseplatform.org/rest/guide/#installations)
 
