@@ -106,7 +106,8 @@ acl.setRoleWriteAccess("admins", true);
 
 这些仅仅是开始。应用可以通过ACL和表级权限执行所有种类复杂的权限控制。比如：
 
-* 
+
+
 
 
 
