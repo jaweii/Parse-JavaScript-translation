@@ -176,19 +176,9 @@ _查询权限验证\(需要parse-server &gt;= 2.3.0\)_
 
 _CLP和ACL_
 
-表级权限\(CLP，Class Level Permmissions\)和访问控制列表\(ACL，Access Control List\)都是安全防护的好工具，但它们并不总是如你期望的那样交互。它们实际上代表两种不同安全层，每个请求必须通过每一层后才能返回正确的信息或做预期的修改。下图展示了这些层，一个在lass表层，一个在对象层，请求必须经过这两层验证。请注意，尽管指针权限和ACL很相似，但是指针权限是表级权限的一种，所以请求为了经过CLP验证必须先经过指针权限验证。![](/assets/clp_vs_acl_diagram.png)就像你看到的，当你同时使用了CLP和ACL，是否授权用户发出请求就会变得复杂。
+表级权限\(CLP，Class Level Permmissions\)和访问控制列表\(ACL，Access Control List\)都是安全防护的好工具，但它们并不总是如你期望的那样交互。它们实际上代表两种不同安全层，每个请求必须通过每一层后才能返回正确的信息或做预期的修改。下图展示了这些层，一个在lass表层，一个在对象层，请求必须经过这两层验证。请注意，尽管指针权限和ACL很相似，但是指针权限是表级权限的一种，所以请求为了经过CLP验证必须先经过指针权限验证。![](/assets/clp_vs_acl_diagram.png)就像你看到的，当你同时使用了CLP和ACL，是否授权用户发出请求就会变得复杂。让我们通过一个例子来更好的理解CLP和ACL可以如何交互。假设我们有一个Photo表，并且有一个photoObject对象，我们的应用中有两个用户，user1和user2，现在我们在Photo表上设置Get CLP，禁止公众Get的请求，允许user1的Get请求，然后再再photoObject上设置ACL，只允许user2的Get请求。
 
-
-
-
-
-
-
-
-
-
-
-
+你可能期望这会使user1和user2都能Get PhotoObject，但是因为CLP层和ACL层同时生效，所以user1和user2将都不能请求成功。user1的Get请求会通过CLP层，但是无法通过ACL层，同样的，user2可以通过ACL层，但是不能通过CLP层。
 
 
 
