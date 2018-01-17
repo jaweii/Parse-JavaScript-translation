@@ -138,3 +138,57 @@ _指针类型权限_
 
 有时将指针权限和ACL混合使用会造成混论，所以我们推荐你使用指针权限就不要使用ACL。幸运的是，如果你决定使用云代码或着ACL来保护你的应用后，移除指针权限是很简单的。
 
+_查询权限验证\(需要parse-server &gt;= 2.3.0\)_
+
+从2.3.0版本开始，parse-server引进了心的表级权限\(CLP\)requiresAuthentication，CLP会阻止任何未经验证的用户执行CLP保护的操作。
+
+比如，你想允许经过验证的用户从你的云端find和get Announcement，你需要设置此CLP：
+
+```
+// POST http://my-parse-server.com/schemas/Announcement
+// Set the X-Parse-Application-Id and X-Parse-Master-Key header
+// body:
+{
+  classLevelPermissions:
+  {
+    "find": {
+      "requiresAuthentication": true,
+      "role:admin": true
+    },
+    "get": {
+      "requiresAuthentication": true,
+      "role:admin": true
+    },
+    "create": { "role:admin": true },
+    "update": { "role:admin": true },
+    "delete": { "role:admin": true }
+  }
+}
+```
+
+效果：
+
+* 未经验证的用户将不能做任何事
+* 经验证的用户将可以读取这个class表的所有对象
+* 属于admin角色的用户将可以执行所有操作
+
+警告：如果你允许任何人登录你的应用，任何客户端仍然可以查找表中对象，以上将形同虚设。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
