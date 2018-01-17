@@ -12,7 +12,9 @@ Parse后端服务框架，Facebook开源项目。
 
 ---
 
-原始文档地址：[http://docs.parseplatform.org/js/guide](http://docs.parseplatform.org/js/guide)
+英文指南地址：[http://docs.parseplatform.org/js/guide](http://docs.parseplatform.org/js/guide)
+
+API文档地址：[http://parseplatform.org/Parse-SDK-JS/api/v1.11.0/index.html](http://parseplatform.org/Parse-SDK-JS/api/v1.11.0/index.html)
 
 翻译：朱嘉伟\([http://buzhundong.com](http://buzhundong.com)\)
 
