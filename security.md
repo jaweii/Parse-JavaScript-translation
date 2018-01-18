@@ -186,7 +186,7 @@ _CLP和ACL的相互影响_
 
 使用CLP禁用某个类型的请求，然后其他类型的请求使用指针权限或者ACL来控制，这是经常被用到的。举个例子，你可能想禁用Photo表中的Delete权限，但另一方面又增加一个指针权限以便创建者可以编辑它，只是不允许删除它。因为指针权限和ACL之间的相互影响非常复杂，我们一般推荐你只用这两种安全机制中的一种。
 
-_安全边缘情况_
+_安全边缘案例_
 
 Parse中有一些特殊的class表，他们不像其他class表一样完全遵循CLP或ACL的定义，这些例外被记录在了下表，其中"正常"表示CLP和ACL正常工作，还有一些其他信息介绍在脚注中。
 
@@ -210,6 +210,35 @@ Parse中有一些特殊的class表，他们不像其他class表一样完全遵�
 6. installations表上的Get权限遵循ACL，Find权限在没有使用master key的情况下不被允许，除非你应用了`installtionId`作为约束条件。
 
 7. installations表上的Update请求遵循ACL，但是Delete请求需要master key才可以。更多关于installtions工作的信息，请查看[http://docs.parseplatform.org/rest/guide/\#installations](http://docs.parseplatform.org/rest/guide/#installations)
+
+_云代码中的数据完整性_
+
+对于大多数应用，指针权限、表级CLP、对象级ACL是保证你应用和用户数据安全的全部，但是有些时候，在一些边缘案例中还不足以保证安全，这种情况可以使用[云代码](http://docs.parseplatform.org/cloudcode/guide/)。
+
+云代码允许你上传JavaScript代码到Parse服务器，并为你运行它，不同于运行在用户设备上的代码，存在被篡改的可能，云代码可以保证不会被篡改 ，所以它更可信，能负责更重要的功能。
+
+云代码最常见的用例是阻止无效的数据被存储，这在防止客户端绕过验证逻辑时非常重要。
+
+云代码允许你为你的class表创建一个beforeSave触发器，在对应class表中有对象被保存时将会运行这个触发器，并且你可以在这个触发器方法里修改对象或拒绝对象的保存操作，下面是[云函数beforeSave触发器](http://docs.parseplatform.org/cloudcode/guide/#beforesave-triggers)的创建方法，用以确保每个用户都设置了邮件地址：
+
+```
+Parse.Cloud.beforeSave(Parse.User, function(request, response) {
+  var user = request.object;
+  if (!user.get("email")) {
+    response.error("Every user must have an email address.");
+  } else {
+    response.success();
+  }
+});
+```
+
+云代码中使用验证方法可以锁定你的应用以确保数据都是可接受的，你也可以是使用afterSave触发器标准化你的数据\(比如格式话所有的电话号码或用户id\)，你可以保留大部分从客户端直接访问Parse数据的生产力优势 ，还可以随时为你的数据执行某些不变量。
+
+
+
+
+
+
 
 
 
