@@ -14,7 +14,7 @@ client key在应用发布后就给了用户，所以任何可以用客户端密�
 
 另一方面，master key定义了一种安全的机制。使用master key可以忽略应用的所有安全机制，比如表级别权限、ACL。master key就像服务器的root权限，所以你应该保管好你的master key，就像保管你的root密码一样。
 
-你应该限制客户端的权限，把敏感的操作在云代码中用master key完成。你将在[Implementing Business Logic in Cloud Code](http://docs.parseplatform.org/js/guide/#implementing-business-logic-in-cloud-code)这一节学会使用云代码。
+你应该限制客户端的权限，把敏感的操作在云代码中用master key完成。你将在[在云代码中实现业务逻辑](https://parse-zh.buzhundong.com/security.html#%E5%9C%A8%E4%BA%91%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91)一节学会使用云代码。
 
 最后，建议在你服务器使用HTTPS和SSL，避免中间人攻击和运营商劫持，当然，不使用的话Parse也能正常工作。
 
@@ -219,9 +219,9 @@ _云代码中的数据完整性_
 
 云代码最常见的用例是阻止无效的数据被存储，这在防止客户端绕过验证逻辑时非常重要。
 
-云代码允许你为你的class表创建一个beforeSave触发器，在对应class表中有对象被保存时将会运行这个触发器，并且你可以在这个触发器方法里修改对象或拒绝对象的保存操作，下面是[云函数beforeSave触发器](http://docs.parseplatform.org/cloudcode/guide/#beforesave-triggers)的创建方法，用以确保每个用户都设置了邮件地址：
+云代码允许你为你的class表创建一个`beforeSave`触发器，在对应class表中有对象被保存时将会运行这个触发器，并且你可以在这个触发器方法里修改对象或拒绝对象的保存操作，下面是[云函数beforeSave触发器](http://docs.parseplatform.org/cloudcode/guide/#beforesave-triggers)的创建方法，用以确保每个用户都设置了邮件地址：
 
-```
+```js
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
   var user = request.object;
   if (!user.get("email")) {
@@ -232,7 +232,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 });
 ```
 
-云代码中使用验证方法可以锁定你的应用以确保数据都是可接受的，你也可以是使用afterSave触发器标准化你的数据\(比如格式话所有的电话号码或用户id\)，你可以保留大部分从客户端直接访问Parse数据的生产力优势 ，还可以随时为你的数据执行某些不变量。
+云代码中使用验证方法可以锁定你的应用以确保数据都是可接受的，你也可以是使用`afterSave`触发器标准化你的数据\(比如格式话所有的电话号码或用户id\)，你可以保留大部分从客户端直接访问Parse数据的生产力优势 ，还可以随时为你的数据执行某些不变量。
 
 常用的验证场景包括：
 
@@ -247,13 +247,13 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 
 有时候有些操作可能是敏感的，需要尽可能的保证安全，这种情况下，你完全可以从客户端代码中删除这些逻辑，将所有的敏感操作都汇集到云代码功能中。
 
-当一个云代码功能被调用，它可以使用{useMasterKey:true}选项来获得修改用户数据的能力，使用master key，你的云代码函数访问数据将可以无视任何ACL，这意味着它可以绕过所有的上一节讲到的安全机制。
+当一个云代码功能被调用，它可以使`用{useMasterKey:true}`选项来获得修改用户数据的能力，使用master key，你的云代码函数访问数据将可以无视任何ACL，这意味着它可以绕过所有的上一节讲到的安全机制。
 
-假设你想允许用户给一个Post对象点赞，而又不用给用户对这个Post对象的写权限，你可以通过从客户端调用云代码函数来完成，而不是客户端直接修改Post对象本身。
+假设你想允许用户给一个`Post`对象点赞，而又不用给用户对这个Post对象的写权限，你可以通过从客户端调用云代码函数来完成，而不是客户端直接修改`Post`对象本身。
 
-master key应该被小心使用，只对需要绕过安全机制的个别云代码函数设置{useMasterKey:true}：
+master key应该被小心使用，只对需要绕过安全机制的个别云代码函数设置`{useMasterKey:true}`：
 
-```
+```js
 Parse.Cloud.define("like", function(request, response) {
   var post = new Parse.Object("Post");
   post.id = request.params.postId;
@@ -275,8 +275,4 @@ Parse为你保护应用安全提供了多种方法，在你构建你的应用，
 值得再次说明的是，默认情况下用户对象对于所有其他用户对象，都是只读的。如果你想让用户的数据对其他用户不可见，你可以在用户对象上设置相应的ACL。
 
 在很多Parse应用 里，很多class表的安全防护是很简单的。对于完全公开的数据，你可以使用表级权限将整个表的权限锁定为公众可读，没人可写;对于完全私密的数据，你可以使用ACL确保只有对象所有者可以读取它。但有些时候，你可能即不想数据完全公开，又不想完全私密，比如你在朋友圈发的文字，只允许经过你设置可见的朋友可以看到，对于这样的情况，你需要结合本指南的技术，准确使用你希望的共享规则。
-
-
-
-
 
