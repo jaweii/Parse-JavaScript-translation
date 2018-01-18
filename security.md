@@ -243,6 +243,41 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 * 禁止用户直接修改计算字段 
 * 禁止用户删除某个对象，除非用户满足某个条件
 
+## 在云代码中实现业务逻辑
+
+有时候有些操作可能是敏感的，需要尽可能的保证安全，这种情况下，你完全可以从客户端代码中删除这些逻辑，将所有的敏感操作都汇集到云代码功能中。
+
+当一个云代码功能被调用，它可以使用{useMasterKey:true}选项来获得修改用户数据的能力，使用master key，你的云代码函数访问数据将可以无视任何ACL，这意味着它可以绕过所有的上一节讲到的安全机制。
+
+假设你想允许用户给一个Post对象点赞，而又不用给用户对这个Post对象的写权限，你可以通过从客户端调用云代码函数来完成，而不是客户端直接修改Post对象本身。
+
+master key应该被小心使用，只对需要绕过安全机制的个别云代码函数设置{useMasterKey:true}：
+
+```
+Parse.Cloud.define("like", function(request, response) {
+  var post = new Parse.Object("Post");
+  post.id = request.params.postId;
+  post.increment("likes");
+  post.save(null, { useMasterKey: true }).then(function() {
+    response.success();
+  }, function(error) {
+    response.error(error);
+  });
+});
+```
+
+云代码最常用的一个用例就是发送一个推送通知给指定用户，通常情况下，客户端是没有权限直接发送推送通知的，因为客户端可能会修改通知内容，或发送给他们不应该发送的人。你的应用设置允许你设置是否禁用"client push"，我们建议你禁用它。你应该写一个云代码函数，在发送推送前确认数据是要推送的数据。
+
+
+
+
+
+
+
+
+
+
+
 
 
 
