@@ -19,5 +19,59 @@
 
 Parse对象被存储在数据库中，Parse查询将根据你编写的查询条件获取对象，为了避免每个查询都查看给定的class表的所有数据，可以为数据库使用索引，索引是指满足给定标准的项目排序列表，索引能有帮助，是因为索引允许数据库高效的查询，并在不需要查看所有数据的情况下返回匹配结果。索引的大小很小，所以可以在内存中使用，所以查找更快。
 
+## 索引
+
+在使用Parse服务时，你需要管理你的数据库并保持索引，如果你没有索引，每个查询将必须遍历表中每个数据才能返回匹配结果，反之，如果你有恰当的索引，遍历的数据将很少。
+
+查询的约束的有效性排序如下：
+
+* 等于
+* 包含
+* 小于、小于等于、大于、大于等于
+* 匹配字符串开头
+* 不等于
+* 不包含
+* 其他
+
+来看看下面的查询，获取`GameScore`对象：
+
+```js
+var GameScore = Parse.Object.extend("GameScore");
+var query = new Parse.Query(GameScore);
+query.equalTo("score", 50);
+query.containedIn("playerName",
+    ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
+```
+
+在`score`字段上创建索引，会比在`playerName`上创建索引创造更小的搜索空间。
+
+当检查数据类型使，布尔值的熵非常低，并且没有很好的索引，使用下面的查询约束：
+
+```js
+query.equalTo("cheatMode", false);
+```
+
+`cheatMode`可能的值有`true`和`false`，如果在`cheatMode`上建立索引，用处并不大，因为要返回查询结果，可能要遍历50%的对象。
+
+数据类型根据键值空间的预期熵排序：
+
+* GeoPoints
+* Array
+* Pointer
+* Date
+* String
+* Number
+* Other
+
+即时最好的索引策略也可能被不够好的查询打败。
+
+## 高效的查询设计
+
+
+
+
+
+
+
 
 
