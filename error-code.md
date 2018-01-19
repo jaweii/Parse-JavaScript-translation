@@ -1,6 +1,6 @@
 # 错误码
 
-下面是Parse API可能返回的所有错误码列表，你可以参考 [RFC2616](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) 的HTTP错误码，以便获取更多错误信息
+下面是Parse API可能返回的所有错误码列表，你还可以参考 [RFC2616](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) 的HTTP错误码，以便获取更多错误信息
 
 ## API 问题 {#api-issues}
 
@@ -158,7 +158,7 @@
 | `TemporaryRejectionError` | 159 | An application’s requests are temporary rejected by the server \(legacy Parse.com apps only\). |
 | `DatabaseNotMigratedError` | 428 | You should migrate your database as soon as possible \(legacy Parse.com apps only\). |
 
-## 其他问题  {#other-issues}
+## 其他问题 {#other-issues}
 
 | Name | Code | Description |
 | :--- | :--- | :--- |
