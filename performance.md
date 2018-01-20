@@ -317,11 +317,20 @@ Parse.Cloud.beforeSave("Post", function(request, response) {
 });
 ```
 
+上面代码会保存关键词和标签到数组字段，并会被MongoDB用多键索引。其中有几个要点需要说明。首先，所有的字符串都被转换成了小写，以便我们使用小写字母查询，并且还能大小写敏感；其次，其中过滤掉了注入"the","in","and"之类会出现在很多文章中的单词，在执行时会减少很多无用的扫描。
 
+当你建立了关键词自断后，你就可以使用`containsAll`约束高效的查询了：
 
-
-
-
+```js
+var Post = Parse.Object.extend("Post");
+var query = new Parse.Query(Post);
+query.containsAll("hashtags", [“#parse”, “#ftw”]);
+query.find().then(function(results) {
+  // Request succeeded
+}, function(error) {
+  // Request failed
+});
+```
 
 
 
