@@ -8,7 +8,7 @@
 
 如果你喜欢没事鼓捣鼓捣业余项目。
 
-Parse后端服务框架，Facebook开源项目。
+Parse后端服务，Facebook开源项目。
 
 ---
 
