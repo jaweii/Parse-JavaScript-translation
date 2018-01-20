@@ -67,5 +67,61 @@ query.equalTo("cheatMode", false);
 
 ## 高效的查询设计
 
+编写高效的查询，意味着充分利用索引的好处。下面的查询约束，会使索引无效：
+
+* 不等于
+* 不包含
+
+另外某些场景下，下面的查询，如果他们不能充分利用索引的好处，可能会造成查询相应变慢。
+
+* 正则表达式
+* 按某字段排序
+
+_不等于_
+
+假设，你正在记录一个游戏中的`GameScore`表的高分，你想获取除了某个玩家以外的所有玩家分数，你可以编写这样的查询：
+
+```js
+var GameScore = Parse.Object.extend("GameScore");
+var query = new Parse.Query(GameScore);
+query.notEqualTo("playerName", "Michael Yabuti");
+query.find().then(function(results) {
+  // Retrieved scores successfully
+});
+```
+
+这个查询不能充分利用索引的好处，数据库必须对比`GameScore`表中的每一个对象，才能返回结果，随着class表的条目增长，查询时间会变长。你应该和那个字段的其他字段匹配，而不是查询是否缺少值，这样才可以让数据库使用索引，查询会更快。
+
+比如说，用户表有一个`state`字段，它可能的值有SignedUp、Verified和invited，下面这个查找所有最少使用过一次应用的用户的查询，是较慢的方式：
+
+```js
+var query = new Parse.Query(Parse.User);
+query.notEqualTo("state", "Invited");
+```
+
+如果是给查询设置"包含条件"的约束，查询就会较快：
+
+```js
+query.containedIn("state", ["SignedUp", "Verified"]);
+```
+
+有时候你可应该重写你的查询，我们回到上一个`GameScore`的例子，假设我们要查询比指定玩家最高分高的玩家，我们可以做些不同的，先拿到指定玩家的最高分，然后执行下面查询：
+
+```js
+var GameScore = Parse.Object.extend("GameScore");
+var query = new Parse.Query(GameScore);
+// 先拿到 Michael Yabuti 的highScore
+query.greaterThan("score", highScore);
+query.find().then(function(results) {
+  // Retrieved scores successfully
+});
+```
+
+查询的重写取决于你的使用场景，这有时可能意味着要重新设计数据模型。
+
+_不包含_
+
+
+
 
 
