@@ -228,7 +228,7 @@ Parse.Cloud.define("averageStars", function(request, response) {
 });
 ```
 
-你也可以在客户端执行一个`Review`表的查询，只返回`stars`字段，并在客户端计算结果，随着一部电影的reviews（重看次数）增加，你可以看到返回到客户端的数量也在增加。
+你也可以在客户端执行一个`Review`表的查询，只返回`stars`字段，并在客户端计算结果，随着一部电影的reviews（评论次数）增加，你可以看到返回到客户端的数量也在增加。
 
 在你考虑优化你的查询时，你会发现你必须修改这个查询，有时候甚至是你在你把应用提交到应用市场以后。不通过修改客户端来修改查询代码是可能的，如果你使用了云函数，你就是要重新设计你的架构，也可以在云代码中完成
 
@@ -242,7 +242,53 @@ Parse.Cloud.run("averageStars", { "movie": "The Matrix" }).then(function(ratings
 
 如果以后你需要修改数据架构，你的客户端可以保持不变，只要你返回一个表示得分结果的数字就行了。
 
+## 避免Count操作
 
+当使用对象统计功能频繁时，可以考虑在数据库中增加一个统计变量，它会随着对象的增加而增加。然后，统计数据就可以通过简单的检索存储的变量来完成。
+
+假设你要在你的应用中显示电影信息，并且你的数据模型是由`Movie`表和`Review`表组成，`Review`表包含了一个指向对象`Movie`对象的指针。你可能想在顶级导航统计视图显示每个电影的评论次数，查询类似这样：
+
+```js
+var Review = Parse.Object.extend("Review");
+var query = new Parse.Query("Review");
+query.equalTo(“movie”, movie);
+query.count().then(function(count) {
+  // Request succeeded
+});
+```
+
+如果你为每个UI元素执行这个查询请求，在大数据集中这会很低效。避免使用count操作的办法就是增加一个`reviews`字段到Movie表，用以表示评论次数，每当`Review`表新增一个对象，就给对应的`Movie`对象`reviews`增加计数。可以通过`afterSave`触发器完成：
+
+```js
+Parse.Cloud.afterSave("Review", function(request) {
+  // 获取movie对象id
+  var movieId = request.object.get("movie").id;
+  // 查询movie对象
+  var Movie = Parse.Object.extend("Movie");
+  var query = new Parse.Query(Movie);
+  query.get(movieId).then(function(movie) {
+    // 给reviews增加计数
+    movie.increment("reviews");
+    movie.save();
+  }, function(error) {
+    throw "Got an error " + error.code + " : " + error.message;
+  });
+});
+```
+
+这样，就可以避免使用count，也能获取到统计信息了：
+
+```js
+var Movie = Parse.Object.extend("Movie");
+var query = new Parse.Query(Movie);
+query.find().then(function(results) {
+  // 结果中包含reviews统计字段
+}, function(error) {
+  // Request failed
+});
+```
+
+你也可以使用单独的Parse对象来监测每个评论的数量，每当一个评论增加或减少，就通过`afterSave`或`afterDelete`触发器来做相应的计数增减。你可以根据你的使用场景来选择。
 
 
 
