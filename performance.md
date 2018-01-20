@@ -158,6 +158,18 @@ query.contains("playerName", "Michael");
 query.startsWith("playerName", "Michael");
 ```
 
+上面查询会根据给定的字符串查找数据，因为使用了所有，所有查询会更快。
+
+作为最佳时间，当你使用正则表达式约束时，你要确保查询中的其他约束能将结果控制在数百个以内，以保证查询效率。如果你必须使用`matches`或`contains`约束，那么尽可能使用大小写敏感和锚查询，比如：
+
+```
+query.matches("playerName", "^Michael");
+```
+
+大多数场景下都会使用到包含正则表达式的搜索，稍候会详细介绍更高效的查询方法。
+
+## 编写受约束的查询
+
 
 
 
