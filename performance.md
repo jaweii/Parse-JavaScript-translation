@@ -290,6 +290,39 @@ query.find().then(function(results) {
 
 你也可以使用单独的Parse对象来监测每个评论的数量，每当一个评论增加或减少，就通过`afterSave`或`afterDelete`触发器来做相应的计数增减。你可以根据你的使用场景来选择。
 
+## 使用高效的查询
+
+正如前文提高的，MongoDB对字符串部分匹配的查询支持不够好，但是，这是产品中实现可拓展的搜索功能的重要功能。
+
+简单搜索算法只是扫描class表中的所有数据，并对每个条目进行查询。编写高效查询的关键，在于使用索引执行每个查询时，将必须被检查的数据量降到最低。你将需要用一种方便建立索引的构建你的数据模型，比如，随着数据集的增长，字符串查询将不能匹配不能被索引、会造成超时的字符串。
+
+我们通过一个例子来了解如何构建一个高效的查询，你可以将这个例子中学到的概念应用到你的使用场景中。假设你的应用有用户发布文章，并且你想为应用提供标签搜索或关键词搜索的能力，你需要预处理你的文章，并在一个数组字段中保存标签或关键词。你可以在你的应用中在文章保存后处理，也可以使用`beforeSave`触发器在云函数中处理：
+
+```js
+var _ = require("underscore");
+Parse.Cloud.beforeSave("Post", function(request, response) {
+  var post = request.object;
+  var toLowerCase = function(w) { return w.toLowerCase(); };
+  var words = post.get("text").split(/\b/);
+  words = _.map(words, toLowerCase);
+  var stopWords = ["the", "in", "and"]
+  words = _.filter(words, function(w) {
+    return w.match(/^\w+$/) && !   _.contains(stopWords, w);
+  });
+  var hashtags = post.get("text").match(/#.+?\b/g);
+  hashtags = _.map(hashtags, toLowerCase);
+  post.set("words", words);
+  post.set("hashtags", hashtags);
+  response.success();
+});
+```
+
+
+
+
+
+
+
 
 
 
