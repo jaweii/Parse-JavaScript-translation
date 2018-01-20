@@ -170,7 +170,77 @@ query.matches("playerName", "^Michael");
 
 ## 编写受约束的查询
 
+编写受约束的查询可以保证只有客户端需要的数据被返回，这在数据使用受限和网络连接不可信的环境下非常重要。在查询章节介绍了你可以添加到查询的约束类型，用以限制返回的数据。增加约束时，你应专注设计高效的查询。
 
+你可以使用skip和limit来获取需要的数据，查询条数限制默认为100条：
+
+```js
+query.limit(10); // 限制条数10
+```
+
+如果你在GeoPoints上遇到问题，确保你指定了合理的半径：
+
+```js
+var query = new Parse.Query(PlaceObject);
+query.withinMiles("location", userGeoPoint, 10.0);
+query.find().then(function(placesObjects) {
+  // Get a list of objects within 10 miles of a user's location
+});
+```
+
+你可以使用select进一步的限制返回哪些字段：
+
+```js
+var GameScore = Parse.Object.extend("GameScore");
+var query = new Parse.Query(GameScore);
+query.select("score", "playerName");
+query.find().then(function(results) {
+  // each of results will only have the selected fields available.
+});
+```
+
+## 客户端缓存
+
+对于IOS和Android应用，你可以开启查询缓存，详情查看[IOS](http://docs.parseplatform.org/ios/guide/#caching-queries)和[Android](http://docs.parseplatform.org/android/guide/#caching-queries)指南。查询缓存可以提高你的应用性能，尤其是在你想显示客户端从Parse最后一次拉取到的数据的时候。
+
+## 使用云代码
+
+云代码可以让你在Parse服务上运行JavaScript代码，而不是在客户端运行。
+
+你可以使用云代码减少客户端逻辑，使应用性能感知上更好。你还可以在云代码中创建对象操作的触发器，这在验证数据和净化数据时很有用。你也可以使用云代码修改相关的对象，或启动其他处理，比如发送推送通知。
+
+我们已经看过了通过编写受约束的查询限制返回数据，你也可以使用[云函数](http://docs.parseplatform.org/cloudcode/guide/#cloud-functions)来为你的应用限制返回的数据数量。在下面的例子中，我们定义了一个云函数来获取一部电影的平均分：
+
+```js
+Parse.Cloud.define("averageStars", function(request, response) {
+  var Review = Parse.Object.extend("Review");
+  var query = new Parse.Query(Review);
+  query.equalTo("movie", request.params.movie);
+  query.find().then(function(results) {
+    var sum = 0;
+    for (var i = 0; i < results.length; ++i) {
+      sum += results[i].get("stars");
+    }
+    response.success(sum / results.length);
+  }, function(error) {
+    response.error("movie lookup failed");
+  });
+});
+```
+
+你也可以在客户端执行一个`Review`表的查询，只返回`stars`字段，并在客户端计算结果，随着一部电影的reviews（重看次数）增加，你可以看到返回到客户端的数量也在增加。
+
+在你考虑优化你的查询时，你会发现你必须修改这个查询，有时候甚至是你在你把应用提交到应用市场以后。不通过修改客户端来修改查询代码是可能的，如果你使用了云函数，你就是要重新设计你的架构，也可以在云代码中完成
+
+上面的查询平均分的云函数例子，在客户端可以像这样调用它：
+
+```js
+Parse.Cloud.run("averageStars", { "movie": "The Matrix" }).then(function(ratings) {
+  // ratings is 4.5
+});
+```
+
+如果以后你需要修改数据架构，你的客户端可以保持不变，只要你返回一个表示得分结果的数字就行了。
 
 
 
