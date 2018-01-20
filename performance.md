@@ -121,6 +121,55 @@ query.find().then(function(results) {
 
 _不包含_
 
+类似于"不等于"，"不包含"查询约束不能使用索引，你应该尝试使用互补的“包含”查询约束。回到之前的用户例子，如果`state`字段还有一个“Blocked”值表示被封的用户，我们现在要查询活动的用户，下面这样是低效的：
+
+```js
+var query = new Parse.Query(Parse.User);
+query.notContainedIn("state", ["Invited", "Blocked"]);
+```
+
+使用对应的“包含”查询约束是高效的：
+
+```js
+query.containedIn("state", ["SignedUp", "Verified"]);
+```
+
+这意味着根据你的架构设置，你要相应的重写查询，甚至重写架构。
+
+_正则表达式_
+
+处于性能考虑，应该尽量避免使用正则表达式，MongoDB对于字符串部分匹配的执行不是很高效。使用正则查询对性能的消耗是很高的，尤其是在表数据超过10万条后。你需要考虑在特定时间内限制多少这样的查询，你的应用才能正常运行。
+
+正则表达式不支持索引，比如下面的查询，通过给定的`playerName`字段查找数据，字符串查询时不区分大小写的，并且不能被索引：
+
+```js
+query.matches("playerName", "Michael", “i”);
+```
+
+下面的查询区分大小写，会查询每个相应字段包含了给定字符串的对象，并且不能被索引：
+
+```js
+query.contains("playerName", "Michael");
+```
+
+上面两个查询都是低效的，事实上，`matches`和`contains`查询约束并没有包含在我们的查询指南中，我们也不推荐使用他们。根据你的使用场景，你应该切换到使用下面的查询约束，它可以使用索引：
+
+```js
+query.startsWith("playerName", "Michael");
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
