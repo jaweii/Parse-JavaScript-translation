@@ -1,12 +1,44 @@
 # 开始
 
-Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传的配置好的Parse服务项目，下载下来安装对应的依赖后运行即可。
+Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传的配置好的ParseServer项目，下载下来安装对应的依赖后运行即可。
 
 然后在前端使用Parse的SDK即可与后端完成交互。
 
 ## 安装Parse服务
 
+你可以照着[ParseServer文档](http://docs.parseplatform.org/parse-server/guide/) 自己搭建Parse服务。
 
+也可以直接下载我[配置好的Parse服务项目](https://github.com/jaweii/Parse-JavaScript-translation)，大概长这样：
+
+![](/assets/1.png)
+
+这个项目是基于官方的例子，集成了仪表盘和文件管理。
+
+下载好这个项目后，安装好依赖。你可以将目录移到合适的位置，因为它将作为我们的后端服务。
+
+然后你还需要 [安装MongoDB](https://www.mongodb.com/download-center#community)，安装完成后使用`mongod -dbpath "你想要保存数据库的路径" ` 运行数据库服务，然后运行`mongo`命令测试能不能连接上：
+
+```
+$ mongo
+MongoDB shell version: 3.2.9
+connecting to: test
+> ^C
+bye
+```
+
+最后在项目目录运行 `npm  run start`即可开启Parse后端服务。
+
+```
+$ npm run start
+
+> parse-server-example@1.4.0 start C:\Users\Administrator\Desktop\Parse\parse-server-example-master
+> cross-env APP_ID='myAppId' CLIENT_KEY='123456' MASTER_KEY='123456' PORT=2018 SERVER_URL=http://localhost:2018/parse node index.js
+
+DATABASE_URI not specified, falling back to localhost.
+parse-server-example running on port 2018.
+```
+
+http://localhost:2018/parse就是我们的后端服务地址，你可以通过修改index.js的代码来修改服务信息，也可以在package.json中修改环境变量来修改服务信息。
 
 # 集成Parse SDK
 
@@ -42,10 +74,10 @@ var Parse = require('parse/react-native');
 
 ```js
 Parse.initialize("你的appId");
-Parse.serverURL = 'http://你的Parse-Server地址:1337/parse'
+Parse.serverURL = '你的后端服务地址'
 ```
 
-这个JavaScript SDK 最初是基于广受欢迎的Backbone.js框架，它提供了灵活的API，允许你配置你喜欢的JS库。
+此JavaScript SDK 最初是基于广受欢迎的Backbone.js框架，它提供了灵活的API，允许你配置你喜欢的JS库。
 
 我们的目标是最小化配置，以便你快速开始构建你的JavaScript和HTML5应用。
 
