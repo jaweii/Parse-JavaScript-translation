@@ -151,3 +151,23 @@ Parse.LiveQuery.on('error', (error) => {
 
 当出现某个网络错误，或者实时请求服务器发生错误，将会触发error事件。
 
+## 重连 {#reconnect}
+
+由于实时请求功能依赖WebSocket连接，为了保持WebScoket连接是一直打开的，每当我们发现连接丢失后，就会自动尝试重连，我们会在后台按间隔指数级增加的时间重连。不过，如果WebScoket连接时通过`Parse.LiveQuery.close()`或`client.close()`关闭的，将不会重连。
+
+## SessionToken {#sessiontoken}
+
+当你订阅一个ParseQuery，我们会发送一个当前用户的sessionToken到实时请求服务器。有一点要注意，当你退出当前用户后，sessionToken将失效，你应该取消订阅后重新订阅；否则，你可能会面临安全问题，因为你会收到不应发送给你的事件。
+
+
+
+
+
+
+
+
+
+
+
+
+
