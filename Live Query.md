@@ -21,7 +21,7 @@ let subscription = query.subscribe();
 
 我们定义了一些事件类型，你可以通过`subscription`对象拿到：
 
-_OPEN 事件_
+### OPEN 事件
 
 ```js
 subscription.on('open', () => {
@@ -33,7 +33,7 @@ subscription.on('open', () => {
 
 当客户端关闭WebSocket连接后，我们会自动重连到实时请求服务器，如果重连成功，也会触发open事件。
 
-_CREAT事件_
+### CREAT事件
 
 ```js
 subscription.on('create', (object) => {
@@ -43,7 +43,7 @@ subscription.on('create', (object) => {
 
 当一个新的Parse对象被创建，并且它满足你订阅的`ParseQuery`时，将会触发create事件。`object`是指创建的对象。
 
-_UPDATE事件_
+### UPDATE事件
 
 ```js
 subscription.on('update', (object) => {
@@ -53,7 +53,7 @@ subscription.on('update', (object) => {
 
 当一个已经存在的，满足你订阅的`ParseQuery`的`ParseObject`被更新，将会触发update事件。object是指更新后的ParseObject对象。
 
-_ENTER事件_
+### ENTER事件
 
 ```js
 subscription.on('enter', (object) => {
@@ -63,7 +63,7 @@ subscription.on('enter', (object) => {
 
 当一个已存在的，不满足`ParseQuery`的`ParseObject`变得满足后，就会触发enter事件。object是指变更后的最新对象。
 
-_LEAVE事件_
+### LEAVE事件
 
 ```js
 subscription.on('leave', (object) => {
@@ -73,7 +73,7 @@ subscription.on('leave', (object) => {
 
 和enter事件相反，当一个已存在的`ParseObject`对象从满足变成不满足`ParseQuery`后，就会触发leave事件。
 
-_DELETE 事件_
+### DELETE 事件
 
 ```js
 subscription.on('delete', (object) => {
@@ -83,7 +83,7 @@ subscription.on('delete', (object) => {
 
 当一个已存在，满足`ParseQuery`的`ParseObject`对象被删除后，就会触发delete事件。object对象是指被删除的对象。
 
-_CLOSE 事件_
+### CLOSE 事件
 
 ```js
 subscription.on('close', () => {
@@ -149,21 +149,5 @@ Parse.LiveQuery.on('error', (error) => {
 });
 ```
 
-When some network error or LiveQuery server error happens, you’ll get this event.
-
 当出现某个网络错误，或者实时请求服务器发生错误，将会触发error事件。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
