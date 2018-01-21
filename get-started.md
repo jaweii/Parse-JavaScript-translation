@@ -91,15 +91,14 @@ Parse.serverURL = '你的后端服务地址'
 
 在此例子中，假设你已经搭建好ParseServer。
 
-我们使用Vue来做一个Todo List。
+现在，我们使用Vue来做一个Todo List。
 
-1、使用`vue init webpack todolist`脚手架命令创建一个vue项目。
+1、使用脚手架命令`vue init webpack todolist`创建一个vue项目。
 
 2、安装Parse、UI依赖 ，集成到main.js。
 
 ```js
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+// main.js
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -120,4 +119,94 @@ new Vue({
 ```
 
 3、编写页面。
+
+```js
+//app.vue
+<template>
+    <div id="app">
+        <mu-appbar>
+            <mu-text-field type="text" hintText="Todo List" v-model="value">
+            </mu-text-field>
+            <mu-icon-button icon="add" slot="right" @click="addItem">
+            </mu-icon-button>
+        </mu-appbar>
+        <mu-list>
+            <mu-list-item v-for="item in list" :title="item.get('title')" :describeText="item.get('finish')?'完成':'未完成'">
+                <mu-icon-button icon="check" slot="left" @click="finishItem(item)" :disabled="item.get('finish')">
+                </mu-icon-button>
+                <mu-icon-button icon="delete" slot="right" @click="deleteItem(item)">
+                </mu-icon-button>
+            </mu-list-item>
+        </mu-list>
+        <div style="text-align:center;" v-if="!list.length">暂无任务</div>
+        </section>
+    </div>
+</template>
+<script>
+//初始化SDK
+import parse from 'parse'
+parse.serverURL = 'http://localhost:2018/parse'
+parse.initialize('myAppId', '123456')//传入APPID和JavaScript key即可
+
+export default {
+    name: 'App',
+    data() {
+        return {
+            value: '',
+            list: []
+        }
+    },
+    mounted() {
+        let query = new parse.Query('Todo')
+        query.find().then(list => {
+            this.list = list
+        })
+    },
+    methods: {
+        addItem() {
+            if (!this.value)
+                return
+            let todo = new parse.Object('Todo')
+            todo.set('title', this.value)
+            todo.set('finish', false)
+            todo.save().then(todo => {
+                this.list.push(todo)
+                this.value = ''
+            }).catch(console.error)
+        },
+        finishItem(todo) {
+            todo.set('finish', true).save().then(todo => {
+                this.$forceUpdate()
+            }).catch(console.error)
+        },
+        deleteItem(todo) {
+            todo.destroy().then(todo => {
+                this.list = this.list.filter(item => item !== todo)
+            }).catch(console.error)
+        }
+    }
+}
+</script>
+
+<style>
+@import "http://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css";
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    max-width: 400px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+</style>
+
+```
+
+以上，是手写的所有代码。按惯例，上GIF：
+
+![](/assets/GIF.gif)
+
+图中的数据都是同步保存到后端数据库的
 
