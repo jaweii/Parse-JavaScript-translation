@@ -75,7 +75,7 @@ var Parse = require('parse/react-native');
 接下来，用JavaScript初始化你的Parse-Sever，记得替换为你的应用信息：
 
 ```js
-Parse.initialize("你的appId","client key","master key");//参数2、3选填
+Parse.initialize("你的appId","client key","javascript key");//参数2、3选填
 Parse.serverURL = '你的后端服务地址'
 ```
 
