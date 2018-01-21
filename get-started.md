@@ -8,7 +8,7 @@ Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传
 
 你可以照着[ParseServer文档](http://docs.parseplatform.org/parse-server/guide/) 自己搭建Parse服务。
 
-也可以直接下载我[配置好的Parse服务项目](https://github.com/jaweii/Parse-JavaScript-translation)，大概长这样：
+也可以直接下载[配置好的Parse服务项目](https://github.com/jaweii/Parse-JavaScript-translation)，大概长这样：
 
 ![](/assets/1.png)
 
@@ -38,9 +38,9 @@ DATABASE_URI not specified, falling back to localhost.
 parse-server-example running on port 2018.
 ```
 
-你可以通过访问http://localhost:2018/test来测试是否运行成功。
+你可以通过访问[http://localhost:2018/test来测试是否运行成功。](http://localhost:2018/test来测试是否运行成功。)
 
-其中，http://localhost:2018/parse就是我们的后端服务地址，在初始化SDK时我们将会用到。你也可 以通过修改index.js的代码来修改服务地址和其他服务信息，也可以在package.json中修改环境变量来修改服务信息。
+其中，[http://localhost:2018/parse就是我们的后端服务地址，在初始化SDK时我们将会用到。你也可](http://localhost:2018/parse就是我们的后端服务地址，在初始化SDK时我们将会用到。你也可) 以通过修改index.js的代码来修改服务地址和其他服务信息，也可以在package.json中修改环境变量来修改服务信息。
 
 # 集成Parse SDK
 
