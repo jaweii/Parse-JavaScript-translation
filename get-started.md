@@ -77,7 +77,7 @@ var Parse = require('parse/react-native');
 接下来，用JavaScript初始化你的Parse-Sever，记得替换为你的应用信息：
 
 ```js
-Parse.initialize("你的appId");
+Parse.initialize("你的appId","client key","master key");//参数2、3选填
 Parse.serverURL = '你的后端服务地址'
 ```
 
@@ -92,4 +92,32 @@ Parse.serverURL = '你的后端服务地址'
 在此例子中，假设你已经搭建好ParseServer。
 
 我们使用Vue来做一个Todo List。
+
+1、使用`vue init webpack todolist`脚手架命令创建一个vue项目。
+
+2、安装Parse、UI依赖 ，集成到main.js。
+
+```js
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+import muse from 'muse-uI'
+import 'muse-ui/dist/muse-ui.css'
+
+Vue.use(muse)
+
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
+new Vue({
+    el: '#app',
+    router,
+    components: { App },
+    template: '<App/>'
+})
+```
+
+3、编写页面。
 
