@@ -42,7 +42,7 @@ parse-server-example running on port 2018.
 
 其中， [http://localhost:2018/parse](http://localhost:2018/parse) 就是我们的后端服务地址，在初始化SDK时我们将会用到。你也可以通过修改index.js的代码来修改服务地址和其他服务信息，也可以在package.json中修改环境变量来修改服务信息。
 
-# 集成Parse SDK
+## 集成Parse SDK
 
 集成Parse SDK到你的JavaScript项目中，最简单的方法是通过[npm](https://npmjs.org/parse)安装。
 
