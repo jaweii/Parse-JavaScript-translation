@@ -1,5 +1,15 @@
 # 开始
 
+Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传的配置好的Parse服务项目，下载下来安装对应的依赖后运行即可。
+
+然后在前端使用Parse的SDK即可与后端完成交互。
+
+## 安装Parse服务
+
+
+
+# 集成Parse SDK
+
 集成Parse SDK到你的JavaScript项目中，最简单的方法是通过[npm](https://npmjs.org/parse)安装。
 
 但如果你想使用Parse的预编译文件，你可以从[npm cdn](https://npmcdn.com/)获得。
@@ -39,9 +49,5 @@ Parse.serverURL = 'http://你的Parse-Server地址:1337/parse'
 
 我们的目标是最小化配置，以便你快速开始构建你的JavaScript和HTML5应用。
 
-目前SDK支持Firefox 23+，Chrome 17+，Safari 5+和IE 10。 IE 9仅支持使用HTTPS托管的应用程序。  
-
-  
-
-  
+目前SDK支持Firefox 23+，Chrome 17+，Safari 5+和IE 10。 IE 9仅支持使用HTTPS托管的应用程序。
 
