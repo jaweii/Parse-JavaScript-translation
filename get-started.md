@@ -6,9 +6,7 @@ Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传
 
 ## 安装Parse服务
 
-你可以照着[ParseServer文档](http://docs.parseplatform.org/parse-server/guide/) 自己搭建Parse服务。
-
-也可以直接下载[配置好的Parse服务项目](https://github.com/jaweii/Parse-JavaScript-translation)，大概长这样：
+你可以照着[ParseServer文档](http://docs.parseplatform.org/parse-server/guide/) 自己搭建Parse服务，也可以直接下载[配置好的Parse服务项目](https://github.com/jaweii/Parse-JavaScript-translation)，大概长这样：
 
 ![](/assets/1.png)
 
