@@ -91,5 +91,7 @@ Parse.serverURL = '你的后端服务地址'
 
 在此例子中，假设你已经搭建好ParseServer。
 
+我们使用Vue来做一个Todo List。
+
 
 
