@@ -1,5 +1,7 @@
 # 实时请求
 
+> 译者注：介绍下实时请求的使用场景，比如，某商品的扫码付款页面，在用户付款后，服务端确认付款成功后通知客户端成功付款的事件，客户端收到事件，知道用户付款成功，然后做对应的交互，完成付款。
+
 ## 标准API {#standard-api}
 
 就像我们在[LiveQuery protocol](https://github.com/parse-community/parse-server/wiki/Parse-LiveQuery-Protocol-Specification)里面说到的，我们保留了一个WebSocket连接来与Parse实时请求服务通信。当实时请求在服务端使用时，使用的是[`ws`](https://www.npmjs.com/package/ws)包，当在浏览器端使用时，使用的是window.WebSocket。我们考虑到在大多数使用场景下，WebSocket不是必需的，所以我们提供了简单的API让你可以专注于你的业务逻辑。
@@ -71,7 +73,6 @@ subscription.on('leave', (object) => {
 
 和enter事件相反，当一个已存在的`ParseObject`对象从满足变成不满足`ParseQuery`后，就会触发leave事件。
 
-  
 _DELETE 事件_
 
 ```js
@@ -82,7 +83,6 @@ subscription.on('delete', (object) => {
 
 当一个已存在，满足ParseQuery的ParseObject对象被删除后，就会触发delete事件。object对象是指被删除的对象。
 
-  
 _CLOSE 事件_
 
 ```js
@@ -94,10 +94,4 @@ subscription.on('close', () => {
 When the client loses the WebSocket connection to the LiveQuery server and we can’t get anymore events, you’ll get this event.
 
 当客户端断开和LiveQuery服务的WebSocket连接后，就会触发close事件。
-
-
-
-
-
-
 
