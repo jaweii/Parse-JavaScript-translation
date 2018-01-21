@@ -2,7 +2,7 @@
 
 Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传的配置好的ParseServer项目，下载下来安装对应的依赖后运行即可。
 
-然后在前端使用Parse的SDK即可与后端完成交互。
+然后，在前端使用Parse的SDK即可与后端完成交互。
 
 ## 安装Parse服务
 
@@ -16,7 +16,7 @@ Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传
 
 下载完这个项目后，安装依赖。你可以将目录移到合适的位置，因为它将作为我们的后端服务。
 
-然后你还需要 [安装MongoDB](https://www.mongodb.com/download-center#community)，安装完成后使用`mongod -dbpath "你想要保存数据库的路径"` 运行数据库服务，然后中 运行`mongo`命令测试能不能连接上：
+然后你还需要 [安装MongoDB](https://www.mongodb.com/download-center#community)，安装完成后使用`mongod -dbpath "你想要保存数据库的路径"` 运行数据库服务，然后运行`mongo`命令测试能不能连接上：
 
 ```
 $ mongo
@@ -201,12 +201,17 @@ export default {
     margin: auto;
 }
 </style>
-
 ```
 
 以上，是手写的所有代码。按惯例，上GIF：
 
 ![](/assets/GIF.gif)
 
-图中的数据都是同步保存到后端数据库的
+图中的数据都是同步保存到后端数据库的，我们从仪表盘的数据浏览器可以看到：
+
+![](/assets/dashboard.png)
+
+你看，一个任务清单应用分分钟就完成了。
+
+你可能对例子中SDK的用法不是很了解，如果你用过leancloud、bmob等bass平台，你会发现他们超级相似；没有用过也没关系，本章之后的指南基本上都是讲SDK的使用。
 
