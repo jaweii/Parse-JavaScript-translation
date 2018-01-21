@@ -89,5 +89,7 @@ Parse.serverURL = '你的后端服务地址'
 
 ## 例子
 
+在此例子中，假设你已经搭建好ParseServer。
+
 
 
