@@ -38,7 +38,9 @@ DATABASE_URI not specified, falling back to localhost.
 parse-server-example running on port 2018.
 ```
 
-[http://localhost:2018/parse就是我们的后端服务地址，你可以通过修改index.js的代码来修改服务信息，也可以在package.json中修改环境变量来修改服务信息。](http://localhost:2018/parse就是我们的后端服务地址，你可以通过修改index.js的代码来修改服务信息，也可以在package.json中修改环境变量来修改服务信息。)
+你可以通过访问http://localhost:2018/test来测试是否运行成功。
+
+其中，http://localhost:2018/parse就是我们的后端服务地址，在初始化SDK时我们将会用到。你也可 以通过修改index.js的代码来修改服务地址和其他服务信息，也可以在package.json中修改环境变量来修改服务信息。
 
 # 集成Parse SDK
 
