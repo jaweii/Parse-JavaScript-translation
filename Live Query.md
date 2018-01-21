@@ -81,7 +81,7 @@ subscription.on('delete', (object) => {
 });
 ```
 
-当一个已存在，满足ParseQuery的ParseObject对象被删除后，就会触发delete事件。object对象是指被删除的对象。
+当一个已存在，满足`ParseQuery`的`ParseObject`对象被删除后，就会触发delete事件。object对象是指被删除的对象。
 
 _CLOSE 事件_
 
@@ -91,7 +91,79 @@ subscription.on('close', () => {
 });
 ```
 
-When the client loses the WebSocket connection to the LiveQuery server and we can’t get anymore events, you’ll get this event.
-
 当客户端断开和LiveQuery服务的WebSocket连接后，就会触发close事件。
+
+## 取消订阅 {#unsubscribe}
+
+```js
+subscription.unsubscribe();
+```
+
+如果你想停止从`ParseQuery`接收事件，你可以使用`unsubscribe`方法取消订阅。然后，你将不能从`subscription`收到任何事件。
+
+# 关闭
+
+```js
+Parse.LiveQuery.close();
+```
+
+当你使用完实时请求，你可以调用close方法，WebSocket将会断开和实时请求服务器的链接，取消重连，取消订阅所有的订阅。在此之后，如果你再次调用`query.subscribe()`，将会创建一个新的连接。
+
+## 设置服务地址 {#setup-server-url}
+
+```js
+Parse.liveQueryServerURL = 'ws://XXXX'
+```
+
+大多数的情况你不需要设置这个，如果你设置了服务地址，我们将会提取出主机地址，并使用ws://hostname作为默认的实时请求服务地址。总之，如果你想定义你自己的实时请求地址，或使用不同的协议，比如wss，你可以通过这个来设置。
+
+## WebSocket 状态 {#websocket-status}
+
+我们暴露出了3个方法来为你监控WebSocket链接的状态。
+
+### OPEN 事件 {#open-event-1}
+
+```js
+Parse.LiveQuery.on('open', () => {
+  console.log('socket connection established');
+});
+```
+
+当WebSocket完成了连接到实时请求服务器，将会触发open事件。
+
+### CLOSE 事件 {#close-event-1}
+
+```js
+Parse.LiveQuery.on('close', () => {
+  console.log('socket connection closed');
+});
+```
+
+当WebSocket关闭了和实时请求服务器的链接，将会触发close事件。
+
+### ERROR 事件 {#error-event}
+
+```js
+Parse.LiveQuery.on('error', (error) => {
+  console.log(error);
+});
+```
+
+When some network error or LiveQuery server error happens, you’ll get this event.
+
+当出现某个网络错误，或者实时请求服务器发生错误，将会触发error事件。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
