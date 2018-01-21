@@ -24,7 +24,7 @@ connecting to: test
 bye
 ```
 
-最后在项目目录运行 `npm  run start`即可开启Parse后端服务。
+如果连接成功，在项目目录运行 `npm  run start`即可开启Parse后端服务。
 
 ```
 $ npm run start
@@ -40,7 +40,7 @@ parse-server-example running on port 2018.
 
 如果运行成功，你可以访问[http://localhost:2018/dashboard](http://localhost:2018/dashboard) 进入仪表盘，进行可视化管理。
 
-其中， [http://localhost:2018/parse](http://localhost:2018/parse) 就是我们的后端服务地址，在初始化SDK时我们将会用到。你也可 以通过修改index.js的代码来修改服务地址和其他服务信息，也可以在package.json中修改环境变量来修改服务信息。
+其中， [http://localhost:2018/parse](http://localhost:2018/parse) 就是我们的后端服务地址，在初始化SDK时我们将会用到。你也可以通过修改index.js的代码来修改服务地址和其他服务信息，也可以在package.json中修改环境变量来修改服务信息。
 
 # 集成Parse SDK
 
