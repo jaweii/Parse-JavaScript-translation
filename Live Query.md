@@ -31,5 +31,73 @@ subscription.on('open', () => {
 
 当客户端关闭WebSocket连接后，我们会自动重连到实时请求服务器，如果重连成功，也会触发open事件。
 
+_CREAT事件_
+
+```js
+subscription.on('create', (object) => {
+  console.log('object created');
+});
+```
+
+当一个新的Parse对象被创建，并且它满足你订阅的`ParseQuery`时，将会触发create事件。`object`是指创建的对象。
+
+_UPDATE事件_
+
+```js
+subscription.on('update', (object) => {
+  console.log('object updated');
+});
+```
+
+当一个已经存在的，满足你订阅的`ParseQuery`的`ParseObject`被更新，将会触发update事件。object是指更新后的ParseObject对象。
+
+_ENTER事件_
+
+```js
+subscription.on('enter', (object) => {
+  console.log('object entered');
+});
+```
+
+当一个已存在的，不满足`ParseQuery`的`ParseObject`变得满足后，就会触发enter事件。object是指变更后的最新对象。
+
+_LEAVE事件_
+
+```js
+subscription.on('leave', (object) => {
+  console.log('object left');
+});
+```
+
+和enter事件相反，当一个已存在的`ParseObject`对象从满足变成不满足`ParseQuery`后，就会触发leave事件。
+
+  
+_DELETE 事件_
+
+```js
+subscription.on('delete', (object) => {
+  console.log('object deleted');
+});
+```
+
+当一个已存在，满足ParseQuery的ParseObject对象被删除后，就会触发delete事件。object对象是指被删除的对象。
+
+  
+_CLOSE 事件_
+
+```js
+subscription.on('close', () => {
+  console.log('subscription closed');
+});
+```
+
+When the client loses the WebSocket connection to the LiveQuery server and we can’t get anymore events, you’ll get this event.
+
+当客户端断开和LiveQuery服务的WebSocket连接后，就会触发close事件。
+
+
+
+
+
 
 
