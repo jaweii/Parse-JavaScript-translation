@@ -2,7 +2,7 @@
 
 ## Parse.Object
 
-Parse的对象存储是建立在`Parse.Object`上，每一个`Parse.Object`包含了JSON格式的键值对。它的数据是无模式的，这意味着你无需提前为每一个`Parse.Object` 指定存在的键。你只需要设置任何你想要的键值对就行了，我们的后端都会存储它。
+Parse的对象存储是建立在`Parse.Object`上，每一个`Parse.Object`包含了JSON格式的键值对，它的数据是无模式的，这意味着你无需提前为每一个`Parse.Object` 指定存在的键，你只需要设置任何你想要的键值对就行了，后端会自动创建并存储它。
 
 举例说明，假设你正在记录游戏玩家的分数，一个`Parse.Object` 可以包含：
 
