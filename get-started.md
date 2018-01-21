@@ -16,7 +16,7 @@ Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传
 
 下载好这个项目后，安装好依赖。你可以将目录移到合适的位置，因为它将作为我们的后端服务。
 
-然后你还需要 [安装MongoDB](https://www.mongodb.com/download-center#community)，安装完成后使用`mongod -dbpath "你想要保存数据库的路径" ` 运行数据库服务，然后运行`mongo`命令测试能不能连接上：
+然后你还需要 [安装MongoDB](https://www.mongodb.com/download-center#community)，安装完成后使用`mongod -dbpath "你想要保存数据库的路径"` 运行数据库服务，然后运行`mongo`命令测试能不能连接上：
 
 ```
 $ mongo
@@ -38,7 +38,7 @@ DATABASE_URI not specified, falling back to localhost.
 parse-server-example running on port 2018.
 ```
 
-http://localhost:2018/parse就是我们的后端服务地址，你可以通过修改index.js的代码来修改服务信息，也可以在package.json中修改环境变量来修改服务信息。
+[http://localhost:2018/parse就是我们的后端服务地址，你可以通过修改index.js的代码来修改服务信息，也可以在package.json中修改环境变量来修改服务信息。](http://localhost:2018/parse就是我们的后端服务地址，你可以通过修改index.js的代码来修改服务信息，也可以在package.json中修改环境变量来修改服务信息。)
 
 # 集成Parse SDK
 
@@ -82,4 +82,8 @@ Parse.serverURL = '你的后端服务地址'
 我们的目标是最小化配置，以便你快速开始构建你的JavaScript和HTML5应用。
 
 目前SDK支持Firefox 23+，Chrome 17+，Safari 5+和IE 10。 IE 9仅支持使用HTTPS托管的应用程序。
+
+## 使用例子
+
+
 
