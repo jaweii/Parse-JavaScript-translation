@@ -84,7 +84,7 @@ ParseServer可以通过下面的选项来配置，你可以在创建ParseServer�
 
 ## 邮箱验证和密码重置
 
-使用email适配器，可以验证用户的邮箱地址和允许密码重置。作为`parse-server`包的一部分，我们通过Mailgun提供了发送邮件的功能，要使用这个，你需要注册Mailgun，并添加下面代码到你的项目：
+使用email适配器，可以验证用户的邮箱地址和允许密码重置。作为`parse-server`包的一部分，我们通过Mailgun适配器提供了发送邮件的功能，要使用这个，你需要注册Mailgun，并添加下面代码到你的项目：
 
 ```js
 var server = ParseServer({
@@ -153,6 +153,18 @@ var server = ParseServer({
   }
 });
 ```
+
+你还可以使用来自社区的其他邮件适配器：
+
+* [parse-server-postmark-adapter](https://www.npmjs.com/package/parse-server-postmark-adapter)
+* [parse-server-sendgrid-adapter](https://www.npmjs.com/package/parse-server-sendgrid-adapter)
+* [parse-server-mandrill-adapter](https://www.npmjs.com/package/parse-server-mandrill-adapter)
+* [parse-server-simple-ses-adapter](https://www.npmjs.com/package/parse-server-simple-ses-adapter)
+* [parse-server-mailgun-adapter-template](https://www.npmjs.com/package/parse-server-mailgun-adapter-template)
+* [parse-server-sendinblue-adapter](https://www.npmjs.com/package/parse-server-sendinblue-adapter)
+* [parse-server-mailjet-adapter](https://www.npmjs.com/package/parse-server-mailjet-adapter)
+* [simple-parse-smtp-adapter](https://www.npmjs.com/package/simple-parse-smtp-adapter)
+* [parse-server-generic-email-adapter](https://www.npmjs.com/package/parse-server-generic-email-adapter)
 
 ## 日志
 
