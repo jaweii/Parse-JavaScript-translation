@@ -10,11 +10,9 @@ Parse的对象存储是建立在`Parse.Object`上，每一个`Parse.Object`包�
 score: 1337, playerName: "Sean Plott", cheatMode: false
 ```
 
-键名必须是字母和数字组成的string类型的，值可以是string、boolean、array和任何可以被JSON编码的类型。
+键名必须是字母和数字组成的string类型的，键值可以是string、boolean、array和任何可以被JSON编码的类型。
 
-每一个`Parse.Object` 都是一个特定子类的实例，且具备类名。
-
-你可以通过不同的实例来区分不同的数据。为了让你的代码更加诗意，我们推荐你使用驼峰命名，就像gameScore或者GameScore。
+每一个`Parse.Object` 都是一个使用表名构造的表记录对象。你可以通过不同的实例来区分不同的数据。为了让你的代码更加诗意，我们推荐你使用驼峰命名，就像gameScore或者GameScore。
 
 ---
 
