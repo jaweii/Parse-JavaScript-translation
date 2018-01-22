@@ -1,8 +1,8 @@
 # ParseServer配置指南
 
 > 番外部分不属于原版指南的一部分，由译者译制添加，以提供更好的文档阅读体验。
-
-> ParseServer GitHub地址：https://github.com/parse-community/Parse-Server
+>
+> ParseServer GitHub地址：[https://github.com/parse-community/Parse-Server](https://github.com/parse-community/Parse-Server)
 
 “开始”“一章有讲到，在本书GitHub有提供一个ParseServer脚手架项目，就是基于ParseServer + Express编写的，在本章会介绍更多关于ParseServer的配置，以满足开发者更多的需求。
 
@@ -52,6 +52,36 @@ ParseServer可以通过下面的选项来配置，你可以在创建ParseServer�
 * `cloud`- 云代码文件的路径地址，是绝对路径。.
 * `push`- 配置APNS和GCM推送.参考[Push Notifications quick start](http://docs.parseplatform.org/parse-server/guide/#push-notifications_push-notifications-quick-start)。
 
+### 客户端秘钥选项
+
+下面密钥不是必需选项，如果设置了对应的选项，在对应的SDK初始化中需要传入你设置的秘钥。
+
+* `clientKey`
+* `javascriptKey`
+* `restAPIKey`
+* `dotNetKey`
+
+### 高级选项
+
+* `allowClientClassCreation`- 设置为false后禁止客户端创建Class表，默认为true。
+* `enableAnonymousUsers`- 设置为false后禁用用户匿名功能，默认为true。
+* `auth`- 用来配置支持[3rd party authentication](http://docs.parseplatform.org/parse-server/guide/#oauth-and-3rd-party-authentication)。
+* `facebookAppIds`- Facebook应用Id数组。
+* `mountPath`- 指定服务挂载的路由. 默认为`/parse`
+* `filesAdapter`- 默认的文件管理可以通过适配器修改，参考[`FilesAdapter.js`](https://www.gitbook.com/book/jaweii/parse/edit#)。
+* `maxUploadSize`- 最大上传文件限制，默认20M。
+* `loggerAdapter`- 参考[`LoggerAdapter.js`](https://www.gitbook.com/book/jaweii/parse/edit#)。
+* `logLevel`- 设置你想要的日志记录级别，默认为`info`，查看[Winston logging levels](https://github.com/winstonjs/winston#logging-levels) 支持哪些值。
+* `sessionLength`- 设置session有效期，单位秒，默认31536000 seconds \(1 年\)。
+* `maxLimit`- 限制查询的最大返回数量，默认不限制。
+* `revokeSessionOnPasswordReset`- 当用户密码被重置，作废之前的session。
+* `accountLockout`- 当用户尝试修改其他用户的信息时，锁定用户账号。
+* `passwordPolicy`- 密码策略。
+* `customPages`- 与邮箱验证链接、密码重置链接、面向用户的页面地址哈希，可用值有：`parseFrameURL`,`invalidLink`,`choosePassword`,`passwordResetSuccessverifyEmailSuccess`.
+* `middleware`- \(CLI only\), 一个模块名，功能是express的中间件。 这个选项用来注入一个监听的中间件.
+* `masterKeyIps`- 一个IP数组，masterKey的使用将被限定在这个数组范围内，默认为空，不限制。如果使用了这个选项，确保使用云代码时，你的IP包含在内。
+* `readOnlyMasterKey`- 类似于masterKey，但是只有读权限，没有写权限。
+
 ## 日志
 
 ParseServer日志默认会：
@@ -69,7 +99,7 @@ ParseServer日志默认会：
 
 ### 设置日志目录
 
-将环境变量`PARSE_SERVER_LOGS_FOLDER `设置为新的路径即可：
+将环境变量`PARSE_SERVER_LOGS_FOLDER`设置为新的路径即可：
 
 `PARSE_SERVER_LOGS_FOLDER='<path-to-logs-folder>' parse-server --appId APPLICATION_ID --masterKey MASTER_KEY`
 
@@ -78,6 +108,4 @@ ParseServer日志默认会：
 通过环境变量`logLevel`设置：
 
 `parse-server --appId APPLICATION_ID --masterKey MASTER_KEY --logLevel LOG_LEVEL`
-
-
 
