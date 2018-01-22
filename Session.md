@@ -84,7 +84,7 @@ Parse.Cloud.beforeSave("MyClass", function(request, response) {
 });
 ```
 
-如果你想在Parse上为`Session`类设置表级权限（CLP），CLP通过`Session` API 限制session的读写，但是不要在用户注册、登录、注销时限制Parse云自动增删session。我们推荐你禁用`Session`所有不需要的CLP。下面有一些`Session` CLP的用例：
+如果你想在Parse上为`Session`表设置表级权限（CLP），以限制session的读写，但不要在用户注册、登录、注销时限制Parse云自动增删session。我们推荐你禁用`Session`所有不需要的CLP。下面有一些`Session` CLP的用例：
 
 * **Find、Delete** - 用以构建一个供用户查看其他登录的在线设备，并且注销其他设备的用户.的功能。如果你不需要个功能，你应该禁用这个权限。
 * **Create **- 用于“Parse for IoT”应用，如果是的app是手机应用或web应用，如果你的IoT设备不需要用户会话，你应该禁用这个权限。
