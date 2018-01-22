@@ -126,25 +126,30 @@ var server = ParseServer({
     }
   },
 
-  // account lockout policy setting (OPTIONAL) - defaults to undefined
-  // if the account lockout policy is set and there are more than `threshold` number of failed login attempts then the `login` api call returns error code `Parse.Error.OBJECT_NOT_FOUND` with error message `Your account is locked due to multiple failed login attempts. Please try again after <duration> minute(s)`. After `duration` minutes of no login attempts, the application will allow the user to try login again.
+  // 账户停用策略 (可选) - 默认为undefined
+  /*
+  如果设置了帐户锁定策略，并且登录尝试次数超过了“阈值”次数，
+  则“login”api调用将返回错误代码“Parse.Error.OBJECT_NOT_FOUND”，
+  并显示错误消息“您的帐户由于多次登录失败而被锁定尝试。 请在<时间>分钟后再试一次。 
+  在没有登录尝试的“持续时间”分钟之后，应用程序将允许用户再次尝试登录。
+  */
   accountLockout: {
-    duration: 5, // duration policy setting determines the number of minutes that a locked-out account remains locked out before automatically becoming unlocked. Set it to a value greater than 0 and less than 100000.
-    threshold: 3, // threshold policy setting determines the number of failed sign-in attempts that will cause a user account to be locked. Set it to an integer value greater than 0 and less than 1000.
+    duration: 5, // 账户锁定等待时长，等位分钟，设置为1-100000.
+    threshold: 3, // 设置登录错误次数阈值，1-1000
   },
-  // optional settings to enforce password policies
+  // 可选的密码策略
   passwordPolicy: {
-    // Two optional settings to enforce strong passwords. Either one or both can be specified. 
-    // If both are specified, both checks must pass to accept the password
-    // 1. a RegExp object or a regex string representing the pattern to enforce 
-    validatorPattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/, // enforce password with at least 8 char with at least 1 lower case, 1 upper case and 1 digit
-    // 2. a callback function to be invoked to validate the password  
+    //两个可选设置来执行强密码。 可以指定一个或两个。
+    //如果两者都被指定，则两个检查都必须通过才能接受密码
+    // 1.表示要执行的模式的RegExp对象或正则表达式字符串
+    validatorPattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/, // 最少8为，大小写和数字组成
+    // 2. 在回调中使用验证方法验证
     validatorCallback: (password) => { return validatePassword(password) }, 
-    doNotAllowUsername: true, // optional setting to disallow username in passwords
-    maxPasswordAge: 90, // optional setting in days for password expiry. Login fails if user does not reset the password within this period after signup/last reset. 
-    maxPasswordHistory: 5, // optional setting to prevent reuse of previous n passwords. Maximum value that can be specified is 20. Not specifying it or specifying 0 will not enforce history.
-    //optional setting to set a validity duration for password reset links (in seconds)
-    resetTokenValidityDuration: 24*60*60, // expire after 24 hours
+    doNotAllowUsername: true, // 是否允许账号密码相同
+    maxPasswordAge: 90, // 设置密码过期天数
+    maxPasswordHistory: 5, // 禁用前n个密码再次使用
+     //设置密码重置链接超时时间
+    resetTokenValidityDuration: 24*60*60, //24小时
   }
 });
 ```
