@@ -166,6 +166,14 @@ var server = ParseServer({
 * [simple-parse-smtp-adapter](https://www.npmjs.com/package/simple-parse-smtp-adapter)
 * [parse-server-generic-email-adapter](https://www.npmjs.com/package/parse-server-generic-email-adapter)
 
+在本书提供的ParseServer脚手架中已经配置好了邮件服务，使用的是译者专门编写的适配器parse-zh-email-adapter，你只需要换上你的SMTP账号就行了。
+
+但是还有些地方要你自己修改，比如邮箱验证成功的页面：
+
+![](/assets/email.png)
+
+英文界面，对用户显然不够友好，如果要修改成理想的界面，编辑目录`./node_modules/parse-server/public_html/ `下的模板即可。
+
 ## 日志
 
 ParseServer日志默认会：
