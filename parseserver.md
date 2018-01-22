@@ -166,8 +166,6 @@ var server = ParseServer({
 * [simple-parse-smtp-adapter](https://www.npmjs.com/package/simple-parse-smtp-adapter)
 * [parse-server-generic-email-adapter](https://www.npmjs.com/package/parse-server-generic-email-adapter)
 
-其中[simple-parse-smtp-adapter](https://github.com/lcortess/simple-parse-smtp-adapter)可以自己配置发送方，避免被作为垃圾邮件归类，其配置可参考它的GitHub。
-
 ## 日志
 
 ParseServer日志默认会：
