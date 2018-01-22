@@ -22,4 +22,6 @@
 * [安全\(Security\)](security.md)
 * [性能\(Performance\)](performance.md)
 * [错误码\(Error Code\)](error-code.md)
+* [番外：ParseServer配置指南](parseserver.md)
+* [番外：仪表盘配置指南](dashboard.md)
 
