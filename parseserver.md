@@ -49,7 +49,7 @@ ParseServer可以通过下面的选项来配置，你可以在创建ParseServer�
 * `databaseURI`**\(必需\) **- 你的数据库地址, i.e.`mongodb://user:pass@host.com/dbname`。如果你的密码有特殊字符，确保它 [URL encode 编码。](https://www.gitbook.com/book/jaweii/parse/edit#)
 * `port`- 端口，默认1337。
 * `serverURL`- ParseServer的URL，当云代码发送请求到ParseServer时会发送这个地址。
-* `cloud`- 云代码文件的路径地址，是绝对路径。.
+* `cloud`- 云代码文件的路径地址，是绝对路径。
 * `push`- 配置APNS和GCM推送.参考[Push Notifications quick start](http://docs.parseplatform.org/parse-server/guide/#push-notifications_push-notifications-quick-start)。
 
 ### 客户端秘钥选项
