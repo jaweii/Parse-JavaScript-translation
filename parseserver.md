@@ -82,6 +82,73 @@ ParseServer可以通过下面的选项来配置，你可以在创建ParseServer�
 * `masterKeyIps`- 一个IP数组，masterKey的使用将被限定在这个数组范围内，默认为空，不限制。如果使用了这个选项，确保使用云代码时，你的IP包含在内。
 * `readOnlyMasterKey`- 类似于masterKey，但是只有读权限，没有写权限。
 
+## 邮箱验证和密码重置
+
+使用email适配器，可以验证用户的邮箱地址和允许密码重置。作为`parse-server`包的一部分，我们通过Mailgun提供了发送邮件的功能，要使用这个，你需要注册Mailgun，并添加下面代码到你的项目：
+
+```js
+var server = ParseServer({
+  ...otherOptions,
+  // 启用邮箱验证
+  verifyUserEmails: true,
+
+  // 如果 `verifyUserEmails` 为 `true` 并且
+  //     如果 `emailVerifyTokenValidityDuration` 为 `undefined` 那么
+  //        email verify token 永不过期
+  //     否则
+  //        email verify token 在`emailVerifyTokenValidityDuration`之后过期
+  //
+  // `emailVerifyTokenValidityDuration` 默认为 `undefined`
+  //
+  // 2小时候过期 (= 2 * 60 * 60 == 7200 seconds)
+  emailVerifyTokenValidityDuration: 2 * 60 * 60, //单位秒 (2 hours = 7200 seconds)
+
+  // 设置为false，允许用户未验证也能登录
+  // 设置为true，则必须验证才能登录
+  preventLoginWithUnverifiedEmail: false, // 默认 false
+
+  // 你的应用的URL
+  // 将会出现在验证邮箱和密码重置的链接中
+  // 就像设置serverURL一样
+  publicServerURL: 'https://example.com/parse',
+  // 你的应用名，将作为邮件主题
+  appName: 'Parse App',
+  // email适配器
+  emailAdapter: {
+    module: '@parse/simple-mailgun-adapter',
+    options: {
+      // 设置发件地址
+      fromAddress: 'parse@example.com',
+      // 你的mailgun域名
+      domain: 'example.com',
+      // 你的mailgun apiKey
+      apiKey: 'key-mykey',
+    }
+  },
+
+  // account lockout policy setting (OPTIONAL) - defaults to undefined
+  // if the account lockout policy is set and there are more than `threshold` number of failed login attempts then the `login` api call returns error code `Parse.Error.OBJECT_NOT_FOUND` with error message `Your account is locked due to multiple failed login attempts. Please try again after <duration> minute(s)`. After `duration` minutes of no login attempts, the application will allow the user to try login again.
+  accountLockout: {
+    duration: 5, // duration policy setting determines the number of minutes that a locked-out account remains locked out before automatically becoming unlocked. Set it to a value greater than 0 and less than 100000.
+    threshold: 3, // threshold policy setting determines the number of failed sign-in attempts that will cause a user account to be locked. Set it to an integer value greater than 0 and less than 1000.
+  },
+  // optional settings to enforce password policies
+  passwordPolicy: {
+    // Two optional settings to enforce strong passwords. Either one or both can be specified. 
+    // If both are specified, both checks must pass to accept the password
+    // 1. a RegExp object or a regex string representing the pattern to enforce 
+    validatorPattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/, // enforce password with at least 8 char with at least 1 lower case, 1 upper case and 1 digit
+    // 2. a callback function to be invoked to validate the password  
+    validatorCallback: (password) => { return validatePassword(password) }, 
+    doNotAllowUsername: true, // optional setting to disallow username in passwords
+    maxPasswordAge: 90, // optional setting in days for password expiry. Login fails if user does not reset the password within this period after signup/last reset. 
+    maxPasswordHistory: 5, // optional setting to prevent reuse of previous n passwords. Maximum value that can be specified is 20. Not specifying it or specifying 0 will not enforce history.
+    //optional setting to set a validity duration for password reset links (in seconds)
+    resetTokenValidityDuration: 24*60*60, // expire after 24 hours
+  }
+});
+```
+
 ## 日志
 
 ParseServer日志默认会：
