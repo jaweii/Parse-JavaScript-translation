@@ -8,7 +8,7 @@
 
 所以，`Parse.Query`提供了其他的方法，可以让你查询一批对象，而不是一个对象。
 
-最常用的方法是始创建一个`Parse.Query`，为其设置查询条件，然后使用`find`方法查询匹配的对象列表。比如，要查询一个玩家的`playerName`的得分，我们使用`equalTo`方法来设定查询条件：
+最常用的方法是始创建一个`Parse.Query`，为其设置查询条件，然后使用`find`方法查询匹配的对象列表。比如，要查询一个玩家的`playerName`的得分，我们使用`equalTo`方法来设定“等于”查询条件：
 
 ```js
 var GameScore = Parse.Object.extend("GameScore");
@@ -174,6 +174,17 @@ query.first().then(function(result) {
   // all fields of the object will now be available here.
 });
 ```
+
+### 比较查询 {#hash858517260}
+
+| 逻辑操作 | Query 方法 |
+| :--- | :--- |
+| 等于 | `equalTo` |
+| 不等于 | `notEqualTo` |
+| 大于 | `greaterThan` |
+| 大于等于 | `greaterThanOrEqualTo` |
+| 小于 | `lessThan` |
+| 小于等于 | `lessThanOrEqualTo` |
 
 ---
 
