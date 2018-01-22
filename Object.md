@@ -16,7 +16,7 @@ score: 1337, playerName: "Sean Plott", cheatMode: false
 
 ---
 
-要创建一个新的子类，使用`Parse.Object.extend` 方法即可。每个`Parse.Query`都会返回一个和`Parse.Object`具有相同类名的新子类。如果你熟悉`Backbone.Model`，那么你已经知道如何去使用`Parse.Object`了，它们创建和修改的设计是一样的。
+要创建一个新的子类，使用`Parse.Object.extend` 方法即可。如果你熟悉`Backbone.Model`，那么你已经知道如何去使用`Parse.Object`了，它们创建和修改的设计是一样的。
 
 ```js
 // 创建一个新的Parse.Object子类
