@@ -1,6 +1,6 @@
 # ParseServer配置指南
 
-> 番外部分不属于原版指南的一部分，由译者译制添加，以提供完整的文档阅读体验。
+> 番外部分不属于原版指南的一部分，由译者译制添加，以提供完整的体验。
 >
 > ParseServer GitHub地址：[https://github.com/parse-community/Parse-Server](https://github.com/parse-community/Parse-Server)
 
