@@ -1,6 +1,6 @@
 # 开始
 
-Parse服务的后端搭建很简单，在本书的GitHub仓库中，有我上传的配置好的ParseServer项目，下载下来安装对应的依赖后运行即可。
+Parse服务的后端搭建很简单，在本书的[GitHub](https://github.com/jaweii/Parse-JavaScript-translation)仓库中，有我上传的配置好的ParseServer项目，下载下来安装对应的依赖后运行即可。
 
 然后，在前端使用Parse的SDK即可与后端完成交互。
 
