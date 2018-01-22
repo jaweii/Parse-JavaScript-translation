@@ -77,7 +77,7 @@ ParseServer可以通过下面的选项来配置，你可以在创建ParseServer�
 * `revokeSessionOnPasswordReset`- 当用户密码被重置，作废之前的session。
 * `accountLockout`- 当用户尝试修改其他用户的信息时，锁定用户账号。
 * `passwordPolicy`- 密码策略。
-* `customPages`- 与邮箱验证链接、密码重置链接、面向用户的页面地址哈希，可用值有：`parseFrameURL`,`invalidLink`,`choosePassword`,`passwordResetSuccessverifyEmailSuccess`.
+* `customPages`- 与邮箱验证链接、密码重置链接、面向用户的页面地址哈希，可用值有：`parseFrameURL`,`invalidLink`,`choosePassword`,`passwordResetSucces`,`sverifyEmailSuccess`.
 * `middleware`- \(CLI only\), 一个模块名，功能是express的中间件。 这个选项用来注入一个监听的中间件.
 * `masterKeyIps`- 一个IP数组，masterKey的使用将被限定在这个数组范围内，默认为空，不限制。如果使用了这个选项，确保使用云代码时，你的IP包含在内。
 * `readOnlyMasterKey`- 类似于masterKey，但是只有读权限，没有写权限。
