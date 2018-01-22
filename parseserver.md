@@ -84,7 +84,7 @@ ParseServer可以通过下面的选项来配置，你可以在创建ParseServer�
 
 ## 邮箱验证和密码重置
 
-使用email适配器，可以验证用户的邮箱地址和允许密码重置。作为`parse-server`包的一部分，我们通过Mailgun适配器提供了发送邮件的功能，要使用这个，你需要注册Mailgun，并添加下面代码到你的项目：
+使用email适配器，可以验证用户的邮箱地址和允许密码重置。下面以maigun为例，Mailgun适配器提供了发送邮件的功能，要使用这个，你需要注册Mailgun，并添加下面代码到你的项目：
 
 ```js
 var server = ParseServer({
@@ -154,7 +154,7 @@ var server = ParseServer({
 });
 ```
 
-你还可以使用来自社区的其他邮件适配器：
+你还可以安装来自社区的其他邮件适配器：
 
 * [parse-server-postmark-adapter](https://www.npmjs.com/package/parse-server-postmark-adapter)
 * [parse-server-sendgrid-adapter](https://www.npmjs.com/package/parse-server-sendgrid-adapter)
@@ -165,6 +165,8 @@ var server = ParseServer({
 * [parse-server-mailjet-adapter](https://www.npmjs.com/package/parse-server-mailjet-adapter)
 * [simple-parse-smtp-adapter](https://www.npmjs.com/package/simple-parse-smtp-adapter)
 * [parse-server-generic-email-adapter](https://www.npmjs.com/package/parse-server-generic-email-adapter)
+
+其中[simple-parse-smtp-adapter](https://github.com/lcortess/simple-parse-smtp-adapter)可以自己配置发送方，避免被作为垃圾邮件归类，其配置可参考它的GitHub。
 
 ## 日志
 
