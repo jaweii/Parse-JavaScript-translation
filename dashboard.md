@@ -39,7 +39,7 @@ parse-dashboard --appId yourAppId --masterKey yourMasterKey --serverURL "https:/
 }
 ```
 
-然后你就可以使用`parse-dashboard --config parse-dashboard-config.json `命令来启动仪表盘了。
+然后你就可以使用`parse-dashboard --config parse-dashboard-config.json`命令来启动仪表盘了。
 
 ### 环境变量
 
@@ -70,6 +70,160 @@ PARSE_DASHBOARD_SSL_KEY: "sslKey"
 PARSE_DASHBOARD_SSL_CERT: "sslCert"
 PARSE_DASHBOARD_CONFIG: undefined // Only for reference, it must not exist
 ```
+
+## 管理多个应用
+
+在一个仪表盘中管理多个应用也是可以的，只需要在配置项`apps`数组中增加额外的应用配置即可。
+
+```
+{
+  "apps": [
+    {
+      "serverURL": "https://api.parse.com/1", // Hosted on Parse.com
+      "appId": "myAppId",
+      "masterKey": "myMasterKey",
+      "javascriptKey": "myJavascriptKey",
+      "restKey": "myRestKey",
+      "appName": "My Parse.Com App",
+      "production": true
+    },
+    {
+      "serverURL": "http://localhost:1337/parse", // Self-hosted Parse Server
+      "appId": "myAppId",
+      "masterKey": "myMasterKey",
+      "appName": "My Parse Server App"
+    }
+  ]
+}
+```
+
+## 配置应用图标
+
+Parse仪表盘可以为每个应用可选的配置图标，以便你在仪表盘列表中快速识别它们。
+
+你需要在配置项中定义`iconsFolder`，并且为每个app配置定义`iconName`，`iconsFolder`的路径相对配置文件的，如果你的Parse仪表盘是安装在全局的，你需要为`iconsFolder`指定完整路径。为了直观理解，下面例子中`icons`的所在位置是和配置文件一样的：
+
+```
+{
+  "apps": [
+    {
+      "serverURL": "http://localhost:1337/parse",
+      "appId": "myAppId",
+      "masterKey": "myMasterKey",
+      "appName": "My Parse Server App",
+      "iconName": "MyAppIcon.png",
+    }
+  ],
+  "iconsFolder": "icons"
+}
+```
+
+## 作为Express中间件运行
+
+你可以将Parse仪表盘作为Express的中间件运行：
+
+```js
+var express = require('express');
+var ParseDashboard = require('parse-dashboard');
+
+var dashboard = new ParseDashboard({
+  "apps": [
+    {
+      "serverURL": "http://localhost:1337/parse",
+      "appId": "myAppId",
+      "masterKey": "myMasterKey",
+      "appName": "MyApp"
+    }
+  ]
+});
+
+var app = express();
+
+// make the Parse Dashboard available at /dashboard
+app.use('/dashboard', dashboard);
+
+var httpServer = require('http').createServer(app);
+httpServer.listen(4040);
+```
+
+如果你想将ParseServer和Parse仪表盘运行在同一个服务上，可以将他们作为express中间件运行：
+
+```js
+var express = require('express');
+var ParseServer = require('parse-server').ParseServer;
+var ParseDashboard = require('parse-dashboard');
+
+var api = new ParseServer({
+	// Parse Server settings
+});
+
+var options = { allowInsecureHTTP: false };
+
+var dashboard = new ParseDashboard({
+	// Parse Dashboard settings
+}, options);
+
+var app = express();
+
+// make the Parse Server available at /parse
+app.use('/parse', api);
+
+// make the Parse Dashboard available at /dashboard
+app.use('/dashboard', dashboard);
+
+var httpServer = require('http').createServer(app);
+httpServer.listen(4040);
+```
+
+## 部署仪表盘
+
+### 安全
+
+为了安全地部署仪表盘，防止你应用的master key泄露，你需要使用HTTPS或基本的身份验证。
+
+部署后的仪表盘会检查你使用的连接是否安全，如果你在负载均衡或前置代理后部署仪表盘，那么仪表盘将不会检查连接是否安全，这种情况下，你可以使用--strstProxy选项来启动仪表盘，以依赖客户端安全连接的头部X-Forwarded-\* 。这对于Heroku这样的托管服务很有用，这样你可以信任提供的代理头来判断你使用的是HTTP或HTTPS。你也可以在仪表盘作为express中间件使用的时候设置这个选项。
+
+```js
+var trustProxy = true;
+var dashboard = new ParseDashboard({
+  "apps": [
+    {
+      "serverURL": "http://localhost:1337/parse",
+      "appId": "myAppId",
+      "masterKey": "myMasterKey",
+      "appName": "MyApp"
+    }
+  ],
+  "trustProxy": 1
+});
+```
+
+### 身份验证
+
+你可以通过添加用户名和密码到配置项中，来为仪表盘添加基本的身份验证：
+
+```js
+{
+  "apps": [{"...": "..."}],
+  "users": [
+    {
+      "user":"user1",
+      "pass":"pass"
+    },
+    {
+      "user":"user2",
+      "pass":"pass"
+    }
+  ],
+  "useEncryptedPasswords": true | false
+}
+```
+
+
+
+
+
+
 
 
 
