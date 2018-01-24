@@ -24,4 +24,5 @@
 * [错误码\(Error Code\)](error-code.md)
 * [番外：ParseServer配置指南](parseserver.md)
 * [番外：仪表盘配置指南](dashboard.md)
+* [番外：云代码使用指南](cloudcode.md)
 
