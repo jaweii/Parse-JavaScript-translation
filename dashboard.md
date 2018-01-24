@@ -154,13 +154,13 @@ var ParseServer = require('parse-server').ParseServer;
 var ParseDashboard = require('parse-dashboard');
 
 var api = new ParseServer({
-	// Parse Server settings
+    // Parse Server settings
 });
 
 var options = { allowInsecureHTTP: false };
 
 var dashboard = new ParseDashboard({
-	// Parse Dashboard settings
+    // Parse Dashboard settings
 }, options);
 
 var app = express();
@@ -219,7 +219,133 @@ var dashboard = new ParseDashboard({
 }
 ```
 
+你可以将密码明文或bcrypt加密存储，如果是使用bcrypt加密存储，你需要配置`useEncryptedPassword`参数为`true`。你可以使用任何bcrypt在线加密工具为你的密码加密，比如：https://www.bcrypt-generator.com。
 
+### 基于用户的访问权限
+
+如果你为仪表盘配置了多应用管理，你可以基于用户来限制应用的管理。像这样：
+
+```js
+{
+  "apps": [{"...": "..."}],
+  "users": [
+     {
+       "user":"user1",
+       "pass":"pass1",
+       "apps": [{"appId": "myAppId1"}, {"appId": "myAppId2"}]
+     },
+     {
+       "user":"user2",
+       "pass":"pass2",
+       "apps": [{"appId": "myAppId1"}]
+     }  ]
+}
+```
+
+这样配置后，user1可以管理myAppId1和myAppId2，user2只能管理myAppId1。
+
+## 使用只读masterKey
+
+你可以通过配置readOnlyMasterKey来限制在仪表盘对对象的写操作，readOnlyMasterKey和masterKey很相似，只不过没有写权限。
+
+### 所用用户使用只读masterKey
+
+在ParseServer中配置如下：
+
+```
+{
+"masterKey": "YOUR_MASTER_KEY_HERE",
+"readOnlyMasterKey": "YOUR_READ_ONLY_MASTER_KEY",
+}
+```
+
+在仪表盘中配置如下：
+
+```js
+var trustProxy = true;
+var dashboard = new ParseDashboard({
+  "apps": [
+    {
+      "serverURL": "http://localhost:1337/parse",
+      "appId": "myAppId",
+      "masterKey": "YOUR_READ_ONLY_MASTER_KEY",
+      "appName": "MyApp"
+    }
+  ],
+  "trustProxy": 1
+});
+```
+
+### 部分用户使用只读masterKey
+
+使用`readOnly`将用户标记为只读用户：
+
+```js
+{
+  "apps": [
+    {
+      "appId": "myAppId1",
+      "masterKey": "myMasterKey1",
+      "readOnlyMasterKey": "myReadOnlyMasterKey1",
+      "serverURL": "myURL1",      
+      "port": 4040,
+      "production": true
+    },
+    {
+      "appId": "myAppId2",
+      "masterKey": "myMasterKey2",
+      "readOnlyMasterKey": "myReadOnlyMasterKey2",
+      "serverURL": "myURL2",      
+      "port": 4041,
+      "production": true
+    }
+  ],
+  "users": [
+    {
+      "user":"user1",
+      "pass":"pass1",
+      "readOnly": true,
+      "apps": [{"appId": "myAppId1"}, {"appId": "myAppId2"}]
+    },
+    {
+      "user":"user2",
+      "pass":"pass2",
+      "apps": [{"appId": "myAppId1"}]
+    }
+  ]
+}
+```
+
+user1将只有读操作的权限。
+
+### 指定应用只读
+
+在每个用户的apps配置项中，你可以基于每个应用的给定只读权限：
+
+```js
+{
+  "apps": [
+    {
+      "appId": "myAppId1",
+      "masterKey": "myMasterKey1",
+      "readOnlyMasterKey": "myReadOnlyMasterKey1",
+      "serverURL": "myURL",      
+      "port": 4040,
+      "production": true
+    },
+    {"...": "..."}
+  ],
+  "users": [
+    {
+      "user":"user",
+      "pass":"pass",
+      "apps": [{"appId": "myAppId", "readOnly": true}, {"appId": "myAppId2"}]
+    }
+  ]
+}
+```
+
+user将会myAppId只有读操作的权限。
 
 
 
