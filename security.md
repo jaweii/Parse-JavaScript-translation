@@ -14,7 +14,7 @@ client key在应用发布后就给了用户，所以任何可以用客户端密�
 
 另一方面，master key定义了一种安全的机制。使用master key可以忽略应用的所有安全机制，比如表级别权限、ACL。master key就像服务器的root权限，所以你应该保管好你的master key，就像保管你的root密码一样。
 
-你应该限制客户端的权限，把敏感的操作在云代码中用master key完成。你将在[在云代码中实现业务逻辑](https://parse-zh.buzhundong.com/security.html#在云代码中实现业务逻辑)一节学会使用云代码。
+你应该限制客户端的权限，把敏感的操作在云代码中用master key完成。你将在[在云代码中实现业务逻辑](#)一节学会使用云代码。
 
 最后，建议在你服务器使用HTTPS和SSL，避免中间人攻击和运营商劫持，当然，不使用的话Parse也能正常工作。
 
@@ -36,7 +36,7 @@ client key在应用发布后就给了用户，所以任何可以用客户端密�
 
 在一开始，你就可以配置你的应用，使客户端无法在云端创建新class表，这在你的Parse服务配置里将`allowClientClassCreation`设置为`false`即可。一旦被设置后，就只能通过数据浏览器或者master key才能创建新的数据表，这可以阻止攻击者创建无数无意义的class表填充你的数据库。
 
-你可以从[Configuring your ParseServer](https://github.com/parse-community/parse-server#configuration) 的Readme中查阅Parse服务的配置。
+你可以从ParseServerp配置指南中查阅Parse服务的配置。
 
 ### _配置表级别权限_
 
@@ -243,7 +243,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 * 禁止用户直接修改计算字段 
 * 禁止用户删除某个对象，除非用户满足某个条件
 
-## 在云代码中实现业务逻辑
+## 在云代码中实现业务逻辑 {#在-云代码中实现业务逻辑}
 
 有时候有些操作可能是敏感的，需要尽可能的保证安全，这种情况下，你完全可以从客户端代码中删除这些逻辑，将所有的敏感操作都汇集到云代码功能中。
 
