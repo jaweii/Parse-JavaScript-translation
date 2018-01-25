@@ -82,6 +82,7 @@ curl -X POST -H 'X-Parse-Application-Id: appId' -H 'X-Parse-Master-Key: masterKe
 若在方法中调用response.error，对象将不会被保存，客户端返回错误；若在方法中调用response.success，对象将会被成功保存。
 
 ```js
+//注册Review表的beforeSave触发器，有对象被保存前，触发此方法。
 Parse.Cloud.beforeSave("Review", function(request, response) {
   if (request.object.get("stars") < 1) {
     response.error("少于1星，不能获取");
@@ -224,22 +225,6 @@ Parse.Cloud.beforeFind('MyObject', function(req) {
   return Promise.reject('error');
 });
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
