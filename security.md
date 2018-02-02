@@ -130,6 +130,22 @@ acl.setRoleWriteAccess("admins", true);
 }
 ```
 
+| ACL Methods |
+| :--- |
+| getPublicReadAccess\(\) → {Boolean} |
+| getPublicWriteAccess\(\) → {Boolean} |
+| getReadAccess\(userId\) → {Boolean} |
+| getRoleReadAccess\(role\) → {Boolean} |
+| getRoleWriteAccess\(role\) → {Boolean} |
+| getWriteAccess\(userId\) → {Boolean} |
+| setPublicReadAccess\(allowed\)→ {Boolean} |
+| setPublicWriteAccess\(allowed\)→ {Boolean} |
+| setReadAccess\(userId, allowed\) |
+| setRoleReadAccess\(role, allowed\) |
+| setRoleWriteAccess\(role, allowed\) |
+| setWriteAccess\(userId, allowed\) |
+| toJSON\(\) → {Object} |
+
 ### _指针类型权限_
 
 指针类型是一种特殊的表级权限，它基于这些对象上的指针字段指向的用户，在class表中的每个对象上创建了一个虚拟ACL。比如，一个使用了`owner`字段的class表中，`owner`上设置了一个只读权限，class表中的每个对象将会对`owner`指向的用户只读。假设有一个有`sender`\(发送方\)和`receiver`\(接收方\)字段的class表，`receiver`字段上使用了只读权限，`sender`字段上使用了读写权限，那么`receiver`指向的用户对于这个表中所有的对象只读，`sender`指向的用户对于这个表中所有的用户可以读写。
@@ -267,6 +283,8 @@ Parse.Cloud.define("like", function(request, response) {
 ```
 
 云代码最常用的一个用例就是发送一个推送通知给指定用户，通常情况下，客户端是没有权限直接发送推送通知的，因为客户端可能会修改通知内容，或发送给他们不应该发送的人。你的应用设置允许你设置是否禁用"client push"，我们建议你禁用它。你应该写一个云代码函数，在发送推送前确认数据是要推送的数据。
+
+
 
 ## 总结
 
