@@ -409,5 +409,43 @@ mainQuery.find()
   });
 ```
 
+## Query方法
+
+| Query Methods |
+| :--- |
+| \(static\) fromJSON\(className, json\) → {Parse.Query} |
+| \(static\) or\(…var\_args\) → {Parse.Query} |
+| \_addCondition\(\) |
+| \_orQuery\(queries\) → {Parse.Query} |
+| addAscending\(key\) → {Parse.Query} |
+| addDescending\(key\) → {Parse.Query} |
+| aggregate\(pipeline, options\) → {Parse.Promise} |
+| ascending\(key\) → {Parse.Query} |
+| containedIn\(key, values\) → {Parse.Query} |
+| contains\(key, substring\) → {Parse.Query} |
+| containsAll\(key, values\) → {Parse.Query} |
+| count\(options\) → {Parse.Promise} |
+| descending\(key\) → {Parse.Query} |
+| distinct\(key, options\) → {Parse.Promise} |
+| doesNotExist\(key\) → {Parse.Query} |
+| doesNotMatchKeyInQuery\(key, queryKey, query\) → {Parse.Query} |
+| doesNotMatchQuery\(key, query\) → {Parse.Query} |
+| each\(callback, options\) → {Parse.Promise} |
+| endsWith\(key, suffix\) → {Parse.Query} |
+| equalTo\(key, value\) → {Parse.Query} |
+| exists\(key\) → {Parse.Query} |
+| find\(options\) → {Parse.Promise} |
+| first\(options\) → {Parse.Promise} |
+| get\(objectId, options\) → {Parse.Promise} |
+| greaterThan\(key, value\) → {Parse.Query} |
+| greaterThanOrEqualTo\(key, value\) → {Parse.Query} |
+| include\(key\) → {Parse.Query} |
+| lessThan\(key, value\) → {Parse.Query} |
+| lessThanOrEqualTo\(key, value\) → {Parse.Query} |
+| limit\(n\) → {Parse.Query} |
+| matches\(key, regex\) → {Parse.Query} |
+| matchesKeyInQuery\(key, queryKey, query\) → {Parse.Query} |
+| matchesQuery\(key, query\) → {Parse.Query} |
+
 
 
