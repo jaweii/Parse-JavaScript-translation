@@ -285,7 +285,7 @@ post.save(null, {
 
 ## 手机验证码登录
 
-参考译者的另外写的教程[Parse服务的手机验证码用户注册/登录教程](http://buzhundong.com/post/Parse%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E6%B3%A8%E5%86%8C-%E7%99%BB%E5%BD%95%E7%94%A8%E6%88%B7%E6%95%99%E7%A8%8B.html)
+参考译者的另外写的教程[Parse服务的手机验证码用户注册/登录教程](http://buzhundong.com/post/cjd5zpscp0000rcsps2d2j5kw.html)
 
 ## 脸书登录
 
