@@ -446,6 +446,21 @@ mainQuery.find()
 | matches\(key, regex\) → {Parse.Query} |
 | matchesKeyInQuery\(key, queryKey, query\) → {Parse.Query} |
 | matchesQuery\(key, query\) → {Parse.Query} |
+| near\(key, point\) → {Parse.Query} |
+| notContainedIn\(key, values\) → {Parse.Query} |
+| notEqualTo\(key, value\) → {Parse.Query} |
+| polygonContains\(key, GeoPoint\) → {Parse.Query} |
+| select\(…keys\) → {Parse.Query} |
+| skip\(n\) → {Parse.Query} |
+| startsWith\(key, prefix\) → {Parse.Query} |
+| subscribe\(\) → {LiveQuerySubscription} |
+| toJSON\(\) → {Object} |
+| withinGeoBox\(key, southwest, northeast\) → {Parse.Query} |
+| withinKilometers\(key, point, maxDistance\) → {Parse.Query} |
+| withinMiles\(key, point, maxDistance\) → {Parse.Query} |
+| withinPolygon\(key, array\) → {Parse.Query} |
+| withinRadians\(key, point, maxDistance\) → {Parse.Query} |
+| withJSON\(json\) → {Parse.Query} |
 
 
 
