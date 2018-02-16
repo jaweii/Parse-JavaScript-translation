@@ -130,21 +130,7 @@ acl.setRoleWriteAccess("admins", true);
 }
 ```
 
-| ACL Methods |
-| :--- |
-| getPublicReadAccess\(\) → {Boolean} |
-| getPublicWriteAccess\(\) → {Boolean} |
-| getReadAccess\(userId\) → {Boolean} |
-| getRoleReadAccess\(role\) → {Boolean} |
-| getRoleWriteAccess\(role\) → {Boolean} |
-| getWriteAccess\(userId\) → {Boolean} |
-| setPublicReadAccess\(allowed\)→ {Boolean} |
-| setPublicWriteAccess\(allowed\)→ {Boolean} |
-| setReadAccess\(userId, allowed\) |
-| setRoleReadAccess\(role, allowed\) |
-| setRoleWriteAccess\(role, allowed\) |
-| setWriteAccess\(userId, allowed\) |
-| toJSON\(\) → {Object} |
+
 
 ### _指针类型权限_
 
@@ -283,8 +269,6 @@ Parse.Cloud.define("like", function(request, response) {
 ```
 
 云代码最常用的一个用例就是发送一个推送通知给指定用户，通常情况下，客户端是没有权限直接发送推送通知的，因为客户端可能会修改通知内容，或发送给他们不应该发送的人。你的应用设置允许你设置是否禁用"client push"，我们建议你禁用它。你应该写一个云代码函数，在发送推送前确认数据是要推送的数据。
-
-
 
 ## 总结
 

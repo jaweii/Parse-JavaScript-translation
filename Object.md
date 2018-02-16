@@ -423,55 +423,7 @@ bigObject.save();
 
 关于Parse处理数据的更多信息，请查看文档的数据\(Data\)章节。
 
-## 对象方法
-
-| Object Methods |
-| :--- |
-| \(static\) \_clearAllState\(\) |
-| \(static\) createWithoutData\(id\) → {Parse.Object} |
-| \(static\) destroyAll\(list, options\) → {Parse.Promise} |
-| \(static\) disableSingleInstance\(\) |
-| \(static\) enableSingleInstance\(\) |
-| \(static\) extend\(className, protoProps, classProps\) → {Class} |
-| \(static\) fetchAll\(list, options\) |
-| \(static\) fetchAllIfNeeded\(list, options\) |
-| \(static\) fromJSON\(json, override\) → {Parse.Object} |
-| \(static\) registerSubclass\(className, constructor\) |
-| \(static\) saveAll\(list, options\) |
-| \_getId\(\) |
-| \_getStateIdentifier\(\) |
-| add\(attr, item\) → {ParseObject\|Boolean} |
-| addAll\(attr, items\) |
-| addAllUnique\(attr, items\) |
-| addUnique\(attr, item\) |
-| clear\(\) → {ParseObject\|boolean} |
-| clone\(\) → {Parse.Object} |
-| destroy\(options\) → {Parse.Promise} |
-| dirty\(attr\) → {Boolean} |
-| dirtyKeys\(\) → {Array.&lt;String&gt;} |
-| equals\(other\) → {Boolean} |
-| escape\(attr\) |
-| existed\(\) → {Boolean} |
-| fetch\(options\) → {Parse.Promise} |
-| get\(attr\) |
-| getACL\(\) → {Parse.ACL} |
-| has\(attr\) → {Boolean} |
-| increment\(attr, amount\) |
-| isNew\(\) → {Boolean} |
-| isValid\(\) → {Boolean} |
-| newInstance\(\) → {Parse.Object} |
-| op\(attr\) → {Parse.Op} |
-| relation\(String\) → {Parse.Relation} |
-| remove\(attr, item\) |
-| removeAll\(attr, items\) |
-| revert\(\) |
-| save\(options\) → {Parse.Promise} |
-| set\(key, value, options\) → {Boolean} |
-| setACL\(acl, options\) → {Boolean} |
-| toJSON\(\) → {Object} |
-| toPointer\(\) → {Pointer} |
-| unset\(attr\) |
-| validate\(attrs\) |
+## 
 
 
 
