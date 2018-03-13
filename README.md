@@ -18,7 +18,7 @@ Parse后端服务，Facebook开源项目。
 
 API文档地址：[http://parseplatform.org/Parse-SDK-JS/api/v1.11.0/index.html](http://parseplatform.org/Parse-SDK-JS/api/v1.11.0/index.html)
 
-Parse服务平台： https://www.back4app.com/
+Parse服务商： [https://www.back4app.com/](https://www.back4app.com/)
 
 翻译：朱嘉伟\([http://buzhundong.com](http://buzhundong.com)\)
 
