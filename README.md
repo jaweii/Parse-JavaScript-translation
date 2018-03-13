@@ -12,11 +12,13 @@ Parse后端服务，Facebook开源项目。
 
 ---
 
-中文指南地址：https://parse-zh.buzhundong.com/
+中文指南地址：[https://parse-zh.buzhundong.com/](https://parse-zh.buzhundong.com/)
 
 英文指南地址：[http://docs.parseplatform.org/js/guide](http://docs.parseplatform.org/js/guide)
 
 API文档地址：[http://parseplatform.org/Parse-SDK-JS/api/v1.11.0/index.html](http://parseplatform.org/Parse-SDK-JS/api/v1.11.0/index.html)
+
+Parse服务平台： https://www.back4app.com/
 
 翻译：朱嘉伟\([http://buzhundong.com](http://buzhundong.com)\)
 
