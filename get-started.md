@@ -1,6 +1,6 @@
 # 开始
 
-Parse服务的后端搭建很简单，在本书的[GitHub](https://github.com/jaweii/Parse-JavaScript-translation)仓库中，有我上传的配置好的ParseServer项目，下载下来安装对应的依赖后运行即可。
+Parse服务的后端搭建很简单，在本书的[GitHub](https://github.com/jaweii/Parse-JavaScript-translation)仓库中，有译者上传的配置好的ParseServer项目，下载下来安装对应的依赖后运行即可。
 
 然后，在前端使用Parse的SDK即可与后端完成交互。
 
@@ -121,17 +121,13 @@ new Vue({
 <template>
     <div id="app">
         <mu-appbar>
-            <mu-text-field type="text" hintText="Todo List" v-model="value">
-            </mu-text-field>
-            <mu-icon-button icon="add" slot="right" @click="addItem">
-            </mu-icon-button>
+            <mu-text-field type="text" hintText="Todo List" v-model="value"/>
+            <mu-icon-button icon="add" slot="right" @click="addItem"/>
         </mu-appbar>
         <mu-list>
             <mu-list-item v-for="item in list" :title="item.get('title')" :describeText="item.get('finish')?'完成':'未完成'">
-                <mu-icon-button icon="check" slot="left" @click="finishItem(item)" :disabled="item.get('finish')">
-                </mu-icon-button>
-                <mu-icon-button icon="delete" slot="right" @click="deleteItem(item)">
-                </mu-icon-button>
+                <mu-icon-button icon="check" slot="left" @click="finishItem(item)" :disabled="item.get('finish')"/>
+                <mu-icon-button icon="delete" slot="right" @click="deleteItem(item)"/>
             </mu-list-item>
         </mu-list>
         <div style="text-align:center;" v-if="!list.length">暂无任务</div>
@@ -153,7 +149,7 @@ export default {
         }
     },
     mounted() {
-        let query = new parse.Query('Todo')
+        const query = new parse.Query('Todo')
         query.find().then(list => {
             this.list = list
         })
@@ -162,7 +158,7 @@ export default {
         addItem() {
             if (!this.value)
                 return
-            let todo = new parse.Object('Todo')
+            const todo = new parse.Object('Todo')
             todo.set('title', this.value)
             todo.set('finish', false)
             todo.save().then(todo => {
