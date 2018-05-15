@@ -1,4 +1,4 @@
-# Parse JavaScript SDK 中文指南
+# Parse Server JavaScript中文指南
 
 如果你是前端。
 
